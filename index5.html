@@ -260,6 +260,8 @@ td.action-btn {
   <button role="tab" aria-selected="true" aria-controls="tab-dashboard" id="tabbtn-dashboard" class="active">داشبورد</button>
   <button role="tab" aria-selected="false" aria-controls="tab-income-expense" id="tabbtn-income-expense">درآمد و هزینه</button>
   <button role="tab" aria-selected="false" aria-controls="tab-invoices" id="tabbtn-invoices">فاکتورها</button>
+  <button role="tab" aria-selected="false" aria-controls="tab-purchase-invoices" id="tabbtn-purchase-invoices">فاکتور خرید</button>
+  <button role="tab" aria-selected="false" aria-controls="tab-checks" id="tabbtn-checks">چک‌ها</button>
   <button role="tab" aria-selected="false" aria-controls="tab-customers-suppliers" id="tabbtn-cust-sup">مشتریان و تامین‌کنندگان</button>
   <button role="tab" aria-selected="false" aria-controls="tab-inventory" id="tabbtn-inventory">مدیریت موجودی</button>
   <button role="tab" aria-selected="false" aria-controls="tab-returns" id="tabbtn-returns">کالاهای مرجوعی</button>
@@ -326,9 +328,9 @@ td.action-btn {
     </div>
   </section>
 
-  <!-- Invoices -->
+  <!-- Invoices (Sales) -->
   <section id="tab-invoices" role="tabpanel" aria-labelledby="tabbtn-invoices">
-    <h2>مدیریت فاکتورها</h2>
+    <h2>مدیریت فاکتورها (فروش)</h2>
     <form id="form-invoice" style="max-width:800px;">
       <div class="flex-row">
         <div class="flex-grow">
@@ -356,6 +358,7 @@ td.action-btn {
               <th style="padding:8px;">نام کالا/خدمت</th>
               <th style="padding:8px;">تعداد</th>
               <th style="padding:8px;">قیمت واحد (تومان)</th>
+              <th style="padding:8px;">تخفیف واحد (تومان)</th>
               <th style="padding:8px;">جمع (تومان)</th>
               <th style="padding:8px;">عملیات</th>
             </tr>
@@ -364,7 +367,10 @@ td.action-btn {
         </table>
         <button type="button" id="btn-add-invoice-item" class="btn-primary">افزودن قلم</button>
         <div style="text-align: left; margin-top: 0.5rem; font-weight: 700; font-size: 1.2rem;">
-          جمع کل: <span id="invoice-total">0 تومان</span>
+          جمع کل بدون تخفیف: <span id="invoice-total-before-discount">0 تومان</span><br/>
+          تخفیف کل (تومان): <input type="number" id="invoice-total-discount" value="0" min="0" style="width:120px; direction:ltr; display:inline-block;" />
+          <br/>
+          جمع کل پس از تخفیف: <span id="invoice-total">0 تومان</span>
         </div>
       </fieldset>
       <button type="submit" style="margin-top: 1rem;">ذخیره فاکتور</button>
@@ -383,7 +389,98 @@ td.action-btn {
     <button id="btn-send-invoices" class="btn-primary" style="margin-top:1rem;">ارسال فاکتورهای انتخاب شده (شبیه‌سازی)</button>
   </section>
 
-  <!-- Customers & Suppliers -->
+  <!-- Purchase Invoices -->
+  <section id="tab-purchase-invoices" role="tabpanel" aria-labelledby="tabbtn-purchase-invoices">
+    <h2>مدیریت فاکتورهای خرید</h2>
+    <form id="form-purchase-invoice" style="max-width:800px;">
+      <div class="flex-row">
+        <div class="flex-grow">
+          <label for="purchase-invoice-supplier">نام تامین‌کننده</label>
+          <input type="text" id="purchase-invoice-supplier" required placeholder="مثال: تامین‌کننده نمونه" />
+        </div>
+        <div class="flex-grow">
+          <label for="purchase-invoice-date">تاریخ</label>
+          <input type="date" id="purchase-invoice-date" required />
+        </div>
+      </div>
+      <fieldset style="border:1.5px solid var(--accent-color); border-radius:12px; padding:1rem; margin-top:1rem;">
+        <legend>اقلام فاکتور خرید</legend>
+        <table aria-label="اقلام فاکتور خرید" style="width:100%; border-collapse:collapse; margin-bottom:1rem;">
+          <thead>
+            <tr style="background:var(--accent-color); color:#fff;">
+              <th style="padding:8px;">نام کالا/خدمت</th>
+              <th style="padding:8px;">تعداد</th>
+              <th style="padding:8px;">قیمت واحد (تومان)</th>
+              <th style="padding:8px;">جمع (تومان)</th>
+              <th style="padding:8px;">عملیات</th>
+            </tr>
+          </thead>
+          <tbody id="purchase-invoice-items-body"></tbody>
+        </table>
+        <button type="button" id="btn-add-purchase-invoice-item" class="btn-primary">افزودن قلم</button>
+        <div style="text-align: left; margin-top: 0.5rem; font-weight: 700; font-size: 1.2rem;">
+          جمع کل: <span id="purchase-invoice-total">0 تومان</span>
+        </div>
+      </fieldset>
+      <button type="submit" style="margin-top: 1rem;">ذخیره فاکتور خرید</button>
+    </form>
+    <h3>لیست فاکتورهای خرید</h3>
+    <div class="table-scroll" style="max-height:400px; overflow-y:auto;">
+      <table aria-label="لیست فاکتورهای خرید" style="font-size:0.95rem;">
+        <thead>
+          <tr>
+            <th>#</th><th>تامین‌کننده</th><th>تاریخ</th><th>جمع کل</th><th>عملیات</th>
+          </tr>
+        </thead>
+        <tbody id="purchase-invoice-list"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Checks -->
+  <section id="tab-checks" role="tabpanel" aria-labelledby="tabbtn-checks">
+    <h2>مدیریت چک‌ها</h2>
+    <form id="form-check" style="max-width:700px;">
+      <div class="flex-row">
+        <div class="flex-grow">
+          <label for="check-payee">دارنده چک</label>
+          <input type="text" id="check-payee" required placeholder="نام دارنده چک" />
+        </div>
+        <div class="flex-grow">
+          <label for="check-amount">مبلغ (تومان)</label>
+          <input type="number" id="check-amount" min="0" required />
+        </div>
+      </div>
+      <div class="flex-row">
+        <div class="flex-grow">
+          <label for="check-due-date">تاریخ سررسید</label>
+          <input type="date" id="check-due-date" required />
+        </div>
+        <div class="flex-grow">
+          <label for="check-status">وضعیت چک</label>
+          <select id="check-status" required>
+            <option value="pending">معوقه</option>
+            <option value="cleared">پرداخت شده</option>
+            <option value="bounced">برگشت خورده</option>
+          </select>
+        </div>
+      </div>
+      <button type="submit" class="btn-primary">ثبت چک</button>
+    </form>
+    <h3>لیست چک‌ها</h3>
+    <div class="table-scroll" style="max-height:400px; overflow-y:auto;">
+      <table aria-label="لیست چک‌ها" style="font-size:0.95rem;">
+        <thead>
+          <tr>
+            <th>#</th><th>دارنده</th><th>مبلغ</th><th>تاریخ سررسید</th><th>وضعیت</th><th>عملیات</th>
+          </tr>
+        </thead>
+        <tbody id="check-list"></tbody>
+      </table>
+    </div>
+  </section>
+
+<!-- Customers & Suppliers -->
   <section id="tab-customers-suppliers" role="tabpanel" aria-labelledby="tabbtn-cust-sup">
     <h2>مشتریان و تامین‌کنندگان</h2>
     <form id="form-customer-supplier" style="max-width:600px;">
@@ -506,9 +603,11 @@ td.action-btn {
   const STORAGE_KEYS = {
     transactions: 'accApp_transactions',
     invoices: 'accApp_invoices',
+    purchaseInvoices: 'accApp_purchaseInvoices',
     customersSuppliers: 'accApp_customersSuppliers',
     inventory: 'accApp_inventory',
     returns: 'accApp_returns',
+    checks: 'accApp_checks'
   };
 
   const tabButtons = document.querySelectorAll('nav button');
@@ -531,6 +630,15 @@ td.action-btn {
     } else if(targetId === 'tab-returns'){
       document.getElementById('form-returns').reset();
       setReturnFormDateToday();
+    } else if(targetId === 'tab-checks'){
+      document.getElementById('form-check').reset();
+      document.getElementById('check-due-date').value = new Date().toISOString().slice(0,10);
+    } else if(targetId === 'tab-purchase-invoices'){
+      document.getElementById('form-purchase-invoice').reset();
+      purchaseInvoiceItems = [{name:'', quantity:1, unitPrice:0}];
+      renderPurchaseInvoiceItems();
+      updatePurchaseInvoiceTotal();
+      document.getElementById('purchase-invoice-date').value = new Date().toISOString().slice(0,10);
     }
   }
   tabButtons.forEach(btn => btn.addEventListener('click', switchTab));
@@ -615,8 +723,15 @@ td.action-btn {
   let chartIncomeExpense = null, chartLiquidity = null;
 
   function updateDashboard() {
+    // Income: incomes + returned items revenue
     const totalIncome = transactions.filter(t => t.type === 'income').reduce((a,b) => a + b.amount, 0);
-    const totalExpense = transactions.filter(t => t.type === 'expense').reduce((a,b) => a + b.amount, 0);
+    // Include purchase invoices as expenses
+    let totalPurchaseExpense = purchaseInvoices.reduce((sum, inv) => sum + inv.total, 0);
+    // You can decide if returns reduce expenses or increase income; here returns increase income already via transactions
+
+    // Expenses: expenses + purchases
+    const totalExpense = transactions.filter(t => t.type === 'expense').reduce((a,b) => a + b.amount, 0) + totalPurchaseExpense;
+
     dashTotalIncomeElem.textContent = formatCurrency(totalIncome);
     dashTotalExpenseElem.textContent = formatCurrency(totalExpense);
     const balance = totalIncome - totalExpense;
@@ -632,6 +747,12 @@ td.action-btn {
         const m = d.getMonth();
         if(tx.type === 'income') monthlyIncome[m] += tx.amount;
         else monthlyExpense[m] += tx.amount;
+      }
+    });
+    purchaseInvoices.forEach(inv => {
+      const d = new Date(inv.date);
+      if(d.getFullYear() === now.getFullYear()){
+        monthlyExpense[d.getMonth()] += inv.total;
       }
     });
 
@@ -671,6 +792,11 @@ td.action-btn {
       running += tx.type === 'income' ? tx.amount : -tx.amount;
       liquidityAmounts.push(running);
     });
+    purchaseInvoices.forEach(inv => {
+      liquidityDates.push(inv.date);
+      running -= inv.total;
+      liquidityAmounts.push(running);
+    });
     if(chartLiquidity) chartLiquidity.destroy();
     const ctx2 = document.getElementById('chart-liquidity').getContext('2d');
     chartLiquidity = new Chart(ctx2, {
@@ -695,26 +821,31 @@ td.action-btn {
     });
   }
 
-  // Invoice Management
+  // Invoice Management (Sales)
   let invoices = loadData('invoices');
   const invoiceForm = document.getElementById('form-invoice');
   const invoiceItemsBody = document.getElementById('invoice-items-body');
   const invoiceListBody = document.getElementById('invoice-list');
   const invoiceTotalElem = document.getElementById('invoice-total');
+  const invoiceTotalBeforeDiscountElem = document.getElementById('invoice-total-before-discount');
+  const invoiceTotalDiscountInput = document.getElementById('invoice-total-discount');
   const btnAddInvoiceItem = document.getElementById('btn-add-invoice-item');
   const btnSendInvoices = document.getElementById('btn-send-invoices');
-  let invoiceItems = [{name:'', quantity:1, unitPrice:0}];
+  let invoiceItems = [{name:'', quantity:1, unitPrice:0, discount:0}];
 
   function renderInvoiceItems() {
     invoiceItemsBody.innerHTML = '';
     invoiceItems.forEach((itm, idx) => {
+      const totalBeforeDiscount = (itm.quantity || 0) * (itm.unitPrice || 0);
+      const discount = itm.discount || 0;
+      const totalAfterDiscount = Math.max(0, totalBeforeDiscount - discount * (itm.quantity || 0));
       const tr = document.createElement('tr');
-      const total = (itm.quantity || 0)*(itm.unitPrice || 0);
       tr.innerHTML = `
         <td><input type="text" aria-label="نام کالا یا خدمت" value="${itm.name}" placeholder="نام کالا یا خدمت" required></td>
         <td><input type="number" aria-label="تعداد" min="0" value="${itm.quantity}" required></td>
         <td><input type="number" aria-label="قیمت واحد" min="0" value="${itm.unitPrice}" required></td>
-        <td>${formatCurrency(total)}</td>
+        <td><input type="number" aria-label="تخفیف واحد" min="0" value="${discount}" required></td>
+        <td>${formatCurrency(totalAfterDiscount)}</td>
         <td class="action-btn"><button type="button" class="small-button" aria-label="حذف قلم">×</button></td>
       `;
       const inputs = tr.querySelectorAll('input');
@@ -735,6 +866,13 @@ td.action-btn {
         renderInvoiceItems();
         updateInvoiceTotal();
       });
+      inputs[3].addEventListener('input', e => {
+        let v = parseFloat(e.target.value);
+        if(isNaN(v) || v<0) v=0;
+        invoiceItems[idx].discount = v;
+        renderInvoiceItems();
+        updateInvoiceTotal();
+      });
       const btnRemove = tr.querySelector('button');
       btnRemove.onclick = () => {
         invoiceItems.splice(idx, 1);
@@ -745,16 +883,66 @@ td.action-btn {
     });
   }
   function updateInvoiceTotal() {
-    const total = invoiceItems.reduce((sum,itm) => {
-      return sum + (itm.quantity || 0)*(itm.unitPrice || 0);
+    const totalBeforeDiscount = invoiceItems.reduce((sum,itm) => {
+      return sum + ((itm.quantity || 0) * (itm.unitPrice || 0));
     }, 0);
-    invoiceTotalElem.textContent = formatCurrency(total);
+    const totalDiscount = invoiceItems.reduce((sum,itm) => {
+      return sum + ((itm.discount || 0) * (itm.quantity || 0));
+    }, 0);
+    const inputDiscount = parseFloat(invoiceTotalDiscountInput.value) || 0;
+    const totalAfterDiscount = Math.max(0, (totalBeforeDiscount - totalDiscount) - inputDiscount);
+
+    invoiceTotalBeforeDiscountElem.textContent = formatCurrency(totalBeforeDiscount);
+    invoiceTotalElem.textContent = formatCurrency(totalAfterDiscount);
   }
+  invoiceTotalDiscountInput.addEventListener('input', () => {
+    let v = parseFloat(invoiceTotalDiscountInput.value);
+    if(isNaN(v) || v<0) v=0;
+    invoiceTotalDiscountInput.value = v;
+    updateInvoiceTotal();
+  });
   btnAddInvoiceItem.onclick = () => {
-    invoiceItems.push({name:'',quantity:1,unitPrice:0});
+    invoiceItems.push({name:'',quantity:1,unitPrice:0,discount:0});
     renderInvoiceItems();
     updateInvoiceTotal();
   };
+  invoiceForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const client = document.getElementById('invoice-client').value.trim();
+    const date = document.getElementById('invoice-date').value;
+    const status = document.getElementById('invoice-status').value;
+    if(!client || !date || !status){
+      alert('لطفاً همه فیلدها را پر کنید.');
+      return;
+    }
+    const validItems = invoiceItems.filter(i => i.name.trim() && i.quantity>0 && i.unitPrice>=0);
+    if(validItems.length===0){
+      alert('لطفاً حداقل یک قلم معتبر وارد کنید.');
+      return;
+    }
+    const totalBeforeDiscount = validItems.reduce((acc,itm)=> acc + itm.quantity*itm.unitPrice,0);
+    const totalDiscountItems = validItems.reduce((acc,itm) => acc + (itm.discount || 0) * itm.quantity,0);
+    const inputTotalDiscount = parseFloat(invoiceTotalDiscountInput.value) || 0;
+    const total = Math.max(0, (totalBeforeDiscount - totalDiscountItems) - inputTotalDiscount);
+    const invoice = {
+      id: Date.now(),
+      client,
+      date,
+      status,
+      items: validItems.map(i => ({...i})),
+      total,
+      totalDiscount: totalDiscountItems + inputTotalDiscount
+    };
+    invoices.push(invoice);
+    saveData('invoices', invoices);
+    renderInvoicesList();
+    invoiceForm.reset();
+    invoiceItems = [{name:'',quantity:1,unitPrice:0,discount:0}];
+    renderInvoiceItems();
+    invoiceTotalDiscountInput.value = 0;
+    updateInvoiceTotal();
+    alert('فاکتور با موفقیت ذخیره شد!');
+  });
   function renderInvoicesList() {
     invoiceListBody.innerHTML = '';
     if(invoices.length === 0){
@@ -784,38 +972,6 @@ td.action-btn {
       invoiceListBody.appendChild(tr);
     });
   }
-  invoiceForm.addEventListener('submit', e => {
-    e.preventDefault();
-    const client = document.getElementById('invoice-client').value.trim();
-    const date = document.getElementById('invoice-date').value;
-    const status = document.getElementById('invoice-status').value;
-    if(!client || !date || !status){
-      alert('لطفاً همه فیلدها را پر کنید.');
-      return;
-    }
-    const validItems = invoiceItems.filter(i => i.name.trim() && i.quantity>0 && i.unitPrice>=0);
-    if(validItems.length===0){
-      alert('لطفاً حداقل یک قلم معتبر وارد کنید.');
-      return;
-    }
-    const total = validItems.reduce((acc,itm)=> acc + itm.quantity*itm.unitPrice,0);
-    const invoice = {
-      id: Date.now(),
-      client,
-      date,
-      status,
-      items: validItems,
-      total
-    };
-    invoices.push(invoice);
-    saveData('invoices', invoices);
-    renderInvoicesList();
-    invoiceForm.reset();
-    invoiceItems = [{name:'',quantity:1,unitPrice:0}];
-    renderInvoiceItems();
-    updateInvoiceTotal();
-    alert('فاکتور با موفقیت ذخیره شد!');
-  });
   invoiceListBody.addEventListener('click', e => {
     if(e.target.matches('button.btn-danger')){
       const idx = parseInt(e.target.getAttribute('data-index'),10);
@@ -832,7 +988,200 @@ td.action-btn {
       'تعداد فاکتورهای پرداخت شده: ' + paidCount);
   };
 
-  // Customers & Suppliers
+  // Purchase Invoice Management
+  let purchaseInvoices = loadData('purchaseInvoices');
+  const purchaseInvoiceForm = document.getElementById('form-purchase-invoice');
+  const purchaseInvoiceItemsBody = document.getElementById('purchase-invoice-items-body');
+  const purchaseInvoiceListBody = document.getElementById('purchase-invoice-list');
+  const purchaseInvoiceTotalElem = document.getElementById('purchase-invoice-total');
+  const btnAddPurchaseInvoiceItem = document.getElementById('btn-add-purchase-invoice-item');
+  let purchaseInvoiceItems = [{name:'', quantity:1, unitPrice:0}];
+
+  function renderPurchaseInvoiceItems() {
+    purchaseInvoiceItemsBody.innerHTML = '';
+    purchaseInvoiceItems.forEach((itm, idx) => {
+      const total = (itm.quantity || 0)*(itm.unitPrice || 0);
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><input type="text" aria-label="نام کالا یا خدمت خریداری شده" value="${itm.name}" placeholder="نام کالا یا خدمت" required></td>
+        <td><input type="number" aria-label="تعداد" min="0" value="${itm.quantity}" required></td>
+        <td><input type="number" aria-label="قیمت واحد" min="0" value="${itm.unitPrice}" required></td>
+        <td>${formatCurrency(total)}</td>
+        <td class="action-btn"><button type="button" class="small-button" aria-label="حذف قلم">×</button></td>
+      `;
+      const inputs = tr.querySelectorAll('input');
+      inputs[0].addEventListener('input', e => {
+        purchaseInvoiceItems[idx].name = e.target.value;
+      });
+      inputs[1].addEventListener('input', e => {
+        let v = parseInt(e.target.value);
+        if(isNaN(v) || v<0) v=0;
+        purchaseInvoiceItems[idx].quantity = v;
+        renderPurchaseInvoiceItems();
+        updatePurchaseInvoiceTotal();
+      });
+      inputs[2].addEventListener('input', e => {
+        let v = parseFloat(e.target.value);
+        if(isNaN(v) || v<0) v=0;
+        purchaseInvoiceItems[idx].unitPrice = v;
+        renderPurchaseInvoiceItems();
+        updatePurchaseInvoiceTotal();
+      });
+      const btnRemove = tr.querySelector('button');
+      btnRemove.onclick = () => {
+        purchaseInvoiceItems.splice(idx, 1);
+        renderPurchaseInvoiceItems();
+        updatePurchaseInvoiceTotal();
+      };
+      purchaseInvoiceItemsBody.appendChild(tr);
+    });
+  }
+  function updatePurchaseInvoiceTotal() {
+    const total = purchaseInvoiceItems.reduce((sum,itm) => {
+      return sum + (itm.quantity || 0)*(itm.unitPrice || 0);
+    }, 0);
+    purchaseInvoiceTotalElem.textContent = formatCurrency(total);
+  }
+  btnAddPurchaseInvoiceItem.onclick = () => {
+    purchaseInvoiceItems.push({name:'', quantity:1, unitPrice:0});
+    renderPurchaseInvoiceItems();
+    updatePurchaseInvoiceTotal();
+  };
+  purchaseInvoiceForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const supplier = document.getElementById('purchase-invoice-supplier').value.trim();
+    const date = document.getElementById('purchase-invoice-date').value;
+    if(!supplier || !date){
+      alert('لطفاً همه فیلدها را پر کنید.');
+      return;
+    }
+    const validItems = purchaseInvoiceItems.filter(i => i.name.trim() && i.quantity>0 && i.unitPrice>=0);
+    if(validItems.length===0){
+      alert('لطفاً حداقل یک قلم معتبر وارد کنید.');
+      return;
+    }
+    const total = validItems.reduce((acc,itm)=> acc + itm.quantity*itm.unitPrice,0);
+    const purchaseInvoice = {
+      id: Date.now(),
+      supplier,
+      date,
+      items: validItems,
+      total
+    };
+    purchaseInvoices.push(purchaseInvoice);
+    saveData('purchaseInvoices', purchaseInvoices);
+    renderPurchaseInvoiceList();
+    purchaseInvoiceForm.reset();
+    purchaseInvoiceItems = [{name:'', quantity:1, unitPrice:0}];
+    renderPurchaseInvoiceItems();
+    updatePurchaseInvoiceTotal();
+    alert('فاکتور خرید با موفقیت ذخیره شد!');
+  });
+  function renderPurchaseInvoiceList() {
+    purchaseInvoiceListBody.innerHTML = '';
+    if(purchaseInvoices.length === 0){
+      const tr = document.createElement('tr');
+      const td = document.createElement('td');
+      td.colSpan = 5;
+      td.style.textAlign = 'center';
+      td.textContent = 'هیچ فاکتور خریدی ثبت نشده است.';
+      tr.appendChild(td);
+      purchaseInvoiceListBody.appendChild(tr);
+      return;
+    }
+    purchaseInvoices.forEach((inv,i) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${i+1}</td>
+        <td>${inv.supplier}</td>
+        <td>${inv.date}</td>
+        <td style="font-weight:700;">${formatCurrency(inv.total)}</td>
+        <td class="action-btn">
+          <button class="btn-danger" aria-label="حذف فاکتور خرید" data-index="${i}">حذف</button>
+        </td>
+      `;
+      purchaseInvoiceListBody.appendChild(tr);
+    });
+  }
+  purchaseInvoiceListBody.addEventListener('click', e => {
+    if(e.target.matches('button.btn-danger')){
+      const idx = parseInt(e.target.getAttribute('data-index'),10);
+      if(confirm('آیا مایلید این فاکتور خرید حذف شود؟')){
+        purchaseInvoices.splice(idx,1);
+        saveData('purchaseInvoices', purchaseInvoices);
+        renderPurchaseInvoiceList();
+      }
+    }
+  });
+
+  // Checks Management
+  let checks = loadData('checks');
+  const checkForm = document.getElementById('form-check');
+  const checkListBody = document.getElementById('check-list');
+
+  function renderChecks() {
+    checkListBody.innerHTML = '';
+    if(checks.length === 0){
+      const tr = document.createElement('tr');
+      const td = document.createElement('td');
+      td.colSpan = 6;
+      td.style.textAlign = 'center';
+      td.textContent = 'هیچ چکی ثبت نشده است.';
+      tr.appendChild(td);
+      checkListBody.appendChild(tr);
+      return;
+    }
+    checks.forEach((check,i) => {
+      let statusClass = 'status-pending';
+      let statusText = '';
+      switch(check.status){
+        case 'pending': statusClass = 'status-pending'; statusText = 'معوقه'; break;
+        case 'cleared': statusClass = 'status-paid'; statusText = 'پرداخت شده'; break;
+        case 'bounced': statusClass = 'status-overdue'; statusText = 'برگشت خورده'; break;
+      }
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${i+1}</td>
+        <td>${check.payee}</td>
+        <td style="font-weight:700;">${formatCurrency(check.amount)}</td>
+        <td>${check.dueDate}</td>
+        <td><span class="status-chip ${statusClass}">${statusText}</span></td>
+        <td class="action-btn">
+          <button class="btn-danger" aria-label="حذف چک" data-index="${i}">حذف</button>
+        </td>
+      `;
+      checkListBody.appendChild(tr);
+    });
+  }
+  checkForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const payee = document.getElementById('check-payee').value.trim();
+    const amount = parseFloat(document.getElementById('check-amount').value);
+    const dueDate = document.getElementById('check-due-date').value;
+    const status = document.getElementById('check-status').value;
+    if(!payee || isNaN(amount) || amount < 0 || !dueDate || !status){
+      alert('لطفاً همه فیلدها را به درستی پر کنید.');
+      return;
+    }
+    checks.push({id: Date.now(), payee, amount, dueDate, status});
+    saveData('checks', checks);
+    renderChecks();
+    checkForm.reset();
+    document.getElementById('check-due-date').value = new Date().toISOString().slice(0,10);
+    alert('چک با موفقیت ثبت شد!');
+  });
+  checkListBody.addEventListener('click', e => {
+    if(e.target.matches('button.btn-danger')){
+      const idx = parseInt(e.target.getAttribute('data-index'),10);
+      if(confirm('آیا مایلید این چک حذف شود؟')){
+        checks.splice(idx,1);
+        saveData('checks', checks);
+        renderChecks();
+      }
+    }
+  });
+
+  // Customers & Suppliers (unchanged)
   let custSupList = loadData('customersSuppliers');
   const csForm = document.getElementById('form-customer-supplier');
   const csListBody = document.getElementById('cs-list');
@@ -895,6 +1244,11 @@ td.action-btn {
         debt += inv.total;
       }
     });
+    purchaseInvoices.forEach(inv => {
+      if(inv.supplier === account.name){
+        debt += inv.total;
+      }
+    });
     return debt;
   }
   function computeCredit(account) {
@@ -930,19 +1284,24 @@ td.action-btn {
     }
     const paidInvs = invoices.filter(i => i.client === account.name && i.status === 'paid');
     const unpaidInvs = invoices.filter(i => i.client === account.name && i.status !== 'paid');
+    const purchaseInvs = purchaseInvoices.filter(i => i.supplier === account.name);
     let html = `<h4>مشخصات ${account.type === 'customer' ? 'مشتری' : 'تامین‌کننده'}: ${account.name}</h4>`;
-    html += `<div><strong>فاکتورهای پرداخت شده (${paidInvs.length}):</strong></div>`;
+    html += `<div><strong>فاکتورهای فروش پرداخت شده (${paidInvs.length}):</strong></div>`;
     if(paidInvs.length > 0){
       html += `<ul>${paidInvs.map(i => `<li>${i.date} - ${formatCurrency(i.total)}</li>`).join('')}</ul>`;
-    } else html += `<p>هیچ فاکتور پرداخت شده‌ای وجود ندارد.</p>`;
-    html += `<div><strong>فاکتورهای معلق و دیر پرداخت شده (${unpaidInvs.length}):</strong></div>`;
+    } else html += `<p>هیچ فاکتور فروش پرداخت شده‌ای وجود ندارد.</p>`;
+    html += `<div><strong>فاکتورهای فروش معلق و دیر پرداخت شده (${unpaidInvs.length}):</strong></div>`;
     if(unpaidInvs.length > 0){
       html += `<ul>${unpaidInvs.map(i => `<li>${i.date} - ${formatCurrency(i.total)} - وضعیت: ${i.status === 'pending' ? 'معلق' : 'دیر پرداخت شده'}</li>`).join('')}</ul>`;
-    } else html += `<p>هیچ فاکتور معلق یا دیر پرداخت شده‌ای وجود ندارد.</p>`;
+    } else html += `<p>هیچ فاکتور فروش معلق یا دیر پرداخت شده‌ای وجود ندارد.</p>`;
+    html += `<div><strong>فاکتورهای خرید (${purchaseInvs.length}):</strong></div>`;
+    if(purchaseInvs.length > 0){
+      html += `<ul>${purchaseInvs.map(i => `<li>${i.date} - ${formatCurrency(i.total)}</li>`).join('')}</ul>`;
+    } else html += `<p>هیچ فاکتور خریدی وجود ندارد.</p>`;
     csDetailsDiv.innerHTML = html;
   }
 
-  // Inventory Management
+  // Inventory Management (unchanged)
   let inventoryList = loadData('inventory');
   const invForm = document.getElementById('form-inventory');
   const invListBody = document.getElementById('inventory-list');
@@ -1001,7 +1360,7 @@ td.action-btn {
     }
   });
 
-  // Returns Management
+  // Returns Management (unchanged)
   let returnsList = loadData('returns');
   const returnsForm = document.getElementById('form-returns');
   const returnsListBody = document.getElementById('returns-list');
@@ -1091,6 +1450,7 @@ td.action-btn {
   // Reports and Analytics
   let profitLossChart = null, cashFlowChart = null;
   function renderReports(){
+    // سود و زیان خالص شامل درآمد، هزینه، فاکتور خرید و مرجوعی
     const incomes = transactions.filter(t => t.type === 'income');
     const expensesT = transactions.filter(t => t.type === 'expense');
     const profitLossData = Array(12).fill(0);
@@ -1109,6 +1469,13 @@ td.action-btn {
       const d = new Date(t.date);
       if(d.getFullYear() === (new Date()).getFullYear()){
         profitLossData[d.getMonth()] -= t.amount;
+      }
+    });
+
+    purchaseInvoices.forEach(inv => {
+      const d = new Date(inv.date);
+      if(d.getFullYear() === (new Date()).getFullYear()){
+        profitLossData[d.getMonth()] -= inv.total;
       }
     });
 
@@ -1163,12 +1530,15 @@ td.action-btn {
   function init(){
     document.getElementById('ie-date').value = new Date().toISOString().slice(0,10);
     document.getElementById('invoice-date').value = new Date().toISOString().slice(0,10);
+    document.getElementById('purchase-invoice-date').value = new Date().toISOString().slice(0,10);
     setReturnFormDateToday();
-
     renderTransactions();
     updateDashboard();
     renderInvoiceItems();
     renderInvoicesList();
+    renderPurchaseInvoiceItems();
+    renderPurchaseInvoiceList();
+    renderChecks();
     renderCSList();
     renderInventory();
     renderReturnsList();
@@ -1179,4 +1549,3 @@ td.action-btn {
 </script>
 </body>
 </html>
-
