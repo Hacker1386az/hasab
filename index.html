@@ -179,20 +179,6 @@ td.action-btn {
   padding: 0.3rem 0.8rem;
   font-weight: 700;
 }
-.btn-info {
-  background: #2196f3; /* Blue */
-  color: white;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-  padding: 0.3rem 0.8rem;
-  font-weight: 700;
-  transition: background-color 0.3s ease;
-}
-.btn-info:hover {
-  background: #1976d2;
-  outline: none;
-}
 .status-chip {
   padding: 0.25rem 0.8rem;
   border-radius: 20px;
@@ -211,13 +197,6 @@ td.action-btn {
 .status-overdue {
   background-color: var(--danger-color);
 }
-.status-cleared {
-    background-color: var(--success-color);
-}
-.status-bounced {
-    background-color: var(--danger-color);
-}
-
 
 .flex-row {
   display: flex;
@@ -255,27 +234,11 @@ td.action-btn {
   font-weight: 700;
   text-align: center;
   user-select: none;
-  position: fixed; /* Fixed position */
-  top: 20px; /* 20px from the top */
-  left: 50%; /* Center horizontally */
-  transform: translateX(-50%); /* Adjust for exact centering */
-  z-index: 10000; /* High z-index to be on top of everything */
-  min-width: 250px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  animation: fadeInOut 4s forwards; /* Animation for fade in/out */
 }
 
 .error-message {
   background: var(--danger-color);
 }
-
-@keyframes fadeInOut {
-    0% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
-    10% { opacity: 1; transform: translateX(-50%) translateY(0); }
-    90% { opacity: 1; transform: translateX(-50%) translateY(0); }
-    100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
-}
-
 
 @media (max-width: 820px) {
   .flex-row {
@@ -287,98 +250,26 @@ td.action-btn {
 }
 .chart-container {
   max-width: 700px;
-  margin: 1rem auto 2rem; /* Added auto for horizontal centering */
-}
-
-/* Modal Styles */
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1000; /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  padding-top: 60px;
-}
-.modal-content {
-  background-color: #fefefe;
-  margin: 5% auto; /* 15% from the top and centered */
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%; /* Could be more or less, depending on screen size */
-  max-width: 700px;
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-  position: relative;
-  font-family: var(--font-family);
-  direction: rtl; /* Ensure RTL for modal content */
-}
-.close-button {
-  color: #aaa;
-  float: left; /* Aligns to the left in RTL */
-  font-size: 28px;
-  font-weight: bold;
-  cursor: pointer;
-}
-.close-button:hover,
-.close-button:focus {
-  color: black;
-  text-decoration: none;
-}
-.modal-content h3 {
-  color: var(--primary-color);
-  margin-top: 0;
-  margin-bottom: 1rem;
-  border-bottom: 2px solid var(--accent-color);
-  padding-bottom: 0.5rem;
-}
-.modal-content table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 1rem;
-}
-.modal-content th, .modal-content td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: center;
-  font-size: 0.9rem;
-}
-.modal-content th {
-  background-color: var(--secondary-color);
-  color: white;
-}
-.modal-footer {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 1.5rem;
-}
-.modal-footer button {
-    margin-left: 10px;
+  margin: 1rem 0 2rem;
 }
 </style>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://unpkg.com/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.js"></script>
-
 </head>
 <body>
 <header>سامانه حسابداری پیشرفته</header>
 <nav role="tablist" aria-label="ناوبری سایت حسابداری">
   <button role="tab" aria-selected="true" aria-controls="tab-dashboard" id="tabbtn-dashboard" class="active">داشبورد</button>
   <button role="tab" aria-selected="false" aria-controls="tab-income-expense" id="tabbtn-income-expense">درآمد و هزینه</button>
-  <button role="tab" aria-selected="false" aria-controls="tab-invoices" id="tabbtn-invoices">فاکتورها (فروش)</button>
+  <button role="tab" aria-selected="false" aria-controls="tab-invoices" id="tabbtn-invoices">فاکتورها</button>
   <button role="tab" aria-selected="false" aria-controls="tab-purchase-invoices" id="tabbtn-purchase-invoices">فاکتور خرید</button>
   <button role="tab" aria-selected="false" aria-controls="tab-checks" id="tabbtn-checks">چک‌ها</button>
   <button role="tab" aria-selected="false" aria-controls="tab-customers-suppliers" id="tabbtn-cust-sup">مشتریان و تامین‌کنندگان</button>
   <button role="tab" aria-selected="false" aria-controls="tab-inventory" id="tabbtn-inventory">مدیریت موجودی</button>
   <button role="tab" aria-selected="false" aria-controls="tab-returns" id="tabbtn-returns">کالاهای مرجوعی</button>
-  <button role="tab" aria-selected="false" aria-controls="tab-reports" id="tabbtn-reports">گزارش‌ها</button>
+  <button role="tab" aria-selected="false" aria-controls="tab-reports" id="tabbtn-reports">  </button>
 </nav>
 
 <main>
+  <!-- Dashboard -->
   <section id="tab-dashboard" role="tabpanel" aria-labelledby="tabbtn-dashboard" class="active">
     <h2>داشبورد مالی</h2>
     <div class="flex-row" style="gap:3rem; max-width:700px; margin-bottom:2rem;">
@@ -394,6 +285,7 @@ td.action-btn {
     </div>
   </section>
 
+  <!-- Income & Expense Manager -->
   <section id="tab-income-expense" role="tabpanel" aria-labelledby="tabbtn-income-expense">
     <h2>ثبت درآمد و هزینه</h2>
     <form id="form-income-expense">
@@ -436,14 +328,14 @@ td.action-btn {
     </div>
   </section>
 
+  <!-- Invoices (Sales) -->
   <section id="tab-invoices" role="tabpanel" aria-labelledby="tabbtn-invoices">
     <h2>مدیریت فاکتورها (فروش)</h2>
     <form id="form-invoice" style="max-width:800px;">
       <div class="flex-row">
         <div class="flex-grow">
           <label for="invoice-client">نام مشتری</label>
-          <input type="text" id="invoice-client" list="customer-names" required placeholder="مثال: شرکت نمونه" />
-          <datalist id="customer-names"></datalist>
+          <input type="text" id="invoice-client" required placeholder="مثال: شرکت نمونه" />
         </div>
         <div class="flex-grow">
           <label for="invoice-date">تاریخ</label>
@@ -497,14 +389,14 @@ td.action-btn {
     <button id="btn-send-invoices" class="btn-primary" style="margin-top:1rem;">ارسال فاکتورهای انتخاب شده (شبیه‌سازی)</button>
   </section>
 
+  <!-- Purchase Invoices -->
   <section id="tab-purchase-invoices" role="tabpanel" aria-labelledby="tabbtn-purchase-invoices">
     <h2>مدیریت فاکتورهای خرید</h2>
     <form id="form-purchase-invoice" style="max-width:800px;">
       <div class="flex-row">
         <div class="flex-grow">
           <label for="purchase-invoice-supplier">نام تامین‌کننده</label>
-          <input type="text" id="purchase-invoice-supplier" list="supplier-names" required placeholder="مثال: تامین‌کننده نمونه" />
-          <datalist id="supplier-names"></datalist>
+          <input type="text" id="purchase-invoice-supplier" required placeholder="مثال: تامین‌کننده نمونه" />
         </div>
         <div class="flex-grow">
           <label for="purchase-invoice-date">تاریخ</label>
@@ -545,6 +437,7 @@ td.action-btn {
     </div>
   </section>
 
+  <!-- Checks -->
   <section id="tab-checks" role="tabpanel" aria-labelledby="tabbtn-checks">
     <h2>مدیریت چک‌ها</h2>
     <form id="form-check" style="max-width:700px;">
@@ -587,41 +480,42 @@ td.action-btn {
     </div>
   </section>
 
-
-<section id="tab-customers-suppliers" role="tabpanel" aria-labelledby="tabbtn-cust-sup">
-  <h2>مشتریان و تامین‌کنندگان</h2>
-  <form id="form-customer-supplier" style="max-width:600px;">
-    <div class="flex-row">
-      <div class="flex-grow">
-        <label for="cs-name">نام</label>
-        <input type="text" id="cs-name" required placeholder="نام مشتری یا تامین‌کننده" />
+<!-- Customers & Suppliers -->
+  <section id="tab-customers-suppliers" role="tabpanel" aria-labelledby="tabbtn-cust-sup">
+    <h2>مشتریان و تامین‌کنندگان</h2>
+    <form id="form-customer-supplier" style="max-width:600px;">
+      <div class="flex-row">
+        <div class="flex-grow">
+          <label for="cs-name">نام</label>
+          <input type="text" id="cs-name" required placeholder="نام مشتری یا تامین‌کننده" />
+        </div>
+        <div class="flex-grow">
+          <label for="cs-type">نوع حساب</label>
+          <select id="cs-type" required>
+            <option value="">انتخاب کنید</option>
+            <option value="customer">مشتری</option>
+            <option value="supplier">تامین‌کننده</option>
+          </select>
+        </div>
       </div>
-      <div class="flex-grow">
-        <label for="cs-type">نوع حساب</label>
-        <select id="cs-type" required>
-          <option value="">انتخاب کنید</option>
-          <option value="customer">مشتری</option>
-          <option value="supplier">تامین‌کننده</option>
-        </select>
-      </div>
+      <button type="submit" class="btn-primary">ذخیره حساب</button>
+    </form>
+    <h3>لیست حساب‌ها</h3>
+    <div class="table-scroll" style="max-height:350px; overflow-y:auto;">
+      <table aria-label="لیست حساب‌های مشتریان و تامین‌کنندگان">
+        <thead>
+          <tr>
+            <th>#</th><th>نام</th><th>نوع</th><th>بدهکار</th><th>بستانکار</th><th>عملیات</th>
+          </tr>
+        </thead>
+        <tbody id="cs-list"></tbody>
+      </table>
     </div>
-    <button type="submit" class="btn-primary">ذخیره حساب</button>
-  </form>
-  <h3>لیست حساب‌ها</h3>
-  <div class="table-scroll" style="max-height:350px; overflow-y:auto;">
-    <table aria-label="لیست حساب‌های مشتریان و تامین‌کنندگان">
-      <thead>
-        <tr>
-          <th>#</th><th>نام</th><th>نوع</th><th>بدهکار</th><th>بستانکار</th><th>عملیات</th>
-        </tr>
-      </thead>
-      <tbody id="cs-list"></tbody>
-    </table>
-  </div>
-  <h3 style="margin-top:2rem;">جزئیات مالی حساب انتخاب شده</h3>
-  <div id="cs-details" style="max-width:800px; margin-top:1rem;"></div>
-</section>
- 
+    <h3 style="margin-top:2rem;">جزئیات مالی حساب انتخاب شده</h3>
+    <div id="cs-details" style="max-width:800px; margin-top:1rem;"></div>
+  </section>
+
+  <!-- Inventory -->
   <section id="tab-inventory" role="tabpanel" aria-labelledby="tabbtn-inventory">
     <h2>مدیریت موجودی کالاها و خدمات</h2>
     <form id="form-inventory" style="max-width:700px;">
@@ -648,8 +542,7 @@ td.action-btn {
     </div>
   </section>
 
-
-  
+  <!-- Returns -->
   <section id="tab-returns" role="tabpanel" aria-labelledby="tabbtn-returns">
     <h2>کالاهای مرجوعی</h2>
     <form id="form-returns" style="max-width:700px;">
@@ -692,6 +585,7 @@ td.action-btn {
     </div>
   </section>
 
+  <!-- Reports & Analytics -->
   <section id="tab-reports" role="tabpanel" aria-labelledby="tabbtn-reports">
     <h2>گزارش‌ها و تحلیل‌ها</h2>
     <div class="chart-container">
@@ -703,1428 +597,957 @@ td.action-btn {
   </section>
 </main>
 
-<div id="invoiceDetailsModal" class="modal">
-  <div class="modal-content">
-    <span class="close-button">&times;</span>
-    <h3 id="modal-invoice-title"></h3>
-    <p><strong>مشتری/تامین‌کننده:</strong> <span id="modal-invoice-party"></span></p>
-    <p><strong>تاریخ:</strong> <span id="modal-invoice-date"></span></p>
-    <p id="modal-invoice-status-row"><strong>وضعیت:</strong> <span id="modal-invoice-status" class="status-chip"></span></p>
-    <h4>اقلام:</h4>
-    <div class="table-scroll" style="max-height: 250px; overflow-y: auto;">
-        <table id="modal-invoice-items-table">
-            <thead>
-                <tr>
-                    <th>نام کالا/خدمت</th>
-                    <th>تعداد</th>
-                    <th>قیمت واحد</th>
-                    <th>تخفیف واحد</th>
-                    <th>جمع</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-    </div>
-    <div style="text-align: left; margin-top: 1rem; font-weight: bold;">
-        <p>جمع کل بدون تخفیف: <span id="modal-invoice-subtotal"></span></p>
-        <p id="modal-invoice-discount-row">تخفیف کل: <span id="modal-invoice-discount"></span></p>
-        <p>جمع کل فاکتور: <span id="modal-invoice-total"></span></p>
-    </div>
-    <div class="modal-footer">
-        <button id="modal-pay-button" class="btn-primary" style="display:none;">پرداخت این فاکتور (شبیه‌سازی)</button>
-        <button id="modal-receive-button" class="btn-primary" style="display:none;">دریافت مبلغ این فاکتور (شبیه‌سازی)</button>
-    </div>
-  </div>
-</div>
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-// Base64 encoded Vazirmatn font (for jsPDF) - IMPORTANT: For a production environment, host this font yourself.
-// This is a minimal subset for demonstration. For full font, you'd embed a larger file.
-// I've included a more robust Base64 string that includes more of the font for better rendering.
-const VAZIRMATN_NORMAL_BASE64 = `AAEAAAASAQAAAAAAAAAAAABfAFQAVwBYAFsAYQBkAGwAcQB0AHwAgACCAIIAiQCNAJIAmgChAKgAsAC5AMEAyADKANIA5wDqAPQA+AEBAQUBDgERARQBGwEjAScBLAEwATEBNgE8AUQAQgFFAUcBSgFTAVQBVwFcAWEBYgFlAWgBbwF+AX8BgAGCAYQBhQGIAY0BjgGQAZIBmAGhAaoBsAG1AbkBvgHBAcwB0AHXAd4B3wHgAecB7gHxAfQB+wH/AgECBAIMAg4CDwISAhcCGgIhAigCJwIpAiwCMAIwAjICNwI+AkMCRAJJAlICVwJfAmECYgJjAmUCbAJrAmwCcAJ0AnUCeAJ6AnwCfQJ+Cf8CgAJ0Am0CggKEAoYChwKJApoClQKbAqcCoAKhAqICpwKnAqgCrAKuArACtAK3ArwCyALMAswC1ALaAtwDCAOUA6wDqAOwA7wD/AQsBBgEIAQsBCAELAQgBAwELAQQBCQENAQwBCwELAQsBCwEMAQwBCwECAQMCAgIDAgQCBQIHAggCCQIKAgwCDQIOAg8CEAESABEAEgATABQAFQAWABcAGAAZABoAGwAcAB0AHgAfACAAIQAiACMAJAAlACYAJwAoAikAKgArACwALQAfgB+AAEAFAEAAwAAUAAIAAEAAQAABQAAgAACAAMAAQAAAAMAAQAAAAEAAAEAIAAHAAYAAgAAAEAAQAEAAkAAQAACQAAAEABAAQAAgABAAEAAAIAAEABAAAAAACAAAAAAAAAIAAAAEAQAAAECAAAAAQDAAAAQRAAAAEUQAAABTAAAAE0gAAABSAAAAE1AAAABSAAAAE1kAAABXAAAAFdoAAABaAAAAWxgAAABbAAAAXWQAAABfAAAAX4AAAABhAAAAX4AAAABiAAAAX4AAAABjAAAAZgAAAGgAAABpAAAAaiAAAGwAAABxAAAAc4AAAHUAAAB3AAAAeAAAAHoAAAB7AAAAfAAAAIIAAACGAAAAigAAAI0AAACSAAAAmgAAAKEAACkAKgAAAKgAAACyAAAAugAAALsAAAC+AAAAwAAAAHQAAAB0AAAAAQAAAAAAAQAAAAAAAAAAAAAABQAAAEAAAIABAAABgAEAAAIAAgACAAIAAwAEAAQAAAYAAgABAAQAFAAgAAEAEQARAAIABwANABIAEQAEAAQAFAAMAAQAAAMAAQAAACQAAAEAABAAAAABAAYAAQAAAAAAAAAAAAMAAQAAAAEAAAACQAAABQAIAABAAAEABQAAIAABAAQAAQAAAEAAQAEAAEAAAEAAgABAAEAAAIAAgAAAEAAAEAAIAABAAAAAwAAAEAAQAAAAAAgAAAAAAAAAAAAAAAgAACAAIAAAAEAAgABAAAAAAYAAgABAAAEAAEAAAAAAAEAAQAAAAAACAAAAAAAAAAAAAAABwAIABAAEAAgAAABQAAQAAACQAAQAAIAAgACAAIAAgACAAIAAgACAAIAAgAAAEAAEAAAQAFAAIABAAAAAQACAAIAAAAEAAAAAwAAAEAAAAMAAAEAAQABAAAAAgAEAAAIAAEAAgAAAAYAAAAQAgAAAAMCAAAAQSAAAABRAAAAEUAAAAAUAAAAEgAAABMIAAAAUgAAAEhAAAAAUgAAAF0AAAAAF4AAAABjAAAAagAAAHQAAAB5AAAAfgAAAL4AAADCAAADXwAAAPUAAAD4AAAAAQAAAQAAAAEAAADuAAAA8AAAAQAAAAAAAAAAAIAAAAEAAQAAAAAAAAAACAAEAAAAAAAEAAQAAAAAAQAAAAAAAAAAAAQAAAEAAAAAAAAAABwEAAQAAAAAAAgAFAAEAAAAAAgAIAAEAAAAAAwAFAAEAAAAAAwAIAAEAAAAABAAGAAEAAAAABAAMAAMAAAAABAANAAEAAAAABQAGAAEAAAAABQAMAAEAAAAABgAGAAEAAAAABgAMAAEAAAAABwAHAAEAAAAABwAMAAEAAAAACAAGAAEAAAAACAAMAAEAAAAACQAHAAEAAAAACQAMAAEAAAAACgAGAAEAAAAACgAMAAEAAAAACwAGAAEAAAAACwALAAEAAAAADAAGAAEAAAAADAAKAAEAAAAADQAGAAEAAAAADQAKAAEAAAAADgAKAAEAAAAADgAQAAEAAAAADwAGAAEAAAAADwAIAAEAAAAAEAAJAAEAAAAAEQAHAAEAAAASAAgAAQAAAAASAAoAAQAAAAATAAsAAQAAAAAUAAgAAQAAAAAUAAoAAQAAAAAVAAsAAQAAAAAVAAgAAQAAAAAWAAoAAQAAAAAWAAQAAQAAAAAXAAMAAQAAAAAXAAUAAQAAAAAYAAMAAQAAAAAYAAQAAQAAAAAZAAEAAQAAAAAZAAUAAQAAAAAaAAEAAQAAAAAaAAQAAQAAAAAbAAEAAQAAAAAbAAQAAQAAAAAcAAEAAQAAAAAcAAEAAQAAAAAdAAEAAQAAAAAdAAEAAQAAAAAeAAEAAQAAAAAeAAEAAQAAAAAfAAEAAQAAAAAfAAEAAQAAAAAgAAEAAQAAAAAgAAEAAQAAAAAhAAEAAQAAAAAhAAEAAQAAAAAiAAEAAQAAAAAiAAEAAQAAAAAjAAEAAQAAAAAjAAEAAQAAAAAkAAEAAQAAAAAkAAEAAQAAAAAlAAEAAQAAAAAlAAEAAQAAAAAmAAEAAQAAAAAmAAEAAQAAAAAnAAEAAQAAAAAnAAEAAQAAAAAoAAEAAQAAAAAoAAEAAQAAAAApAAEAAQAAAAApAAEAAQAAAAAqAAEAAQAAAAAqAAEAAQAAAAArAAEAAQAAAAArAAEAAQAAAAAsAAEAAQAAAAAsAAEAAQAAAAAtAAEAAQAAAAAtAAEAAQAAAAAuAAEAAQAAAAAuAAEAAQAAAAAvAAEAAQAAAAAvAAEAAQAAAAAwAAEAAQAAAAAwAAEAAQAAAAAxAAEAAQAAAAAxAAEAAQAAAAAyAAEAAQAAAAAyAAEAAQAAAAAzAAEAAQAAAAAzAAEAAQAAAAA0AAEAAQAAAAA0AAEAAQAAAAA1AAEAAQAAAAA1AAEAAQAAAAA2AAEAAQAAAAA2AAEAAQAAAAA3AAEAAQAAAAA3AAEAAQAAAAA4AAEAAQAAAAA4AAEAAQAAAAA5AAEAAQAAAAA5AAEAAQAAAAA6AAEAAQAAAAA6AAEAAQAAAAA7AAEAAQAAAAA7AAEAAQAAAAA8AAEAAQAAAAA8AAEAAQAAAAA9AAEAAQAAAAA9AAEAAQAAAAA+AAEAAQAAAAA+AAEAAQAAAAA/AAEAAQAAAAA/AAEAAQAAAAAQAQAEAAAAARABAAAEAAAAASABAAAEAAAAATABAAAEAAAAAUABAAAEAAAAAVABAAAEAAAAAWABAAAEAAAAAXABAAAEAAAAAYABAAAEAAAAAZABAAAEAAAAAaABAAAEAAAAAbABAAAEAAAAAcABAAAEAAAAAdABAAAEAAAAAeABAAAEAAAAAfABAAAEAAAAAgABAAAEAAAAAhABAAAEAAAAAiABAAAEAAAAAjABAAAEAAAAAkABAAAEAAAAAlABAAAEAAAAAmABAAAEAAAAAnABAAAEAAAAAoABAAAEAAAAApABAAAEAAAAAqABAAAEAAAAArABAAAEAAAAAsABAAAEAAAAAtABAAAEAAAAAuABAAAEAAAAAvABAAAEAAAAAwABAAAEAAAAAxABAAAEAAAAAyABAAAEAAAAAzABAAAEAAAAA0ABAAAEAAAAA1ABAAAEAAAAA2ABAAAEAAAAA3ABAAAEAAAAA4ABAAAEAAAAA5ABAAAEAAAAA6ABAAAEAAAAA7ABAAAEAAAAA8ABAAAEAAAAA9ABAAAEAAAAA+ABAAAEAAAAA/ABAAAEAAAAAEgQACAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQABAAAABIQAAIAIAAAEAAAEAQAAAPEAQAAASgAAAAIAAAAEAAAAAQAAAASgAAAEIAAAAFgAAAAAAAAAAOIAAAAAAAAAAAAAAAAAA4AEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAEAAAAAAAAAAAAAAAEAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAABgAEAAAIAAAAEAEAAAAAAAAAAAAAABAAADgAUAAwACAAUACQAEAAEAAAEAAwABAAIAAAAAAAAAAAAAAgAAAEAAAEAAAEAAAEAAAEAAAABAAIAAwAEAAEAAQAAAgAEAAEAAQABAAQAAgABAAUAAQAAAwAEAAIAAwACAAMAAQAAAQAAAEAAAEAAAgABAAQAAQAAAEAAAEAAAEAAAUAAQAAAAAAAIAAAAAAAAUAAAEAAAEAAgAEAAEAAgAAAEAAAEAAAEAAAABAAIAAwAEAAEAAgAEAAIAAAAAAAMAAQAAAgAEAAEAAQAAAEAAAEAAAQAAAAABAAIAAwAEAAEAAQAAAgAEAAEAAQAAAAIAAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAAAEAA
-`;
+(() => {
+  const STORAGE_KEYS = {
+    transactions: 'accApp_transactions',
+    invoices: 'accApp_invoices',
+    purchaseInvoices: 'accApp_purchaseInvoices',
+    customersSuppliers: 'accApp_customersSuppliers',
+    inventory: 'accApp_inventory',
+    returns: 'accApp_returns',
+    checks: 'accApp_checks'
+  };
 
-// Initialize jsPDF outside any function to ensure it's loaded once
-window.jsPDF = window.jspdf.jsPDF; // Correctly get jsPDF from the UMD bundle
-let doc = new jsPDF(); // Create a new doc instance
+  const tabButtons = document.querySelectorAll('nav button');
+  const sections = document.querySelectorAll('main section');
 
-// Add Vazirmatn font to jsPDF
-// The 'addFileToVFS' and 'addFont' methods are crucial for embedding fonts.
-// Ensure this is done before any text is added with the font.
-doc.addFileToVFS('Vazirmatn-Regular.ttf', VAZIRMATN_NORMAL_BASE64);
-doc.addFont('Vazirmatn-Regular.ttf', 'Vazirmatn', 'normal');
-
-// Global variables for Chart instances
-let incomeExpenseChart = null;
-let liquidityChart = null;
-let profitLossChart = null;
-let cashFlowChart = null;
-
-
-// --- Data Storage ---
-let transactions = loadData('transactions') || [];
-let salesInvoices = loadData('salesInvoices') || [];
-let purchaseInvoices = loadData('purchaseInvoices') || [];
-let checks = loadData('checks') || [];
-let customersSuppliers = loadData('customersSuppliers') || [];
-let inventoryItems = loadData('inventoryItems') || [];
-let returns = loadData('returns') || [];
-
-function saveData(key, data) {
-  localStorage.setItem(key, JSON.stringify(data));
-}
-
-function loadData(key) {
-  const data = localStorage.getItem(key);
-  return data ? JSON.parse(data) : null;
-}
-
-// --- Helper Functions ---
-function formatCurrency(amount) {
-  // Ensure amount is a number before formatting
-  const numAmount = parseFloat(amount);
-  if (isNaN(numAmount)) {
-    return '0'; // Or handle error appropriately
+  function switchTab(e) {
+    const targetId = e.target.getAttribute('aria-controls');
+    tabButtons.forEach(btn => {
+      btn.classList.remove('active');
+      btn.setAttribute('aria-selected', 'false');
+    });
+    e.target.classList.add('active');
+    e.target.setAttribute('aria-selected', 'true');
+    sections.forEach(sec => {
+      sec.classList.remove('active');
+      if (sec.id === targetId) sec.classList.add('active');
+    });
+    if(targetId === 'tab-inventory'){
+      document.getElementById('form-inventory').reset();
+    } else if(targetId === 'tab-returns'){
+      document.getElementById('form-returns').reset();
+      setReturnFormDateToday();
+    } else if(targetId === 'tab-checks'){
+      document.getElementById('form-check').reset();
+      document.getElementById('check-due-date').value = new Date().toISOString().slice(0,10);
+    } else if(targetId === 'tab-purchase-invoices'){
+      document.getElementById('form-purchase-invoice').reset();
+      purchaseInvoiceItems = [{name:'', quantity:1, unitPrice:0}];
+      renderPurchaseInvoiceItems();
+      updatePurchaseInvoiceTotal();
+      document.getElementById('purchase-invoice-date').value = new Date().toISOString().slice(0,10);
+    }
   }
-  return new Intl.NumberFormat('fa-IR', { style: 'decimal' }).format(numAmount);
-}
+  tabButtons.forEach(btn => btn.addEventListener('click', switchTab));
 
-function showMessage(msg, type = 'success', duration = 3000) {
-  const messageDiv = document.createElement('div');
-  messageDiv.className = `message ${type === 'error' ? 'error-message' : ''}`;
-  messageDiv.textContent = msg;
-  document.body.appendChild(messageDiv);
-  setTimeout(() => {
-    messageDiv.remove();
-  }, duration);
-}
+  function formatCurrency(n) {
+    return n.toLocaleString('fa-IR') + ' تومان';
+  }
 
-// --- Tab Switching Logic ---
-const tabButtons = document.querySelectorAll('nav button');
-const sections = document.querySelectorAll('main section');
+  function loadData(key) {
+    const data = localStorage.getItem(STORAGE_KEYS[key]);
+    return data ? JSON.parse(data) : [];
+  }
+  function saveData(key, data) {
+    localStorage.setItem(STORAGE_KEYS[key], JSON.stringify(data));
+  }
 
-tabButtons.forEach(button => {
-  button.addEventListener('click', () => {
-    const targetId = button.id.replace('tabbtn-', 'tab-');
-    switchTab(targetId);
-  });
-});
+  // Transactions
+  let transactions = loadData('transactions');
+  const ieForm = document.getElementById('form-income-expense');
+  const ieListBody = document.getElementById('ie-transaction-list');
 
-function switchTab(targetId) {
-  sections.forEach(section => {
-    section.classList.remove('active');
-  });
-  tabButtons.forEach(button => {
-    button.classList.remove('active');
-    button.setAttribute('aria-selected', 'false');
-  });
-
-  document.getElementById(targetId).classList.add('active');
-  document.getElementById(targetId.replace('tab-', 'tabbtn-')).classList.add('active');
-  document.getElementById(targetId.replace('tab-', 'tabbtn-')).setAttribute('aria-selected', 'true');
-
-  // Update specific sections when their tab is clicked
-  if (targetId === 'tab-dashboard') {
-    updateDashboard();
-  } else if (targetId === 'tab-income-expense') {
+  function renderTransactions() {
+    ieListBody.innerHTML = '';
+    if (transactions.length === 0) {
+      const tr = document.createElement('tr');
+      const td = document.createElement('td');
+      td.colSpan = 6;
+      td.textContent = 'هیچ تراکنشی ثبت نشده است.';
+      td.style.textAlign = 'center';
+      tr.appendChild(td);
+      ieListBody.appendChild(tr);
+      return;
+    }
+    transactions.forEach((tx, i) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${i+1}</td>
+        <td>${tx.type === 'income' ? 'درآمد' : 'هزینه'}</td>
+        <td>${tx.title}</td>
+        <td style="color:${tx.type === 'income' ? 'var(--success-color)' : 'var(--danger-color)'}; font-weight:700;">
+          ${formatCurrency(tx.amount)}
+        </td>
+        <td>${tx.date}</td>
+        <td class="action-btn"><button class="btn-danger" aria-label="حذف تراکنش" data-index="${i}">حذف</button></td>
+      `;
+      ieListBody.appendChild(tr);
+    });
+  }
+  ieForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const type = document.getElementById('ie-type').value;
+    const title = document.getElementById('ie-title').value.trim();
+    const amount = parseFloat(document.getElementById('ie-amount').value);
+    const date = document.getElementById('ie-date').value;
+    if(!type || !title || isNaN(amount) || amount < 0 || !date){
+      alert('لطفاً همه فیلدها را به درستی پر کنید.');
+      return;
+    }
+    transactions.push({type, title, amount, date});
+    saveData('transactions', transactions);
     renderTransactions();
-  } else if (targetId === 'tab-invoices') {
-    renderSalesInvoices();
-    populateCustomerSupplierDatalists(); // Populate datalist for sales invoices
-  } else if (targetId === 'tab-purchase-invoices') {
-    renderPurchaseInvoices();
-    populateCustomerSupplierDatalists(); // Populate datalist for purchase invoices
-  } else if (targetId === 'tab-checks') {
+    updateDashboard();
+    ieForm.reset();
+    document.getElementById('ie-date').value = new Date().toISOString().slice(0,10);
+  });
+  ieListBody.addEventListener('click', e => {
+    if(e.target.matches('button.btn-danger')){
+      const idx = e.target.getAttribute('data-index');
+      if(confirm('آیا مطمئن هستید که می‌خواهید این تراکنش را حذف کنید؟')){
+        transactions.splice(idx, 1);
+        saveData('transactions', transactions);
+        renderTransactions();
+        updateDashboard();
+      }
+    }
+  });
+
+  // Dashboard
+  const dashTotalIncomeElem = document.getElementById('dashboard-total-income');
+  const dashTotalExpenseElem = document.getElementById('dashboard-total-expense');
+  const dashBalanceElem = document.getElementById('dashboard-balance');
+  let chartIncomeExpense = null, chartLiquidity = null;
+
+  function updateDashboard() {
+    // Income: incomes + returned items revenue
+    const totalIncome = transactions.filter(t => t.type === 'income').reduce((a,b) => a + b.amount, 0);
+    // Include purchase invoices as expenses
+    let totalPurchaseExpense = purchaseInvoices.reduce((sum, inv) => sum + inv.total, 0);
+    // You can decide if returns reduce expenses or increase income; here returns increase income already via transactions
+
+    // Expenses: expenses + purchases
+    const totalExpense = transactions.filter(t => t.type === 'expense').reduce((a,b) => a + b.amount, 0) + totalPurchaseExpense;
+
+    dashTotalIncomeElem.textContent = formatCurrency(totalIncome);
+    dashTotalExpenseElem.textContent = formatCurrency(totalExpense);
+    const balance = totalIncome - totalExpense;
+    dashBalanceElem.textContent = formatCurrency(balance);
+    dashBalanceElem.style.color = balance >= 0 ? 'var(--success-color)' : 'var(--danger-color)';
+
+    const monthlyIncome = Array(12).fill(0);
+    const monthlyExpense = Array(12).fill(0);
+    const now = new Date();
+    transactions.forEach(tx => {
+      const d = new Date(tx.date);
+      if(d.getFullYear() === now.getFullYear()){
+        const m = d.getMonth();
+        if(tx.type === 'income') monthlyIncome[m] += tx.amount;
+        else monthlyExpense[m] += tx.amount;
+      }
+    });
+    purchaseInvoices.forEach(inv => {
+      const d = new Date(inv.date);
+      if(d.getFullYear() === now.getFullYear()){
+        monthlyExpense[d.getMonth()] += inv.total;
+      }
+    });
+
+    if(chartIncomeExpense) chartIncomeExpense.destroy();
+    const ctx1 = document.getElementById('chart-income-expense').getContext('2d');
+    chartIncomeExpense = new Chart(ctx1, {
+      type: 'bar',
+      data: {
+        labels: ['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'],
+        datasets: [
+          {
+            label: 'درآمد',
+            data: monthlyIncome,
+            backgroundColor: 'rgba(46, 125, 50, 0.7)',
+          },
+          {
+            label: 'هزینه',
+            data: monthlyExpense,
+            backgroundColor: 'rgba(211, 47, 47, 0.7)',
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: { beginAtZero:true }
+        }
+      }
+    });
+
+    const liquidityDates = [];
+    const liquidityAmounts = [];
+    let running = 0;
+    const sortedTx = [...transactions].sort((a,b)=> new Date(a.date) - new Date(b.date));
+    sortedTx.forEach(tx => {
+      liquidityDates.push(tx.date);
+      running += tx.type === 'income' ? tx.amount : -tx.amount;
+      liquidityAmounts.push(running);
+    });
+    purchaseInvoices.forEach(inv => {
+      liquidityDates.push(inv.date);
+      running -= inv.total;
+      liquidityAmounts.push(running);
+    });
+    if(chartLiquidity) chartLiquidity.destroy();
+    const ctx2 = document.getElementById('chart-liquidity').getContext('2d');
+    chartLiquidity = new Chart(ctx2, {
+      type: 'line',
+      data: {
+        labels: liquidityDates,
+        datasets: [{
+          label: 'نقدینگی',
+          data: liquidityAmounts,
+          borderColor: 'rgba(75,108,183,0.9)',
+          fill: true,
+          backgroundColor: 'rgba(75,108,183,0.2)',
+          tension: 0.3
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: { beginAtZero: false }
+        }
+      }
+    });
+  }
+
+  // Invoice Management (Sales)
+  let invoices = loadData('invoices');
+  const invoiceForm = document.getElementById('form-invoice');
+  const invoiceItemsBody = document.getElementById('invoice-items-body');
+  const invoiceListBody = document.getElementById('invoice-list');
+  const invoiceTotalElem = document.getElementById('invoice-total');
+  const invoiceTotalBeforeDiscountElem = document.getElementById('invoice-total-before-discount');
+  const invoiceTotalDiscountInput = document.getElementById('invoice-total-discount');
+  const btnAddInvoiceItem = document.getElementById('btn-add-invoice-item');
+  const btnSendInvoices = document.getElementById('btn-send-invoices');
+  let invoiceItems = [{name:'', quantity:1, unitPrice:0, discount:0}];
+
+  function renderInvoiceItems() {
+    invoiceItemsBody.innerHTML = '';
+    invoiceItems.forEach((itm, idx) => {
+      const totalBeforeDiscount = (itm.quantity || 0) * (itm.unitPrice || 0);
+      const discount = itm.discount || 0;
+      const totalAfterDiscount = Math.max(0, totalBeforeDiscount - discount * (itm.quantity || 0));
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><input type="text" aria-label="نام کالا یا خدمت" value="${itm.name}" placeholder="نام کالا یا خدمت" required></td>
+        <td><input type="number" aria-label="تعداد" min="0" value="${itm.quantity}" required></td>
+        <td><input type="number" aria-label="قیمت واحد" min="0" value="${itm.unitPrice}" required></td>
+        <td><input type="number" aria-label="تخفیف واحد" min="0" value="${discount}" required></td>
+        <td>${formatCurrency(totalAfterDiscount)}</td>
+        <td class="action-btn"><button type="button" class="small-button" aria-label="حذف قلم">×</button></td>
+      `;
+      const inputs = tr.querySelectorAll('input');
+      inputs[0].addEventListener('input', e => {
+        invoiceItems[idx].name = e.target.value;
+      });
+      inputs[1].addEventListener('input', e => {
+        let v = parseInt(e.target.value);
+        if(isNaN(v) || v<0) v=0;
+        invoiceItems[idx].quantity = v;
+        renderInvoiceItems();
+        updateInvoiceTotal();
+      });
+      inputs[2].addEventListener('input', e => {
+        let v = parseFloat(e.target.value);
+        if(isNaN(v) || v<0) v=0;
+        invoiceItems[idx].unitPrice = v;
+        renderInvoiceItems();
+        updateInvoiceTotal();
+      });
+      inputs[3].addEventListener('input', e => {
+        let v = parseFloat(e.target.value);
+        if(isNaN(v) || v<0) v=0;
+        invoiceItems[idx].discount = v;
+        renderInvoiceItems();
+        updateInvoiceTotal();
+      });
+      const btnRemove = tr.querySelector('button');
+      btnRemove.onclick = () => {
+        invoiceItems.splice(idx, 1);
+        renderInvoiceItems();
+        updateInvoiceTotal();
+      };
+      invoiceItemsBody.appendChild(tr);
+    });
+  }
+  function updateInvoiceTotal() {
+    const totalBeforeDiscount = invoiceItems.reduce((sum,itm) => {
+      return sum + ((itm.quantity || 0) * (itm.unitPrice || 0));
+    }, 0);
+    const totalDiscount = invoiceItems.reduce((sum,itm) => {
+      return sum + ((itm.discount || 0) * (itm.quantity || 0));
+    }, 0);
+    const inputDiscount = parseFloat(invoiceTotalDiscountInput.value) || 0;
+    const totalAfterDiscount = Math.max(0, (totalBeforeDiscount - totalDiscount) - inputDiscount);
+
+    invoiceTotalBeforeDiscountElem.textContent = formatCurrency(totalBeforeDiscount);
+    invoiceTotalElem.textContent = formatCurrency(totalAfterDiscount);
+  }
+  invoiceTotalDiscountInput.addEventListener('input', () => {
+    let v = parseFloat(invoiceTotalDiscountInput.value);
+    if(isNaN(v) || v<0) v=0;
+    invoiceTotalDiscountInput.value = v;
+    updateInvoiceTotal();
+  });
+  btnAddInvoiceItem.onclick = () => {
+    invoiceItems.push({name:'',quantity:1,unitPrice:0,discount:0});
+    renderInvoiceItems();
+    updateInvoiceTotal();
+  };
+  invoiceForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const client = document.getElementById('invoice-client').value.trim();
+    const date = document.getElementById('invoice-date').value;
+    const status = document.getElementById('invoice-status').value;
+    if(!client || !date || !status){
+      alert('لطفاً همه فیلدها را پر کنید.');
+      return;
+    }
+    const validItems = invoiceItems.filter(i => i.name.trim() && i.quantity>0 && i.unitPrice>=0);
+    if(validItems.length===0){
+      alert('لطفاً حداقل یک قلم معتبر وارد کنید.');
+      return;
+    }
+    const totalBeforeDiscount = validItems.reduce((acc,itm)=> acc + itm.quantity*itm.unitPrice,0);
+    const totalDiscountItems = validItems.reduce((acc,itm) => acc + (itm.discount || 0) * itm.quantity,0);
+    const inputTotalDiscount = parseFloat(invoiceTotalDiscountInput.value) || 0;
+    const total = Math.max(0, (totalBeforeDiscount - totalDiscountItems) - inputTotalDiscount);
+    const invoice = {
+      id: Date.now(),
+      client,
+      date,
+      status,
+      items: validItems.map(i => ({...i})),
+      total,
+      totalDiscount: totalDiscountItems + inputTotalDiscount
+    };
+    invoices.push(invoice);
+    saveData('invoices', invoices);
+    renderInvoicesList();
+    invoiceForm.reset();
+    invoiceItems = [{name:'',quantity:1,unitPrice:0,discount:0}];
+    renderInvoiceItems();
+    invoiceTotalDiscountInput.value = 0;
+    updateInvoiceTotal();
+    alert('فاکتور با موفقیت ذخیره شد!');
+  });
+  function renderInvoicesList() {
+    invoiceListBody.innerHTML = '';
+    if(invoices.length === 0){
+      const tr = document.createElement('tr');
+      const td = document.createElement('td');
+      td.colSpan = 6;
+      td.style.textAlign = 'center';
+      td.textContent = 'هیچ فاکتوری ثبت نشده است.';
+      tr.appendChild(td);
+      invoiceListBody.appendChild(tr);
+      return;
+    }
+    invoices.forEach((inv,i) => {
+      const statusClass = inv.status==='paid' ? 'status-paid' : inv.status==='pending' ? 'status-pending' : 'status-overdue';
+      let statusText = inv.status==='paid' ? 'پرداخت شده' : inv.status==='pending' ? 'معلق' : 'دیر پرداخت شده';
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${i+1}</td>
+        <td>${inv.client}</td>
+        <td>${inv.date}</td>
+        <td style="font-weight:700;">${formatCurrency(inv.total)}</td>
+        <td><span class="status-chip ${statusClass}">${statusText}</span></td>
+        <td class="action-btn">
+          <button class="btn-danger" aria-label="حذف فاکتور" data-index="${i}">حذف</button>
+        </td>
+      `;
+      invoiceListBody.appendChild(tr);
+    });
+  }
+  invoiceListBody.addEventListener('click', e => {
+    if(e.target.matches('button.btn-danger')){
+      const idx = parseInt(e.target.getAttribute('data-index'),10);
+      if(confirm('آیا مایلید این فاکتور حذف شود؟')){
+        invoices.splice(idx,1);
+        saveData('invoices', invoices);
+        renderInvoicesList();
+      }
+    }
+  });
+  btnSendInvoices.onclick = () => {
+    const paidCount = invoices.filter(a=>a.status==='paid').length;
+    alert('امکان ارسال فاکتورها به صورت ایمیل در نسخه دمو فعلاً فعال نیست.\n\n' +
+      'تعداد فاکتورهای پرداخت شده: ' + paidCount);
+  };
+
+  // Purchase Invoice Management
+  let purchaseInvoices = loadData('purchaseInvoices');
+  const purchaseInvoiceForm = document.getElementById('form-purchase-invoice');
+  const purchaseInvoiceItemsBody = document.getElementById('purchase-invoice-items-body');
+  const purchaseInvoiceListBody = document.getElementById('purchase-invoice-list');
+  const purchaseInvoiceTotalElem = document.getElementById('purchase-invoice-total');
+  const btnAddPurchaseInvoiceItem = document.getElementById('btn-add-purchase-invoice-item');
+  let purchaseInvoiceItems = [{name:'', quantity:1, unitPrice:0}];
+
+  function renderPurchaseInvoiceItems() {
+    purchaseInvoiceItemsBody.innerHTML = '';
+    purchaseInvoiceItems.forEach((itm, idx) => {
+      const total = (itm.quantity || 0)*(itm.unitPrice || 0);
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><input type="text" aria-label="نام کالا یا خدمت خریداری شده" value="${itm.name}" placeholder="نام کالا یا خدمت" required></td>
+        <td><input type="number" aria-label="تعداد" min="0" value="${itm.quantity}" required></td>
+        <td><input type="number" aria-label="قیمت واحد" min="0" value="${itm.unitPrice}" required></td>
+        <td>${formatCurrency(total)}</td>
+        <td class="action-btn"><button type="button" class="small-button" aria-label="حذف قلم">×</button></td>
+      `;
+      const inputs = tr.querySelectorAll('input');
+      inputs[0].addEventListener('input', e => {
+        purchaseInvoiceItems[idx].name = e.target.value;
+      });
+      inputs[1].addEventListener('input', e => {
+        let v = parseInt(e.target.value);
+        if(isNaN(v) || v<0) v=0;
+        purchaseInvoiceItems[idx].quantity = v;
+        renderPurchaseInvoiceItems();
+        updatePurchaseInvoiceTotal();
+      });
+      inputs[2].addEventListener('input', e => {
+        let v = parseFloat(e.target.value);
+        if(isNaN(v) || v<0) v=0;
+        purchaseInvoiceItems[idx].unitPrice = v;
+        renderPurchaseInvoiceItems();
+        updatePurchaseInvoiceTotal();
+      });
+      const btnRemove = tr.querySelector('button');
+      btnRemove.onclick = () => {
+        purchaseInvoiceItems.splice(idx, 1);
+        renderPurchaseInvoiceItems();
+        updatePurchaseInvoiceTotal();
+      };
+      purchaseInvoiceItemsBody.appendChild(tr);
+    });
+  }
+  function updatePurchaseInvoiceTotal() {
+    const total = purchaseInvoiceItems.reduce((sum,itm) => {
+      return sum + (itm.quantity || 0)*(itm.unitPrice || 0);
+    }, 0);
+    purchaseInvoiceTotalElem.textContent = formatCurrency(total);
+  }
+  btnAddPurchaseInvoiceItem.onclick = () => {
+    purchaseInvoiceItems.push({name:'', quantity:1, unitPrice:0});
+    renderPurchaseInvoiceItems();
+    updatePurchaseInvoiceTotal();
+  };
+  purchaseInvoiceForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const supplier = document.getElementById('purchase-invoice-supplier').value.trim();
+    const date = document.getElementById('purchase-invoice-date').value;
+    if(!supplier || !date){
+      alert('لطفاً همه فیلدها را پر کنید.');
+      return;
+    }
+    const validItems = purchaseInvoiceItems.filter(i => i.name.trim() && i.quantity>0 && i.unitPrice>=0);
+    if(validItems.length===0){
+      alert('لطفاً حداقل یک قلم معتبر وارد کنید.');
+      return;
+    }
+    const total = validItems.reduce((acc,itm)=> acc + itm.quantity*itm.unitPrice,0);
+    const purchaseInvoice = {
+      id: Date.now(),
+      supplier,
+      date,
+      items: validItems,
+      total
+    };
+    purchaseInvoices.push(purchaseInvoice);
+    saveData('purchaseInvoices', purchaseInvoices);
+    renderPurchaseInvoiceList();
+    purchaseInvoiceForm.reset();
+    purchaseInvoiceItems = [{name:'', quantity:1, unitPrice:0}];
+    renderPurchaseInvoiceItems();
+    updatePurchaseInvoiceTotal();
+    alert('فاکتور خرید با موفقیت ذخیره شد!');
+  });
+  function renderPurchaseInvoiceList() {
+    purchaseInvoiceListBody.innerHTML = '';
+    if(purchaseInvoices.length === 0){
+      const tr = document.createElement('tr');
+      const td = document.createElement('td');
+      td.colSpan = 5;
+      td.style.textAlign = 'center';
+      td.textContent = 'هیچ فاکتور خریدی ثبت نشده است.';
+      tr.appendChild(td);
+      purchaseInvoiceListBody.appendChild(tr);
+      return;
+    }
+    purchaseInvoices.forEach((inv,i) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${i+1}</td>
+        <td>${inv.supplier}</td>
+        <td>${inv.date}</td>
+        <td style="font-weight:700;">${formatCurrency(inv.total)}</td>
+        <td class="action-btn">
+          <button class="btn-danger" aria-label="حذف فاکتور خرید" data-index="${i}">حذف</button>
+        </td>
+      `;
+      purchaseInvoiceListBody.appendChild(tr);
+    });
+  }
+  purchaseInvoiceListBody.addEventListener('click', e => {
+    if(e.target.matches('button.btn-danger')){
+      const idx = parseInt(e.target.getAttribute('data-index'),10);
+      if(confirm('آیا مایلید این فاکتور خرید حذف شود؟')){
+        purchaseInvoices.splice(idx,1);
+        saveData('purchaseInvoices', purchaseInvoices);
+        renderPurchaseInvoiceList();
+      }
+    }
+  });
+
+  // Checks Management
+  let checks = loadData('checks');
+  const checkForm = document.getElementById('form-check');
+  const checkListBody = document.getElementById('check-list');
+
+  function renderChecks() {
+    checkListBody.innerHTML = '';
+    if(checks.length === 0){
+      const tr = document.createElement('tr');
+      const td = document.createElement('td');
+      td.colSpan = 6;
+      td.style.textAlign = 'center';
+      td.textContent = 'هیچ چکی ثبت نشده است.';
+      tr.appendChild(td);
+      checkListBody.appendChild(tr);
+      return;
+    }
+    checks.forEach((check,i) => {
+      let statusClass = 'status-pending';
+      let statusText = '';
+      switch(check.status){
+        case 'pending': statusClass = 'status-pending'; statusText = 'معوقه'; break;
+        case 'cleared': statusClass = 'status-paid'; statusText = 'پرداخت شده'; break;
+        case 'bounced': statusClass = 'status-overdue'; statusText = 'برگشت خورده'; break;
+      }
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${i+1}</td>
+        <td>${check.payee}</td>
+        <td style="font-weight:700;">${formatCurrency(check.amount)}</td>
+        <td>${check.dueDate}</td>
+        <td><span class="status-chip ${statusClass}">${statusText}</span></td>
+        <td class="action-btn">
+          <button class="btn-danger" aria-label="حذف چک" data-index="${i}">حذف</button>
+        </td>
+      `;
+      checkListBody.appendChild(tr);
+    });
+  }
+  checkForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const payee = document.getElementById('check-payee').value.trim();
+    const amount = parseFloat(document.getElementById('check-amount').value);
+    const dueDate = document.getElementById('check-due-date').value;
+    const status = document.getElementById('check-status').value;
+    if(!payee || isNaN(amount) || amount < 0 || !dueDate || !status){
+      alert('لطفاً همه فیلدها را به درستی پر کنید.');
+      return;
+    }
+    checks.push({id: Date.now(), payee, amount, dueDate, status});
+    saveData('checks', checks);
     renderChecks();
-  } else if (targetId === 'tab-customers-suppliers') {
-    renderCustomersSuppliers();
-    document.getElementById('cs-details').innerHTML = ''; // Clear details when switching to main CS tab
-  } else if (targetId === 'tab-inventory') {
+    checkForm.reset();
+    document.getElementById('check-due-date').value = new Date().toISOString().slice(0,10);
+    alert('چک با موفقیت ثبت شد!');
+  });
+  checkListBody.addEventListener('click', e => {
+    if(e.target.matches('button.btn-danger')){
+      const idx = parseInt(e.target.getAttribute('data-index'),10);
+      if(confirm('آیا مایلید این چک حذف شود؟')){
+        checks.splice(idx,1);
+        saveData('checks', checks);
+        renderChecks();
+      }
+    }
+  });
+
+  // Customers & Suppliers (unchanged)
+  let custSupList = loadData('customersSuppliers');
+  const csForm = document.getElementById('form-customer-supplier');
+  const csListBody = document.getElementById('cs-list');
+  const csDetailsDiv = document.getElementById('cs-details');
+
+  csForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const name = document.getElementById('cs-name').value.trim();
+    const type = document.getElementById('cs-type').value;
+    if(!name || !type){
+      alert('لطفاً همه فیلدها را پر کنید.');
+      return;
+    }
+    if(custSupList.some(a=>a.name===name && a.type===type)){
+      alert('این حساب قبلاً ثبت شده است.');
+      return;
+    }
+    custSupList.push({id: Date.now(), name, type});
+    saveData('customersSuppliers', custSupList);
+    renderCSList();
+    csForm.reset();
+    alert('حساب با موفقیت ذخیره شد.');
+  });
+
+  function renderCSList(){
+    csListBody.innerHTML = '';
+    if(custSupList.length===0){
+      const tr = document.createElement('tr');
+      const td = document.createElement('td');
+      td.colSpan = 6;
+      td.style.textAlign = 'center';
+      td.textContent = 'هیچ حسابی ثبت نشده است.';
+      tr.appendChild(td);
+      csListBody.appendChild(tr);
+      csDetailsDiv.innerHTML = '';
+      return;
+    }
+    custSupList.forEach((acc,i) => {
+      const debt = computeDebt(acc);
+      const credit = computeCredit(acc);
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${i+1}</td>
+        <td>${acc.name}</td>
+        <td>${acc.type === 'customer' ? 'مشتری' : 'تامین‌کننده'}</td>
+        <td style="color:var(--danger-color); font-weight:700;">${formatCurrency(debt)}</td>
+        <td style="color:var(--success-color); font-weight:700;">${formatCurrency(credit)}</td>
+        <td class="action-btn">
+          <button class="btn-primary" aria-label="جزئیات حساب" data-id="${acc.id}">جزئیات</button>
+          <button class="btn-danger" aria-label="حذف حساب" data-id="${acc.id}">حذف</button>
+        </td>
+      `;
+      csListBody.appendChild(tr);
+    });
+  }
+  function computeDebt(account) {
+    let debt=0;
+    invoices.forEach(inv => {
+      if(inv.client===account.name && inv.status !== 'paid'){
+        debt += inv.total;
+      }
+    });
+    purchaseInvoices.forEach(inv => {
+      if(inv.supplier === account.name){
+        debt += inv.total;
+      }
+    });
+    return debt;
+  }
+  function computeCredit(account) {
+    let credit=0;
+    invoices.forEach(inv => {
+      if(inv.client===account.name && inv.status === 'paid'){
+        credit += inv.total;
+      }
+    });
+    return credit;
+  }
+  csListBody.addEventListener('click', e => {
+    if(e.target.matches('button.btn-primary')){
+      const id = parseInt(e.target.getAttribute('data-id'),10);
+      showAccountDetails(id);
+    }
+    else if(e.target.matches('button.btn-danger')){
+      const id = parseInt(e.target.getAttribute('data-id'),10);
+      if(confirm('آیا مایلید این حساب حذف شود؟ تمام فاکتورها و داده مرتبط حذف نخواهند شد.')){
+        custSupList = custSupList.filter(a => a.id !== id);
+        saveData('customersSuppliers', custSupList);
+        renderCSList();
+        csDetailsDiv.innerHTML = '';
+      }
+    }
+  });
+
+  function showAccountDetails(accountId){
+    const account = custSupList.find(a => a.id === accountId);
+    if(!account){
+      csDetailsDiv.innerHTML = '<p>حساب یافت نشد.</p>';
+      return;
+    }
+    const paidInvs = invoices.filter(i => i.client === account.name && i.status === 'paid');
+    const unpaidInvs = invoices.filter(i => i.client === account.name && i.status !== 'paid');
+    const purchaseInvs = purchaseInvoices.filter(i => i.supplier === account.name);
+    let html = `<h4>مشخصات ${account.type === 'customer' ? 'مشتری' : 'تامین‌کننده'}: ${account.name}</h4>`;
+    html += `<div><strong>فاکتورهای فروش پرداخت شده (${paidInvs.length}):</strong></div>`;
+    if(paidInvs.length > 0){
+      html += `<ul>${paidInvs.map(i => `<li>${i.date} - ${formatCurrency(i.total)}</li>`).join('')}</ul>`;
+    } else html += `<p>هیچ فاکتور فروش پرداخت شده‌ای وجود ندارد.</p>`;
+    html += `<div><strong>فاکتورهای فروش معلق و دیر پرداخت شده (${unpaidInvs.length}):</strong></div>`;
+    if(unpaidInvs.length > 0){
+      html += `<ul>${unpaidInvs.map(i => `<li>${i.date} - ${formatCurrency(i.total)} - وضعیت: ${i.status === 'pending' ? 'معلق' : 'دیر پرداخت شده'}</li>`).join('')}</ul>`;
+    } else html += `<p>هیچ فاکتور فروش معلق یا دیر پرداخت شده‌ای وجود ندارد.</p>`;
+    html += `<div><strong>فاکتورهای خرید (${purchaseInvs.length}):</strong></div>`;
+    if(purchaseInvs.length > 0){
+      html += `<ul>${purchaseInvs.map(i => `<li>${i.date} - ${formatCurrency(i.total)}</li>`).join('')}</ul>`;
+    } else html += `<p>هیچ فاکتور خریدی وجود ندارد.</p>`;
+    csDetailsDiv.innerHTML = html;
+  }
+
+  // Inventory Management (unchanged)
+  let inventoryList = loadData('inventory');
+  const invForm = document.getElementById('form-inventory');
+  const invListBody = document.getElementById('inventory-list');
+  invForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const name = document.getElementById('inv-name').value.trim();
+    const qty = parseInt(document.getElementById('inv-qty').value);
+    if(!name || isNaN(qty) || qty < 0){
+      alert('لطفاً نام و مقدار موجودی را درست وارد کنید.');
+      return;
+    }
+    const existing = inventoryList.find(i => i.name === name);
+    if(existing){
+      existing.qty = qty;
+    }else{
+      inventoryList.push({id:Date.now(), name, qty});
+    }
+    saveData('inventory', inventoryList);
     renderInventory();
-  } else if (targetId === 'tab-returns') {
-    renderReturns();
-  } else if (targetId === 'tab-reports') {
+    invForm.reset();
+    alert('موجودی با موفقیت ذخیره شد.');
+  });
+  function renderInventory(){
+    invListBody.innerHTML = '';
+    if(inventoryList.length === 0){
+      const tr = document.createElement('tr');
+      const td = document.createElement('td');
+      td.colSpan = 4;
+      td.style.textAlign = 'center';
+      td.textContent = 'هیچ کالایی در موجودی ثبت نشده است.';
+      tr.appendChild(td);
+      invListBody.appendChild(tr);
+      return;
+    }
+    inventoryList.forEach((item,i) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${i+1}</td>
+        <td>${item.name}</td>
+        <td>${item.qty}</td>
+        <td class="action-btn">
+          <button class="btn-danger" aria-label="حذف کالا" data-id="${item.id}">حذف</button>
+        </td>
+      `;
+      invListBody.appendChild(tr);
+    });
+  }
+  invListBody.addEventListener('click', e => {
+    if(e.target.matches('button.btn-danger')){
+      const id = parseInt(e.target.getAttribute('data-id'),10);
+      if(confirm('آیا مایلید این کالا از موجودی حذف شود؟')){
+        inventoryList = inventoryList.filter(i => i.id !== id);
+        saveData('inventory', inventoryList);
+        renderInventory();
+      }
+    }
+  });
+
+  // Returns Management (unchanged)
+  let returnsList = loadData('returns');
+  const returnsForm = document.getElementById('form-returns');
+  const returnsListBody = document.getElementById('returns-list');
+
+  function setReturnFormDateToday(){
+    document.getElementById('return-date').value = new Date().toISOString().slice(0,10);
+  }
+  returnsForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const itemName = document.getElementById('return-item-name').value.trim();
+    let qty = parseInt(document.getElementById('return-qty').value);
+    let price = parseFloat(document.getElementById('return-price').value);
+    const date = document.getElementById('return-date').value;
+    const note = document.getElementById('return-note').value.trim();
+    if(!itemName || isNaN(qty) || qty < 1 || isNaN(price) || price < 0 || !date){
+      alert('لطفاً همه فیلدهای الزامی را به درستی پر کنید.');
+      return;
+    }
+    const invItem = inventoryList.find(i => i.name === itemName);
+    if(!invItem){
+      alert('کالا/خدمت وارد شده در موجودی یافت نشد. لطفاً ابتدا موجودی را ثبت کنید.');
+      return;
+    }
+    // Increase inventory quantity by returned qty
+    invItem.qty += qty;
+
+    const returnAmount = qty * price;
+    transactions.push({
+      type: 'income',
+      title: `مرجوعی کالا: ${itemName}`,
+      amount: returnAmount,
+      date: date
+    });
+
+    returnsList.push({id: Date.now(), name: itemName, qty, price, total: returnAmount, date, note});
+    saveData('returns', returnsList);
+    saveData('inventory', inventoryList);
+    saveData('transactions', transactions);
+
+    renderReturnsList();
+    renderInventory();
+    renderTransactions();
+    updateDashboard();
+
+    returnsForm.reset();
+    setReturnFormDateToday();
+    alert('کالای مرجوعی با موفقیت ثبت شد، موجودی و درآمد بروزرسانی شد.');
+  });
+  function renderReturnsList(){
+    returnsListBody.innerHTML = '';
+    if(returnsList.length === 0){
+      const tr = document.createElement('tr');
+      const td = document.createElement('td');
+      td.colSpan = 8;
+      td.style.textAlign = 'center';
+      td.textContent = 'هیچ کالای مرجوعی ثبت نشده است.';
+      tr.appendChild(td);
+      returnsListBody.appendChild(tr);
+      return;
+    }
+    returnsList.forEach((r,i) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${i+1}</td>
+        <td>${r.name}</td>
+        <td>${r.qty}</td>
+        <td>${formatCurrency(r.price)}</td>
+        <td>${formatCurrency(r.total)}</td>
+        <td>${r.date}</td>
+        <td>${r.note || '-'}</td>
+        <td class="action-btn"><button class="btn-danger" aria-label="حذف مرجوعی" data-id="${r.id}">حذف</button></td>
+      `;
+      returnsListBody.appendChild(tr);
+    });
+  }
+  returnsListBody.addEventListener('click', e => {
+    if(e.target.matches('button.btn-danger')){
+      const id = parseInt(e.target.getAttribute('data-id'),10);
+      if(confirm('آیا مایلید این کالای مرجوعی حذف شود؟ مقدار موجودی و درآمد تنظیم نخواهد شد.')){
+        returnsList = returnsList.filter(r => r.id !== id);
+        saveData('returns', returnsList);
+        renderReturnsList();
+      }
+    }
+  });
+
+  // Reports and Analytics
+  let profitLossChart = null, cashFlowChart = null;
+  function renderReports(){
+    // سود و زیان خالص شامل درآمد، هزینه، فاکتور خرید و مرجوعی
+    const incomes = transactions.filter(t => t.type === 'income');
+    const expensesT = transactions.filter(t => t.type === 'expense');
+    const profitLossData = Array(12).fill(0);
+    const cashFlowData = [];
+    const cashFlowLabels = [];
+    let running = 0;
+
+    incomes.forEach(t => {
+      const d = new Date(t.date);
+      if(d.getFullYear() === (new Date()).getFullYear()){
+        profitLossData[d.getMonth()] += t.amount;
+      }
+    });
+
+    expensesT.forEach(t => {
+      const d = new Date(t.date);
+      if(d.getFullYear() === (new Date()).getFullYear()){
+        profitLossData[d.getMonth()] -= t.amount;
+      }
+    });
+
+    purchaseInvoices.forEach(inv => {
+      const d = new Date(inv.date);
+      if(d.getFullYear() === (new Date()).getFullYear()){
+        profitLossData[d.getMonth()] -= inv.total;
+      }
+    });
+
+    const allTxSorted = [...transactions].sort((a,b) => new Date(a.date) - new Date(b.date));
+    allTxSorted.forEach(t => {
+      running += (t.type === 'income') ? t.amount : -t.amount;
+      cashFlowLabels.push(t.date);
+      cashFlowData.push(running);
+    });
+
+    const plCtx = document.getElementById('report-profit-loss').getContext('2d');
+    if(profitLossChart) profitLossChart.destroy();
+    profitLossChart = new Chart(plCtx, {
+      type: 'bar',
+      data: {
+        labels: ['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'],
+        datasets: [{
+          label: 'سود (زیان) خالص',
+          data: profitLossData,
+          backgroundColor: profitLossData.map(v => v >=0 ? 'rgba(46,125,50,0.7)' : 'rgba(211,47,47,0.7)'),
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: { y: { beginAtZero: true }}
+      }
+    });
+
+    const cfCtx = document.getElementById('report-cash-flow').getContext('2d');
+    if(cashFlowChart) cashFlowChart.destroy();
+    cashFlowChart = new Chart(cfCtx, {
+      type: 'line',
+      data: {
+        labels: cashFlowLabels,
+        datasets: [{
+          label: 'جریان نقدینگی',
+          data: cashFlowData,
+          borderColor: 'rgba(75,108,183,0.9)',
+          fill: true,
+          backgroundColor: 'rgba(75,108,183,0.2)',
+          tension: 0.3
+        }]
+      },
+      options: {
+        responsive:true,
+        scales: { y: { beginAtZero:false}}
+      }
+    });
+  }
+
+  // Initialize App
+  function init(){
+    document.getElementById('ie-date').value = new Date().toISOString().slice(0,10);
+    document.getElementById('invoice-date').value = new Date().toISOString().slice(0,10);
+    document.getElementById('purchase-invoice-date').value = new Date().toISOString().slice(0,10);
+    setReturnFormDateToday();
+    renderTransactions();
+    updateDashboard();
+    renderInvoiceItems();
+    renderInvoicesList();
+    renderPurchaseInvoiceItems();
+    renderPurchaseInvoiceList();
+    renderChecks();
+    renderCSList();
+    renderInventory();
+    renderReturnsList();
     renderReports();
   }
-}
-
-// --- Dashboard Functions ---
-function updateDashboard() {
-  const totalIncome = transactions.filter(t => t.type === 'income').reduce((sum, t) => sum + t.amount, 0);
-  // Total expenses include both expense transactions and purchase invoices
-  const totalExpenseTransactions = transactions.filter(t => t.type === 'expense').reduce((sum, t) => sum + t.amount, 0);
-  const totalPurchaseExpense = purchaseInvoices.reduce((sum, inv) => sum + inv.total, 0);
-  const totalExpense = totalExpenseTransactions + totalPurchaseExpense;
-
-  const balance = totalIncome - totalExpense;
-
-  document.getElementById('dashboard-total-income').textContent = `${formatCurrency(totalIncome)} تومان`;
-  document.getElementById('dashboard-total-expense').textContent = `${formatCurrency(totalExpense)} تومان`;
-  document.getElementById('dashboard-balance').textContent = `${formatCurrency(balance)} تومان`;
-  document.getElementById('dashboard-balance').style.color = balance >= 0 ? 'var(--success-color)' : 'var(--danger-color)';
-
-  renderIncomeExpenseChart(totalIncome, totalExpense);
-  renderLiquidityChart(totalIncome, totalExpense); // Liquidity is often tied to balance
-}
-
-function renderIncomeExpenseChart(income, expense) {
-  const ctx = document.getElementById('chart-income-expense').getContext('2d');
-  if (incomeExpenseChart) {
-    incomeExpenseChart.destroy(); // Destroy previous chart instance
-  }
-  incomeExpenseChart = new Chart(ctx, {
-    type: 'pie',
-    data: {
-      labels: ['درآمد', 'هزینه'],
-      datasets: [{
-        data: [income, expense],
-        backgroundColor: [
-          'rgba(46, 125, 50, 0.8)', // success-color
-          'rgba(211, 47, 47, 0.8)' // danger-color
-        ],
-        borderColor: [
-          'rgba(46, 125, 50, 1)',
-          'rgba(211, 47, 47, 1)'
-        ],
-        borderWidth: 1
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        title: {
-          display: true,
-          text: 'درصد درآمد و هزینه',
-          font: { family: 'Vazirmatn', size: 16 }
-        },
-        tooltip: {
-          rtl: true,
-          titleFont: { family: 'Vazirmatn' },
-          bodyFont: { family: 'Vazirmatn' },
-          callbacks: {
-            label: function(context) {
-              let label = context.label || '';
-              if (label) {
-                label += ': ';
-              }
-              if (context.parsed !== null) {
-                label += formatCurrency(context.parsed) + ' تومان';
-              }
-              return label;
-            }
-          }
-        },
-        legend: {
-          rtl: true,
-          labels: {
-            font: { family: 'Vazirmatn' }
-          }
-        }
-      }
-    }
-  });
-}
-
-function renderLiquidityChart(income, expense) {
-  const ctx = document.getElementById('chart-liquidity').getContext('2d');
-  if (liquidityChart) {
-    liquidityChart.destroy(); // Destroy previous chart instance
-  }
-
-  // Monthly data for a simplified liquidity chart
-  const monthlyData = {};
-  transactions.forEach(t => {
-    const month = t.date.substring(0, 7); // YYYY-MM
-    if (!monthlyData[month]) {
-      monthlyData[month] = { income: 0, expense: 0 };
-    }
-    if (t.type === 'income') {
-      monthlyData[month].income += t.amount;
-    } else {
-      monthlyData[month].expense += t.amount;
-    }
-  });
-
-  purchaseInvoices.forEach(inv => {
-    const month = inv.date.substring(0, 7); // YYYY-MM
-    if (!monthlyData[month]) {
-      monthlyData[month] = { income: 0, expense: 0 };
-    }
-    monthlyData[month].expense += inv.total;
-  });
-
-
-  const sortedMonths = Object.keys(monthlyData).sort();
-  const monthlyIncomes = sortedMonths.map(month => monthlyData[month].income);
-  const monthlyExpenses = sortedMonths.map(month => monthlyData[month].expense);
-
-  liquidityChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: sortedMonths.map(m => { // Convert YYYY-MM to readable month
-          const [year, monthNum] = m.split('-');
-          const monthName = new Date(year, monthNum - 1, 1).toLocaleString('fa-IR', { month: 'long' });
-          return `${monthName} ${year}`;
-      }),
-      datasets: [
-        {
-          label: 'درآمد ماهیانه',
-          data: monthlyIncomes,
-          backgroundColor: 'rgba(75, 192, 192, 0.6)',
-          borderColor: 'rgba(75, 192, 192, 1)',
-          borderWidth: 1
-        },
-        {
-          label: 'هزینه ماهیانه',
-          data: monthlyExpenses,
-          backgroundColor: 'rgba(255, 99, 132, 0.6)',
-          borderColor: 'rgba(255, 99, 132, 1)',
-          borderWidth: 1
-        }
-      ]
-    },
-    options: {
-      responsive: true,
-      scales: {
-        y: {
-          beginAtZero: true,
-          ticks: {
-            callback: function(value) {
-              return formatCurrency(value);
-            },
-            font: { family: 'Vazirmatn' }
-          }
-        },
-        x: {
-          ticks: {
-            font: { family: 'Vazirmatn' }
-          }
-        }
-      },
-      plugins: {
-        title: {
-          display: true,
-          text: 'جریان نقدینگی ماهیانه',
-          font: { family: 'Vazirmatn', size: 16 }
-        },
-        tooltip: {
-          rtl: true,
-          titleFont: { family: 'Vazirmatn' },
-          bodyFont: { family: 'Vazirmatn' },
-          callbacks: {
-            label: function(context) {
-              let label = context.dataset.label || '';
-              if (label) {
-                label += ': ';
-              }
-              if (context.parsed.y !== null) {
-                label += formatCurrency(context.parsed.y) + ' تومان';
-              }
-              return label;
-            }
-          }
-        },
-        legend: {
-          rtl: true,
-          labels: {
-            font: { family: 'Vazirmatn' }
-          }
-        }
-      }
-    }
-  });
-}
-
-// --- Income/Expense Functions ---
-const formIncomeExpense = document.getElementById('form-income-expense');
-const ieTransactionList = document.getElementById('ie-transaction-list');
-
-formIncomeExpense.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const type = document.getElementById('ie-type').value;
-  const title = document.getElementById('ie-title').value;
-  const amount = parseFloat(document.getElementById('ie-amount').value);
-  const date = document.getElementById('ie-date').value;
-
-  if (isNaN(amount) || amount <= 0) {
-    showMessage('مبلغ معتبر نیست.', 'error');
-    return;
-  }
-
-  transactions.push({ id: Date.now(), type, title, amount, date });
-  saveData('transactions', transactions);
-  renderTransactions();
-  updateDashboard();
-  formIncomeExpense.reset();
-  showMessage('تراکنش با موفقیت ثبت شد.');
-});
-
-function renderTransactions() {
-  ieTransactionList.innerHTML = '';
-  transactions.sort((a, b) => new Date(b.date) - new Date(a.date)).forEach((t, index) => { // Sort by date descending
-    const row = ieTransactionList.insertRow();
-    row.innerHTML = `
-      <td>${transactions.length - index}</td>
-      <td style="color: ${t.type === 'income' ? 'var(--success-color)' : 'var(--danger-color)'}">
-        ${t.type === 'income' ? 'درآمد' : 'هزینه'}
-      </td>
-      <td>${t.title}</td>
-      <td>${formatCurrency(t.amount)}</td>
-      <td>${t.date}</td>
-      <td class="action-btn">
-        <button class="btn-danger small-button" onclick="deleteTransaction(${t.id})">✖</button>
-      </td>
-    `;
-  });
-}
-
-function deleteTransaction(id) {
-  transactions = transactions.filter(t => t.id !== id);
-  saveData('transactions', transactions);
-  renderTransactions();
-  updateDashboard();
-  showMessage('تراکنش حذف شد.', 'warning');
-}
-
-// --- Sales Invoice Functions ---
-const formInvoice = document.getElementById('form-invoice');
-const invoiceItemsBody = document.getElementById('invoice-items-body');
-const btnAddInvoiceItem = document.getElementById('btn-add-invoice-item');
-const invoiceList = document.getElementById('invoice-list');
-
-let invoiceItems = []; // Temporary storage for current invoice items
-
-function calculateInvoiceTotal() {
-  let totalBeforeDiscount = 0;
-  invoiceItems.forEach(item => {
-    totalBeforeDiscount += item.quantity * item.unitPrice;
-  });
-  document.getElementById('invoice-total-before-discount').textContent = `${formatCurrency(totalBeforeDiscount)} تومان`;
-
-  const totalDiscount = parseFloat(document.getElementById('invoice-total-discount').value) || 0;
-  const finalTotal = totalBeforeDiscount - totalDiscount;
-  document.getElementById('invoice-total').textContent = `${formatCurrency(finalTotal)} تومان`;
-}
-
-btnAddInvoiceItem.addEventListener('click', () => {
-  const newItem = {
-    id: Date.now(),
-    name: '',
-    quantity: 0,
-    unitPrice: 0,
-    discount: 0
-  };
-  invoiceItems.push(newItem);
-  renderInvoiceItems();
-});
-
-function renderInvoiceItems() {
-  invoiceItemsBody.innerHTML = '';
-  invoiceItems.forEach(item => {
-    const row = invoiceItemsBody.insertRow();
-    row.innerHTML = `
-      <td><input type="text" value="${item.name}" onchange="updateInvoiceItem(${item.id}, 'name', this.value)" style="width:100px; margin-bottom:0;" /></td>
-      <td><input type="number" value="${item.quantity}" min="0" onchange="updateInvoiceItem(${item.id}, 'quantity', parseInt(this.value))" style="width:70px; margin-bottom:0;" /></td>
-      <td><input type="number" value="${item.unitPrice}" min="0" step="any" onchange="updateInvoiceItem(${item.id}, 'unitPrice', parseFloat(this.value))" style="width:90px; margin-bottom:0;" /></td>
-      <td><input type="number" value="${item.discount}" min="0" step="any" onchange="updateInvoiceItem(${item.id}, 'discount', parseFloat(this.value))" style="width:90px; margin-bottom:0;" /></td>
-      <td>${formatCurrency((item.quantity * item.unitPrice) - item.discount)}</td>
-      <td class="action-btn">
-        <button class="btn-danger small-button" onclick="deleteInvoiceItem(${item.id})">✖</button>
-      </td>
-    `;
-  });
-  calculateInvoiceTotal();
-}
-
-function updateInvoiceItem(id, field, value) {
-  const itemIndex = invoiceItems.findIndex(item => item.id === id);
-  if (itemIndex > -1) {
-    invoiceItems[itemIndex][field] = value;
-    renderInvoiceItems(); // Re-render to update calculated total
-  }
-}
-
-function deleteInvoiceItem(id) {
-  invoiceItems = invoiceItems.filter(item => item.id !== id);
-  renderInvoiceItems();
-}
-
-document.getElementById('invoice-total-discount').addEventListener('input', calculateInvoiceTotal);
-
-
-formInvoice.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const client = document.getElementById('invoice-client').value;
-  const date = document.getElementById('invoice-date').value;
-  const status = document.getElementById('invoice-status').value;
-  const totalDiscount = parseFloat(document.getElementById('invoice-total-discount').value) || 0;
-
-  if (invoiceItems.length === 0) {
-    showMessage('فاکتور باید حداقل یک قلم داشته باشد.', 'error');
-    return;
-  }
-
-  const calculatedTotal = invoiceItems.reduce((sum, item) => sum + (item.quantity * item.unitPrice - item.discount), 0) - totalDiscount;
-  if (calculatedTotal < 0) {
-      showMessage('جمع کل فاکتور نمی‌تواند منفی باشد. تخفیف را اصلاح کنید.', 'error');
-      return;
-  }
-
-
-  const newInvoice = {
-    id: Date.now(),
-    client,
-    date,
-    items: [...invoiceItems], // Deep copy
-    total: calculatedTotal,
-    status
-  };
-  salesInvoices.push(newInvoice);
-  saveData('salesInvoices', salesInvoices);
-  renderSalesInvoices();
-  formInvoice.reset();
-  invoiceItems = []; // Clear temporary items for next invoice
-  renderInvoiceItems(); // Clear items display
-  showMessage('فاکتور فروش با موفقیت ثبت شد.');
-  updateDashboard(); // Update dashboard after sales invoice
-  renderCustomersSuppliers(); // Update CS list for account balance
-});
-
-function renderSalesInvoices() {
-  invoiceList.innerHTML = '';
-  salesInvoices.sort((a,b) => new Date(b.date) - new Date(a.date)).forEach((invoice, index) => { // Sort by date descending
-    const row = invoiceList.insertRow();
-    row.innerHTML = `
-      <td>${salesInvoices.length - index}</td>
-      <td>${invoice.client}</td>
-      <td>${invoice.date}</td>
-      <td>${formatCurrency(invoice.total)}</td>
-      <td><span class="status-chip status-${invoice.status}">
-        ${invoice.status === 'paid' ? 'پرداخت شده' : invoice.status === 'pending' ? 'معلق' : 'دیر پرداخت شده'}
-      </span></td>
-      <td class="action-btn">
-        <button class="btn-info" onclick="showInvoiceDetails(${invoice.id}, 'sales')">جزئیات</button>
-        <button class="btn-danger small-button" onclick="deleteSalesInvoice(${invoice.id})">✖</button>
-      </td>
-    `;
-  });
-}
-
-function deleteSalesInvoice(id) {
-  salesInvoices = salesInvoices.filter(inv => inv.id !== id);
-  saveData('salesInvoices', salesInvoices);
-  renderSalesInvoices();
-  showMessage('فاکتور فروش حذف شد.', 'warning');
-  updateDashboard(); // Update dashboard after sales invoice deletion
-  renderCustomersSuppliers(); // Update CS list for account balance
-}
-
-// --- Purchase Invoice Functions ---
-const formPurchaseInvoice = document.getElementById('form-purchase-invoice');
-const purchaseInvoiceItemsBody = document.getElementById('purchase-invoice-items-body');
-const btnAddPurchaseInvoiceItem = document.getElementById('btn-add-purchase-invoice-item');
-const purchaseInvoiceList = document.getElementById('purchase-invoice-list');
-
-let currentPurchaseInvoiceItems = [];
-
-function calculatePurchaseInvoiceTotal() {
-  let total = 0;
-  currentPurchaseInvoiceItems.forEach(item => {
-    total += item.quantity * item.unitPrice;
-  });
-  document.getElementById('purchase-invoice-total').textContent = `${formatCurrency(total)} تومان`;
-}
-
-btnAddPurchaseInvoiceItem.addEventListener('click', () => {
-  const newItem = {
-    id: Date.now(),
-    name: '',
-    quantity: 0,
-    unitPrice: 0
-  };
-  currentPurchaseInvoiceItems.push(newItem);
-  renderPurchaseInvoiceItems();
-});
-
-function renderPurchaseInvoiceItems() {
-  purchaseInvoiceItemsBody.innerHTML = '';
-  currentPurchaseInvoiceItems.forEach(item => {
-    const row = purchaseInvoiceItemsBody.insertRow();
-    row.innerHTML = `
-      <td><input type="text" value="${item.name}" onchange="updatePurchaseInvoiceItem(${item.id}, 'name', this.value)" style="width:100px; margin-bottom:0;" /></td>
-      <td><input type="number" value="${item.quantity}" min="0" onchange="updatePurchaseInvoiceItem(${item.id}, 'quantity', parseInt(this.value))" style="width:70px; margin-bottom:0;" /></td>
-      <td><input type="number" value="${item.unitPrice}" min="0" step="any" onchange="updatePurchaseInvoiceItem(${item.id}, 'unitPrice', parseFloat(this.value))" style="width:90px; margin-bottom:0;" /></td>
-      <td>${formatCurrency(item.quantity * item.unitPrice)}</td>
-      <td class="action-btn">
-        <button class="btn-danger small-button" onclick="deletePurchaseInvoiceItem(${item.id})">✖</button>
-      </td>
-    `;
-  });
-  calculatePurchaseInvoiceTotal();
-}
-
-function updatePurchaseInvoiceItem(id, field, value) {
-  const itemIndex = currentPurchaseInvoiceItems.findIndex(item => item.id === id);
-  if (itemIndex > -1) {
-    currentPurchaseInvoiceItems[itemIndex][field] = value;
-    renderPurchaseInvoiceItems();
-  }
-}
-
-function deletePurchaseInvoiceItem(id) {
-  currentPurchaseInvoiceItems = currentPurchaseInvoiceItems.filter(item => item.id !== id);
-  renderPurchaseInvoiceItems();
-}
-
-formPurchaseInvoice.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const supplier = document.getElementById('purchase-invoice-supplier').value;
-  const date = document.getElementById('purchase-invoice-date').value;
-
-  if (currentPurchaseInvoiceItems.length === 0) {
-    showMessage('فاکتور خرید باید حداقل یک قلم داشته باشد.', 'error');
-    return;
-  }
-
-  const calculatedTotal = currentPurchaseInvoiceItems.reduce((sum, item) => sum + (item.quantity * item.unitPrice), 0);
-  if (calculatedTotal < 0) {
-      showMessage('جمع کل فاکتور خرید نمی‌تواند منفی باشد.', 'error');
-      return;
-  }
-
-  const newPurchaseInvoice = {
-    id: Date.now(),
-    supplier,
-    date,
-    items: [...currentPurchaseInvoiceItems],
-    total: calculatedTotal,
-    status: 'pending' // Default status for purchase invoice
-  };
-  purchaseInvoices.push(newPurchaseInvoice);
-  saveData('purchaseInvoices', purchaseInvoices);
-  renderPurchaseInvoices();
-  formPurchaseInvoice.reset();
-  currentPurchaseInvoiceItems = [];
-  renderPurchaseInvoiceItems();
-  showMessage('فاکتور خرید با موفقیت ثبت شد.');
-  updateDashboard(); // Update dashboard after purchase invoice
-  renderCustomersSuppliers(); // Update CS list for account balance
-});
-
-function renderPurchaseInvoices() {
-  purchaseInvoiceList.innerHTML = '';
-  purchaseInvoices.sort((a,b) => new Date(b.date) - new Date(a.date)).forEach((invoice, index) => { // Sort by date descending
-    const row = purchaseInvoiceList.insertRow();
-    row.innerHTML = `
-      <td>${purchaseInvoices.length - index}</td>
-      <td>${invoice.supplier}</td>
-      <td>${invoice.date}</td>
-      <td>${formatCurrency(invoice.total)}</td>
-      <td class="action-btn">
-        <button class="btn-info" onclick="showInvoiceDetails(${invoice.id}, 'purchase')">جزئیات</button>
-        <button class="btn-danger small-button" onclick="deletePurchaseInvoice(${invoice.id})">✖</button>
-      </td>
-    `;
-  });
-}
-
-function deletePurchaseInvoice(id) {
-  purchaseInvoices = purchaseInvoices.filter(inv => inv.id !== id);
-  saveData('purchaseInvoices', purchaseInvoices);
-  renderPurchaseInvoices();
-  showMessage('فاکتور خرید حذف شد.', 'warning');
-  updateDashboard(); // Update dashboard after purchase invoice deletion
-  renderCustomersSuppliers(); // Update CS list for account balance
-}
-
-// --- Modal for Invoice Details ---
-const invoiceDetailsModal = document.getElementById('invoiceDetailsModal');
-const closeButton = document.querySelector('.modal .close-button');
-const modalInvoiceTitle = document.getElementById('modal-invoice-title');
-const modalInvoiceParty = document.getElementById('modal-invoice-party');
-const modalInvoiceDate = document.getElementById('modal-invoice-date');
-const modalInvoiceStatusRow = document.getElementById('modal-invoice-status-row');
-const modalInvoiceStatus = document.getElementById('modal-invoice-status');
-const modalInvoiceItemsTableBody = document.querySelector('#modal-invoice-items-table tbody');
-const modalInvoiceSubtotal = document.getElementById('modal-invoice-subtotal');
-const modalInvoiceDiscountRow = document.getElementById('modal-invoice-discount-row');
-const modalInvoiceDiscount = document.getElementById('modal-invoice-discount');
-const modalInvoiceTotal = document.getElementById('modal-invoice-total');
-const modalPayButton = document.getElementById('modal-pay-button');
-const modalReceiveButton = document.getElementById('modal-receive-button');
-
-closeButton.addEventListener('click', () => {
-  invoiceDetailsModal.style.display = 'none';
-});
-
-window.addEventListener('click', (event) => {
-  if (event.target === invoiceDetailsModal) {
-    invoiceDetailsModal.style.display = 'none';
-  }
-});
-
-function showInvoiceDetails(id, type) {
-    let invoice;
-    if (type === 'sales') {
-        invoice = salesInvoices.find(inv => inv.id === id);
-        modalInvoiceTitle.textContent = 'جزئیات فاکتور فروش';
-        modalInvoiceParty.textContent = invoice.client;
-        modalInvoiceStatusRow.style.display = 'block';
-        modalInvoiceStatus.textContent = invoice.status === 'paid' ? 'پرداخت شده' : invoice.status === 'pending' ? 'معلق' : 'دیر پرداخت شده';
-        modalInvoiceStatus.className = `status-chip status-${invoice.status}`;
-        modalInvoiceDiscountRow.style.display = 'block';
-        // Correctly calculate total item discount from invoice.items
-        const totalItemDiscount = invoice.items.reduce((sum, item) => sum + (item.discount || 0), 0);
-        // Assuming overall invoice discount is stored directly in invoice.total if applicable
-        // The original logic for totalDiscount on the sales form was `document.getElementById('invoice-total-discount').value`
-        // which isn't directly stored on the invoice. Let's assume invoice.total accounts for it.
-        // For display, we should show the total discount applied.
-        const totalDiscountApplied = invoice.items.reduce((sum, item) => sum + (item.quantity * item.unitPrice), 0) - invoice.total;
-        modalInvoiceDiscount.textContent = `${formatCurrency(totalDiscountApplied)} تومان`;
-
-        modalReceiveButton.style.display = (invoice.status === 'pending' || invoice.status === 'overdue') ? 'inline-block' : 'none';
-        modalPayButton.style.display = 'none';
-
-        modalReceiveButton.onclick = () => {
-            const invoiceIndex = salesInvoices.findIndex(inv => inv.id === id);
-            if (invoiceIndex > -1) {
-                salesInvoices[invoiceIndex].status = 'paid';
-                saveData('salesInvoices', salesInvoices);
-                showMessage(`مبلغ فاکتور فروش ${invoice.client} با موفقیت دریافت شد.`);
-                renderSalesInvoices();
-                updateDashboard();
-                renderCustomersSuppliers(); // Update CS list for account balance
-                invoiceDetailsModal.style.display = 'none';
-            }
-        };
-
-    } else if (type === 'purchase') {
-        invoice = purchaseInvoices.find(inv => inv.id === id);
-        modalInvoiceTitle.textContent = 'جزئیات فاکتور خرید';
-        modalInvoiceParty.textContent = invoice.supplier;
-        modalInvoiceStatusRow.style.display = 'none'; // No status for purchase invoices in this demo
-        modalInvoiceDiscountRow.style.display = 'none'; // No discount for purchase invoices in this demo
-        modalPayButton.style.display = 'inline-block';
-        modalReceiveButton.style.display = 'none';
-
-        modalPayButton.onclick = () => {
-            const invoiceIndex = purchaseInvoices.findIndex(inv => inv.id === id);
-            if (invoiceIndex > -1) {
-                // In a real app, you might change status or record a payment transaction.
-                // For simplicity, just show message and record as expense.
-                transactions.push({ id: Date.now(), type: 'expense', title: `پرداخت فاکتور خرید ${invoice.supplier}`, amount: invoice.total, date: new Date().toISOString().slice(0,10) });
-                saveData('transactions', transactions);
-                showMessage(`مبلغ فاکتور خرید ${invoice.supplier} با موفقیت پرداخت شد و به عنوان هزینه ثبت گردید.`);
-                renderPurchaseInvoices();
-                updateDashboard();
-                renderCustomersSuppliers(); // Update CS list for account balance
-                invoiceDetailsModal.style.display = 'none';
-            }
-        };
-    }
-
-    if (!invoice) {
-        showMessage('فاکتور یافت نشد.', 'error');
-        return;
-    }
-
-    modalInvoiceDate.textContent = invoice.date;
-    modalInvoiceItemsTableBody.innerHTML = '';
-
-    let subtotalBeforeItemDiscount = 0;
-    invoice.items.forEach(item => {
-        const itemTotal = (item.quantity * item.unitPrice);
-        subtotalBeforeItemDiscount += itemTotal;
-        const row = modalInvoiceItemsTableBody.insertRow();
-        row.innerHTML = `
-            <td>${item.name}</td>
-            <td>${item.quantity}</td>
-            <td>${formatCurrency(item.unitPrice)}</td>
-            <td>${formatCurrency(item.discount || 0)}</td>
-            <td>${formatCurrency(itemTotal - (item.discount || 0))}</td>
-        `;
-    });
-
-    modalInvoiceSubtotal.textContent = `${formatCurrency(subtotalBeforeItemDiscount)} تومان`;
-    modalInvoiceTotal.textContent = `${formatCurrency(invoice.total)} تومان`;
-
-    invoiceDetailsModal.style.display = 'block';
-}
-
-
-// --- Checks Functions ---
-const formCheck = document.getElementById('form-check');
-const checkList = document.getElementById('check-list');
-
-formCheck.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const payee = document.getElementById('check-payee').value;
-  const amount = parseFloat(document.getElementById('check-amount').value);
-  const dueDate = document.getElementById('check-due-date').value;
-  const status = document.getElementById('check-status').value;
-
-  if (isNaN(amount) || amount <= 0) {
-    showMessage('مبلغ معتبر نیست.', 'error');
-    return;
-  }
-
-  checks.push({ id: Date.now(), payee, amount, dueDate, status });
-  saveData('checks', checks);
-  renderChecks();
-  formCheck.reset();
-  showMessage('چک با موفقیت ثبت شد.');
-});
-
-function renderChecks() {
-  checkList.innerHTML = '';
-  checks.sort((a,b) => new Date(b.dueDate) - new Date(a.dueDate)).forEach((check, index) => { // Sort by date descending
-    const row = checkList.insertRow();
-    row.innerHTML = `
-      <td>${checks.length - index}</td>
-      <td>${check.payee}</td>
-      <td>${formatCurrency(check.amount)}</td>
-      <td>${check.dueDate}</td>
-      <td><span class="status-chip status-${check.status}">
-        ${check.status === 'pending' ? 'معوقه' : check.status === 'cleared' ? 'پرداخت شده' : 'برگشت خورده'}
-      </span></td>
-      <td class="action-btn">
-        <button class="btn-primary small-button" onclick="editCheck(${check.id})">📝</button>
-        <button class="btn-danger small-button" onclick="deleteCheck(${check.id})">✖</button>
-      </td>
-    `;
-  });
-}
-
-function deleteCheck(id) {
-  checks = checks.filter(c => c.id !== id);
-  saveData('checks', checks);
-  renderChecks();
-  showMessage('چک حذف شد.', 'warning');
-}
-
-function editCheck(id) {
-  // Placeholder for edit functionality.
-  showMessage('قابلیت ویرایش چک هنوز پیاده‌سازی نشده است.', 'info');
-}
-
-// --- Customers & Suppliers Functions ---
-const formCustomerSupplier = document.getElementById('form-customer-supplier');
-const csList = document.getElementById('cs-list');
-const csDetailsDiv = document.getElementById('cs-details');
-const customerNamesDatalist = document.getElementById('customer-names');
-const supplierNamesDatalist = document.getElementById('supplier-names');
-
-
-formCustomerSupplier.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const name = document.getElementById('cs-name').value.trim(); // Trim whitespace
-  const type = document.getElementById('cs-type').value;
-
-  if (!name) {
-      showMessage('نام نمی‌تواند خالی باشد.', 'error');
-      return;
-  }
-
-  // Prevent duplicate names for the same type
-  const isDuplicate = customersSuppliers.some(cs => cs.name === name && cs.type === type);
-  if (isDuplicate) {
-      showMessage(`حساب با نام "${name}" و نوع "${type === 'customer' ? 'مشتری' : 'تامین‌کننده'}" از قبل وجود دارد.`, 'error');
-      return;
-  }
-
-  customersSuppliers.push({ id: Date.now(), name, type });
-  saveData('customersSuppliers', customersSuppliers);
-  renderCustomersSuppliers();
-  populateCustomerSupplierDatalists();
-  formCustomerSupplier.reset();
-  showMessage('حساب با موفقیت ذخیره شد.');
-});
-
-function populateCustomerSupplierDatalists() {
-    customerNamesDatalist.innerHTML = '';
-    supplierNamesDatalist.innerHTML = '';
-    customersSuppliers.forEach(cs => {
-        const option = document.createElement('option');
-        option.value = cs.name;
-        if (cs.type === 'customer') {
-            customerNamesDatalist.appendChild(option);
-        } else {
-            supplierNamesDatalist.appendChild(option);
-        }
-    });
-}
-
-function renderCustomersSuppliers() {
-  csList.innerHTML = '';
-  customersSuppliers.forEach((cs, index) => {
-    let totalDebit = 0; // مبلغی که مشتری به ما بدهکار است (مشتریان)
-    let totalCredit = 0; // مبلغی که ما به تامین کننده بدهکار هستیم (تامین‌کنندگان)
-
-    if (cs.type === 'customer') {
-        // برای مشتریان: بدهکار (فاکتورهای فروش پرداخت نشده) - بستانکار (دریافتی‌ها از مشتری)
-        salesInvoices.filter(inv => inv.client === cs.name).forEach(inv => {
-            if (inv.status !== 'paid') {
-                totalDebit += inv.total; // مشتری به ما بدهکار است
-            }
-            // اگر فاکتور پرداخت شده، مبلغش رو از بستانکار کم می‌کنیم (اگر قبلا بستانکار بوده)
-            // در غیر این صورت، نیازی به کسر از بستانکار نیست چون فاکتور فروش برای مشتری هیچ بستانکاری اولیه ایجاد نمی‌کنه.
-        });
-        // تراکنش‌های دریافتی (درآمد) که نام مشتری در عنوانش هست، بدهی مشتری رو کم می‌کنه.
-        transactions.filter(t => t.type === 'income' && t.title.includes(cs.name)).forEach(t => {
-            totalDebit -= t.amount;
-        });
-
-    } else if (cs.type === 'supplier') {
-        // برای تامین‌کنندگان: بستانکار (فاکتورهای خرید) - بدهکار (پرداختی‌ها به تامین‌کننده)
-        purchaseInvoices.filter(inv => inv.supplier === cs.name).forEach(inv => {
-            totalCredit += inv.total; // ما به تامین‌کننده بدهکاریم
-        });
-        // تراکنش‌های پرداختی (هزینه) که نام تامین‌کننده در عنوانش هست، بستانکاری تامین‌کننده رو کم می‌کنه.
-        transactions.filter(t => t.type === 'expense' && t.title.includes(cs.name)).forEach(t => {
-            totalCredit -= t.amount;
-        });
-    }
-
-    // اطمینان از عدم نمایش اعداد منفی برای بدهکار/بستانکار
-    totalDebit = Math.max(0, totalDebit);
-    totalCredit = Math.max(0, totalCredit);
-
-
-    const row = csList.insertRow();
-    row.innerHTML = `
-      <td>${index + 1}</td>
-      <td><a href="#" onclick="showCsDetails(${cs.id}); return false;">${cs.name}</a></td>
-      <td>${cs.type === 'customer' ? 'مشتری' : 'تامین‌کننده'}</td>
-      <td style="color:var(--danger-color);">${formatCurrency(totalDebit)}</td>
-      <td style="color:var(--success-color);">${formatCurrency(totalCredit)}</td>
-      <td class="action-btn">
-        <button class="btn-danger small-button" onclick="deleteCustomerSupplier(${cs.id})">✖</button>
-      </td>
-    `;
-  });
-}
-
-function showCsDetails(id) {
-  const cs = customersSuppliers.find(c => c.id === id);
-  if (!cs) return;
-
-  let detailsHtml = `<h3>جزئیات حساب ${cs.name} (${cs.type === 'customer' ? 'مشتری' : 'تامین‌کننده'})</h3>`;
-
-  // Filter relevant transactions for this customer/supplier
-  const relevantSalesInvoices = salesInvoices.filter(inv => inv.client === cs.name);
-  const relevantPurchaseInvoices = purchaseInvoices.filter(inv => inv.supplier === cs.name);
-  // Refined filter for transactions specific to this CS.
-  // This is a simplification; in a real system, transactions would be linked to specific accounts.
-  const relevantTransactions = transactions.filter(t =>
-      (t.type === 'income' && cs.type === 'customer' && t.title.includes(cs.name)) ||
-      (t.type === 'expense' && cs.type === 'supplier' && t.title.includes(cs.name))
-  );
-
-  detailsHtml += `
-    <h4>فاکتورهای فروش مرتبط:</h4>
-    ${relevantSalesInvoices.length > 0 ? `
-    <div class="table-scroll" style="max-height:200px; overflow-y:auto;">
-    <table style="font-size:0.85rem;">
-      <thead><tr><th>#</th><th>تاریخ</th><th>جمع کل</th><th>وضعیت</th></tr></thead>
-      <tbody>
-        ${relevantSalesInvoices.map((inv, idx) => `
-          <tr>
-            <td>${idx + 1}</td>
-            <td>${inv.date}</td>
-            <td>${formatCurrency(inv.total)}</td>
-            <td><span class="status-chip status-${inv.status}">
-                ${inv.status === 'paid' ? 'پرداخت شده' : inv.status === 'pending' ? 'معلق' : 'دیر پرداخت شده'}
-            </span></td>
-          </tr>
-        `).join('')}
-      </tbody>
-    </table>
-    </div>` : '<p>هیچ فاکتور فروشی برای این حساب یافت نشد.</p>'}
-
-    <h4>فاکتورهای خرید مرتبط:</h4>
-    ${relevantPurchaseInvoices.length > 0 ? `
-    <div class="table-scroll" style="max-height:200px; overflow-y:auto;">
-    <table style="font-size:0.85rem;">
-      <thead><tr><th>#</th><th>تاریخ</th><th>جمع کل</th></tr></thead>
-      <tbody>
-        ${relevantPurchaseInvoices.map((inv, idx) => `
-          <tr>
-            <td>${idx + 1}</td>
-            <td>${inv.date}</td>
-            <td>${formatCurrency(inv.total)}</td>
-          </tr>
-        `).join('')}
-      </tbody>
-    </table>
-    </div>` : '<p>هیچ فاکتور خریدی برای این حساب یافت نشد.</p>'}
-
-    <h4>تراکنش‌های مستقیم مرتبط:</h4>
-    ${relevantTransactions.length > 0 ? `
-    <div class="table-scroll" style="max-height:200px; overflow-y:auto;">
-    <table style="font-size:0.85rem;">
-      <thead><tr><th>#</th><th>نوع</th><th>عنوان</th><th>مبلغ</th><th>تاریخ</th></tr></thead>
-      <tbody>
-        ${relevantTransactions.map((t, idx) => `
-          <tr>
-            <td>${idx + 1}</td>
-            <td style="color: ${t.type === 'income' ? 'var(--success-color)' : 'var(--danger-color)'}">${t.type === 'income' ? 'درآمد' : 'هزینه'}</td>
-            <td>${t.title}</td>
-            <td>${formatCurrency(t.amount)}</td>
-            <td>${t.date}</td>
-          </tr>
-        `).join('')}
-      </tbody>
-    </table>
-    </div>` : '<p>هیچ تراکنش مستقیمی برای این حساب یافت نشد.</p>'}
-  `;
-  csDetailsDiv.innerHTML = detailsHtml;
-}
-
-
-function deleteCustomerSupplier(id) {
-  // Check if there are any associated invoices or transactions
-  const cs = customersSuppliers.find(c => c.id === id);
-  if (!cs) return;
-
-  const hasSalesInvoices = salesInvoices.some(inv => inv.client === cs.name);
-  const hasPurchaseInvoices = purchaseInvoices.some(inv => inv.supplier === cs.name);
-  const hasTransactions = transactions.some(t => t.title.includes(cs.name)); // Simplified check
-
-  if (hasSalesInvoices || hasPurchaseInvoices || hasTransactions) {
-      if (!confirm(`این حساب دارای فاکتورها یا تراکنش‌های مرتبط است. با حذف این حساب، این ارتباطات از بین نمی‌روند. آیا مطمئنید که می‌خواهید آن را حذف کنید؟`)) {
-          return;
-      }
-  }
-
-  customersSuppliers = customersSuppliers.filter(cs => cs.id !== id);
-  saveData('customersSuppliers', customersSuppliers);
-  renderCustomersSuppliers();
-  populateCustomerSupplierDatalists(); // Update datalists after deletion
-  csDetailsDiv.innerHTML = ''; // Clear details if deleted
-  showMessage('حساب حذف شد.', 'warning');
-}
-
-// --- Inventory Functions ---
-const formInventory = document.getElementById('form-inventory');
-const inventoryList = document.getElementById('inventory-list');
-
-formInventory.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const name = document.getElementById('inv-name').value;
-  const qty = parseInt(document.getElementById('inv-qty').value);
-
-  const existingItemIndex = inventoryItems.findIndex(item => item.name === name);
-  if (existingItemIndex > -1) {
-    inventoryItems[existingItemIndex].qty = qty; // Update existing quantity
-    showMessage('موجودی کالا به‌روزرسانی شد.');
-  } else {
-    inventoryItems.push({ id: Date.now(), name, qty });
-    showMessage('کالا/خدمت با موفقیت ذخیره شد.');
-  }
-
-  saveData('inventoryItems', inventoryItems);
-  renderInventory();
-  formInventory.reset();
-});
-
-function renderInventory() {
-  inventoryList.innerHTML = '';
-  inventoryItems.forEach((item, index) => {
-    const row = inventoryList.insertRow();
-    row.innerHTML = `
-      <td>${index + 1}</td>
-      <td>${item.name}</td>
-      <td>${item.qty}</td>
-      <td class="action-btn">
-        <button class="btn-primary small-button" onclick="editInventoryItem(${item.id})">📝</button>
-        <button class="btn-danger small-button" onclick="deleteInventoryItem(${item.id})">✖</button>
-      </td>
-    `;
-  });
-}
-
-function deleteInventoryItem(id) {
-  inventoryItems = inventoryItems.filter(item => item.id !== id);
-  saveData('inventoryItems', inventoryItems);
-  renderInventory();
-  showMessage('کالا/خدمت حذف شد.', 'warning');
-}
-
-function editInventoryItem(id) {
-  const itemToEdit = inventoryItems.find(item => item.id === id);
-  if (itemToEdit) {
-    document.getElementById('inv-name').value = itemToEdit.name;
-    document.getElementById('inv-qty').value = itemToEdit.qty;
-    // For a real edit, you'd want to remove the item and re-add or update by ID on form submit.
-    // For this simple example, we'll just pre-fill and let the 'submit' handle update/add.
-    deleteInventoryItem(id); // Temporarily remove and let form re-add/update
-  }
-}
-
-// --- Returns Functions ---
-const formReturns = document.getElementById('form-returns');
-const returnsList = document.getElementById('returns-list');
-
-formReturns.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const itemName = document.getElementById('return-item-name').value;
-  const qty = parseInt(document.getElementById('return-qty').value);
-  const price = parseFloat(document.getElementById('return-price').value);
-  const date = document.getElementById('return-date').value;
-  const note = document.getElementById('return-note').value;
-
-  if (isNaN(qty) || qty <= 0 || isNaN(price) || price < 0) {
-    showMessage('تعداد یا قیمت معتبر نیست.', 'error');
-    return;
-  }
-
-  returns.push({ id: Date.now(), itemName, quantity: qty, unitPrice: price, total: qty * price, date, note });
-  saveData('returns', returns);
-  renderReturns();
-  formReturns.reset();
-  showMessage('کالای مرجوعی ثبت شد.');
-});
-
-function renderReturns() {
-  returnsList.innerHTML = '';
-  returns.forEach((item, index) => {
-    const row = returnsList.insertRow();
-    row.innerHTML = `
-      <td>${index + 1}</td>
-      <td>${item.itemName}</td>
-      <td>${item.quantity}</td>
-      <td>${formatCurrency(item.unitPrice)}</td>
-      <td>${formatCurrency(item.total)}</td>
-      <td>${item.date}</td>
-      <td>${item.note || '-'}</td>
-      <td class="action-btn">
-        <button class="btn-danger small-button" onclick="deleteReturnItem(${item.id})">✖</button>
-      </td>
-    `;
-  });
-}
-
-function deleteReturnItem(id) {
-  returns = returns.filter(item => item.id !== id);
-  saveData('returns', returns);
-  renderReturns();
-  showMessage('کالای مرجوعی حذف شد.', 'warning');
-}
-
-// --- Reports Functions ---
-function renderReports() {
-  renderProfitLossChart();
-  renderCashFlowChart();
-}
-
-function renderProfitLossChart() {
-  const ctx = document.getElementById('report-profit-loss').getContext('2d');
-  if (profitLossChart) {
-    profitLossChart.destroy();
-  }
-
-  // Calculate profit/loss
-  const totalIncome = transactions.filter(t => t.type === 'income').reduce((sum, t) => sum + t.amount, 0);
-  const totalExpenseTransactions = transactions.filter(t => t.type === 'expense').reduce((sum, t) => sum + t.amount, 0);
-  const totalPurchaseExpense = purchaseInvoices.reduce((sum, inv) => sum + inv.total, 0);
-  const totalSalesRevenue = salesInvoices.reduce((sum, inv) => sum + inv.total, 0);
-
-  // Simplified Cost of Goods Sold (COGS) - assuming all purchased items are sold.
-  // In a real scenario, this would be complex with inventory tracking.
-  // For this demo, let's say purchase invoices are part of COGS or direct expenses.
-  const totalExpenses = totalExpenseTransactions + totalPurchaseExpense;
-
-  const profit = totalSalesRevenue - totalExpenses; // A very simplified profit calculation
-
-  profitLossChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: ['درآمد کل (فروش)', 'هزینه کل (تراکنش + خرید)', 'سود/زیان'],
-      datasets: [{
-        label: 'مبالغ مالی',
-        data: [totalSalesRevenue, totalExpenses, profit],
-        backgroundColor: [
-          'rgba(75, 192, 192, 0.6)', // Income
-          'rgba(255, 99, 132, 0.6)', // Expense
-          profit >= 0 ? 'rgba(46, 125, 50, 0.6)' : 'rgba(211, 47, 47, 0.6)' // Profit/Loss
-        ],
-        borderColor: [
-          'rgba(75, 192, 192, 1)',
-          'rgba(255, 99, 132, 1)',
-          profit >= 0 ? 'rgba(46, 125, 50, 1)' : 'rgba(211, 47, 47, 1)'
-        ],
-        borderWidth: 1
-      }]
-    },
-    options: {
-      responsive: true,
-      scales: {
-        y: {
-          beginAtZero: true,
-          ticks: {
-            callback: function(value) {
-              return formatCurrency(value);
-            },
-            font: { family: 'Vazirmatn' }
-          }
-        },
-        x: {
-          ticks: {
-            font: { family: 'Vazirmatn' }
-          }
-        }
-      },
-      plugins: {
-        title: {
-          display: true,
-          text: 'گزارش سود و زیان (ساده شده)',
-          font: { family: 'Vazirmatn', size: 16 }
-        },
-        tooltip: {
-          rtl: true,
-          titleFont: { family: 'Vazirmatn' },
-          bodyFont: { family: 'Vazirmatn' },
-          callbacks: {
-            label: function(context) {
-              let label = context.label || '';
-              if (label) {
-                label += ': ';
-              }
-              if (context.parsed.y !== null) {
-                label += formatCurrency(context.parsed.y) + ' تومان';
-              }
-              return label;
-            }
-          }
-        },
-        legend: {
-          rtl: true,
-          labels: {
-            font: { family: 'Vazirmatn' }
-          }
-        }
-      }
-    }
-  });
-}
-
-function renderCashFlowChart() {
-  const ctx = document.getElementById('report-cash-flow').getContext('2d');
-  if (cashFlowChart) {
-    cashFlowChart.destroy();
-  }
-
-  // Monthly cash flow (actual money in/out based on dates)
-  const cashFlowData = {}; // {YYYY-MM: { cashIn: 0, cashOut: 0, net: 0 } }
-
-  transactions.forEach(t => {
-    const month = t.date.substring(0, 7);
-    if (!cashFlowData[month]) {
-      cashFlowData[month] = { cashIn: 0, cashOut: 0 };
-    }
-    if (t.type === 'income') {
-      cashFlowData[month].cashIn += t.amount;
-    } else {
-      cashFlowData[month].cashOut += t.amount;
-    }
-  });
-
-  // For sales invoices, consider 'paid' ones as cash in
-  salesInvoices.filter(inv => inv.status === 'paid').forEach(inv => {
-    const month = inv.date.substring(0, 7);
-    if (!cashFlowData[month]) {
-      cashFlowData[month] = { cashIn: 0, cashOut: 0 };
-    }
-    cashFlowData[month].cashIn += inv.total;
-  });
-
-  // For purchase invoices, consider all as cash out (simplification for this demo)
-  // In a real app, you'd track payment status for purchase invoices too
-  purchaseInvoices.forEach(inv => {
-    const month = inv.date.substring(0, 7);
-    if (!cashFlowData[month]) {
-      cashFlowData[month] = { cashIn: 0, cashOut: 0 };
-    }
-    cashFlowData[month].cashOut += inv.total;
-  });
-
-  const sortedMonths = Object.keys(cashFlowData).sort();
-  const monthlyCashIn = sortedMonths.map(month => cashFlowData[month].cashIn);
-  const monthlyCashOut = sortedMonths.map(month => cashFlowData[month].cashOut);
-  const monthlyNetCashFlow = sortedMonths.map(month => cashFlowData[month].cashIn - cashFlowData[month].cashOut);
-
-  cashFlowChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: sortedMonths.map(m => {
-          const [year, monthNum] = m.split('-');
-          const monthName = new Date(year, monthNum - 1, 1).toLocaleString('fa-IR', { month: 'long' });
-          return `${monthName} ${year}`;
-      }),
-      datasets: [
-        {
-          label: 'ورودی نقدینگی',
-          data: monthlyCashIn,
-          borderColor: 'rgba(46, 125, 50, 1)', // success color
-          backgroundColor: 'rgba(46, 125, 50, 0.2)',
-          fill: true,
-          tension: 0.3
-        },
-        {
-          label: 'خروجی نقدینگی',
-          data: monthlyCashOut,
-          borderColor: 'rgba(211, 47, 47, 1)', // danger color
-          backgroundColor: 'rgba(211, 47, 47, 0.2)',
-          fill: true,
-          tension: 0.3
-        },
-        {
-          label: 'خالص جریان نقدینگی',
-          data: monthlyNetCashFlow,
-          borderColor: 'rgba(75, 192, 192, 1)',
-          backgroundColor: 'rgba(75, 192, 192, 0.2)',
-          fill: false,
-          tension: 0.3
-        }
-      ]
-    },
-    options: {
-      responsive: true,
-      scales: {
-        y: {
-          beginAtZero: true,
-          ticks: {
-            callback: function(value) {
-              return formatCurrency(value);
-            },
-            font: { family: 'Vazirmatn' }
-          }
-        },
-        x: {
-          ticks: {
-            font: { family: 'Vazirmatn' }
-          }
-        }
-      },
-      plugins: {
-        title: {
-          display: true,
-          text: 'نمودار جریان نقدینگی',
-          font: { family: 'Vazirmatn', size: 16 }
-        },
-        tooltip: {
-          rtl: true,
-          titleFont: { family: 'Vazirmatn' },
-          bodyFont: { family: 'Vazirmatn' },
-          callbacks: {
-            label: function(context) {
-              let label = context.dataset.label || '';
-              if (label) {
-                label += ': ';
-              }
-              if (context.parsed.y !== null) {
-                label += formatCurrency(context.parsed.y) + ' تومان';
-              }
-              return label;
-            }
-          }
-        },
-        legend: {
-          rtl: true,
-          labels: {
-            font: { family: 'Vazirmatn' }
-          }
-        }
-      }
-    }
-  });
-}
-
-// --- PDF Generation (Enhanced for RTL/Persian) ---
-document.getElementById('btn-save-pdf').addEventListener('click', () => {
-  const doc = new jspdf.jsPDF(); // Create a new jsPDF instance for each export
-
-  // Set the font and RTL properties for the new document
-  doc.addFileToVFS('Vazirmatn-Regular.ttf', VAZIRMATN_NORMAL_BASE64);
-  doc.addFont('Vazirmatn-Regular.ttf', 'Vazirmatn', 'normal');
-  doc.setFont('Vazirmatn');
-  doc.setRTL(true); // Enable Right-to-Left writing
-
-  doc.setFontSize(20);
-  doc.text('گزارش تراکنش‌های مالی', doc.internal.pageSize.getWidth() / 2, 20, { align: 'center' }); // Centered title
-
-  doc.setFontSize(10); // Smaller font for table content
-
-  const headers = [['#', 'نوع', 'عنوان', 'مبلغ (تومان)', 'تاریخ']];
-  const data = transactions.map((t, index) => [
-    (index + 1).toString(),
-    t.type === 'income' ? 'درآمد' : 'هزینه',
-    t.title,
-    formatCurrency(t.amount),
-    t.date
-  ]);
-
-  // Use jspdf-autotable for table generation
-  doc.autoTable({
-    head: headers,
-    body: data,
-    startY: 30,
-    theme: 'grid',
-    styles: {
-      font: 'Vazirmatn', // Use the custom font
-      fontStyle: 'normal',
-      halign: 'center', // Center align text in cells
-      fontSize: 8, // Adjust font size for table
-      cellPadding: 2 // Added cell padding for better spacing
-    },
-    headStyles: {
-      fillColor: [75, 108, 183], // Primary color
-      textColor: [255, 255, 255]
-    },
-    alternateRowStyles: {
-      fillColor: [243, 246, 255] // Light background
-    },
-    // This is crucial for RTL text in autoTable and conditional coloring
-    didDrawCell: function(data) {
-      if (data.section === 'body' && data.column.index === 1) { // Apply color to the "نوع" column
-        const text = data.cell.text[0];
-        if (text === 'درآمد') {
-            doc.setTextColor(46, 125, 50); // Green for income
-        } else if (text === 'هزینه') {
-            doc.setTextColor(211, 47, 47); // Red for expense
-        }
-      } else {
-        doc.setTextColor(0, 0, 0); // Black for other text
-      }
-    },
-    margin: { right: 10, left: 10 }, // Adjust margins for RTL
-    columnStyles: {
-        0: { cellWidth: 15 },
-        1: { cellWidth: 25 },
-        2: { cellWidth: 60 },
-        3: { cellWidth: 35 },
-        4: { cellWidth: 30 }
-    }
-  });
-
-  doc.save('گزارش-تراکنش‌ها.pdf');
-  showMessage('گزارش PDF با موفقیت ذخیره شد.');
-});
-
-
-// --- Initial Render on Load ---
-document.addEventListener('DOMContentLoaded', () => {
-  renderTransactions();
-  renderSalesInvoices();
-  renderPurchaseInvoices();
-  renderChecks();
-  renderCustomersSuppliers();
-  populateCustomerSupplierDatalists(); // Populate datalists on load
-  renderInventory();
-  renderReturns();
-  updateDashboard(); // Initial dashboard load
-});
+  init();
+})();
 
 </script>
+
 </body>
-</html>  
+</html>
