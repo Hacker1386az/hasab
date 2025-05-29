@@ -1,0 +1,2891 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>سامانه حسابداری پیشرفته - نسخه کامل</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;900&display=swap');
+        :root {
+            --primary-color: #0b3d91;
+            --secondary-color: #074e08;
+            --accent-color: #ff7043;
+            --accent-hover: #e06137;
+            --bg-light: #11b3c2;
+            --bg-white: #fcffd2;
+            --text-dark: #222;
+            --text-light: #555;
+            --success-color: #2e7d32;
+            --danger-color: #d32f2f;
+            --warning-color: #f9a825;
+            --font-family: 'Vazirmatn', sans-serif;
+            --shadow-box: 0 10px 30px rgba(11,61,145,0.15);
+        }
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            font-family: var(--font-family);
+            background: var(--bg-light);
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            scroll-behavior: smooth;
+            overscroll-behavior-y: contain;
+        }
+        header {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-align: center;
+            padding: 1.25rem;
+            font-weight: 900;
+            font-size: 2rem;
+            box-shadow: var(--shadow-box);
+            user-select: none;
+            letter-spacing: 0.12em;
+            text-shadow: 0 0 5px rgba(0,0,0,0.15);
+        }
+        nav {
+            background: var(--secondary-color);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            padding: 0.75rem 1rem;
+            gap: 0.25rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            user-select: none;
+            position: sticky;
+            top: 0;
+            z-index: 12000;
+        }
+        nav button {
+            background: none;
+            border: none;
+            color: white;
+            font-weight: 700;
+            font-size: 1.05rem;
+            padding: 0.85rem 1.3rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            border-radius: 12px;
+            margin: 0.15rem;
+            box-shadow: inset 0 0 10px rgba(255,255,255,0.15);
+            filter: drop-shadow(0 1px 1px rgba(0,0,0,0.15));
+            text-shadow: 0 0 2px rgba(0,0,0,0.3);
+            min-width: 100px;
+        }
+        nav button.active, nav button:hover {
+            background-color: var(--accent-color);
+            color: white;
+            outline: none;
+            filter: drop-shadow(0 2px 5px rgba(255,112,67,0.6));
+            font-weight: 800;
+            letter-spacing: 0.02em;
+        }
+        main {
+            flex: 1;
+            padding: 1.5rem 1rem 3rem;
+            max-width: 1150px;
+            margin: 0 auto;
+            width: 95%;
+            background: var(--bg-white);
+            border-radius: 14px;
+            box-shadow: var(--shadow-box);
+            overflow-y: auto;
+            min-height: 75vh;
+            scroll-margin-top: 70px;
+        }
+        section {
+            display: none;
+        }
+        section.active {
+            display: block;
+        }
+        h2 {
+            margin-top: 0;
+            margin-bottom: 1.2rem;
+            color: var(--primary-color);
+            font-weight: 900;
+            font-size: 1.75rem;
+            border-bottom: 4px solid var(--accent-color);
+            padding-bottom: 0.3rem;
+            letter-spacing: 0.03em;
+        }
+        form {
+            max-width: 700px;
+            margin-bottom: 2rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.35rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            user-select: none;
+            font-size: 1rem;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 0.5rem 1rem;
+            margin-bottom: 1.3rem;
+            border-radius: 12px;
+            border: 2px solid #ddd;
+            font-family: var(--font-family);
+            font-size: 1.05rem;
+            direction: rtl;
+            transition: border-color 0.35s ease, box-shadow 0.25s ease;
+            outline-offset: 0;
+            user-select: text;
+        }
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 8px var(--accent-color);
+            outline: none;
+            user-select: text;
+        }
+        button[type=submit], .btn-primary {
+            background: var(--primary-color);
+            color: white;
+            font-weight: 900;
+            border: none;
+            border-radius: 14px;
+            padding: 0.85rem 2rem;
+            font-size: 1.3rem;
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.4s ease, box-shadow 0.3s ease;
+            filter: drop-shadow(0 3px 3px rgba(11,61,145,0.4));
+            box-shadow: inset 0 -3px 6px rgba(255,255,255,0.35);
+            min-width: 140px;
+            letter-spacing: 0.06em;
+        }
+        button[type=submit]:hover, .btn-primary:hover {
+            background: var(--accent-hover);
+            box-shadow: 0 6px 15px rgba(255,112,67,0.7);
+            outline: none;
+        }
+        .table-scroll {
+            overflow-x: auto;
+            border-radius: 12px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+            background: var(--bg-white);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            user-select: none;
+        }
+        th, td {
+            border: 1.5px solid #ddd;
+            padding: 0.7rem 1.2rem;
+            text-align: center;
+            vertical-align: middle;
+            user-select: text;
+        }
+        th {
+            background: var(--primary-color);
+            color: white;
+            font-weight: 900;
+        }
+        td.action-btn {
+            padding: 0.3rem;
+            white-space: nowrap;
+        }
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+            border-radius: 8px;
+            padding: 0.35rem 1rem;
+            border: none;
+            font-weight: 900;
+            cursor: pointer;
+            margin-left: 0.4rem;
+            transition: background-color 0.3s ease;
+            user-select: none;
+            min-width: 48px;
+            font-size: 1rem;
+            line-height: 1;
+        }
+        .btn-primary:hover, .btn-danger:hover {
+            opacity: 0.85;
+            outline: none;
+            filter: drop-shadow(0 0 7px var(--accent-color));
+        }
+        .btn-danger {
+            background: var(--danger-color);
+            color: white;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            padding: 0.35rem 1rem;
+            font-weight: 900;
+            user-select: none;
+            min-width: 48px;
+            font-size: 1rem;
+            line-height: 1;
+        }
+        .btn-info {
+            background: #2196f3; /* Blue */
+            color: white;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            padding: 0.35rem 1rem;
+            font-weight: 900;
+            transition: background-color 0.3s ease;
+            user-select: none;
+            min-width: 48px;
+            font-size: 1rem;
+            line-height: 1;
+        }
+        .btn-info:hover {
+            background: #1976d2;
+            outline: none;
+        }
+        .status-chip {
+            padding: 0.3rem 0.9rem;
+            border-radius: 28px;
+            font-weight: 900;
+            font-size: 0.8rem;
+            color: white;
+            user-select: none;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            letter-spacing: 0.02em;
+        }
+        .status-paid {
+            background-color: var(--success-color);
+            box-shadow: 0 2px 12px rgba(46, 125, 50, 0.35);
+        }
+        .status-pending {
+            background-color: var(--warning-color);
+            color: #222;
+            box-shadow: 0 2px 12px rgba(249, 168, 37, 0.35);
+        }
+        .status-overdue {
+            background-color: var(--danger-color);
+            box-shadow: 0 2px 12px rgba(211, 47, 47, 0.35);
+        }
+        .status-cleared {
+            background-color: var(--success-color);
+        }
+        .status-bounced {
+            background-color: var(--danger-color);
+        }
+        .flex-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .flex-grow {
+            flex-grow: 1;
+        }
+        .small-button {
+            background: var(--accent-color);
+            color: white;
+            border-radius: 60%;
+            border: none;
+            padding: 0.2rem 0.6rem;
+            font-weight: 900;
+            cursor: pointer;
+            font-size: 1.2rem;
+            line-height: 1;
+            user-select: none;
+            transition: background-color 0.3s ease;
+            filter: drop-shadow(0 0 3px rgba(255,112,67,0.75));
+            box-shadow: inset 0 0 8px rgba(255,255,255,0.5);
+        }
+        .small-button:hover {
+            background: var(--primary-color);
+            outline: none;
+            filter: drop-shadow(0 0 10px rgba(11,61,145,0.75));
+        }
+        .message {
+            padding: 0.9rem 1.3rem;
+            background: var(--success-color);
+            color: white;
+            border-radius: 16px;
+            margin-bottom: 1rem;
+            font-weight: 900;
+            text-align: center;
+            user-select: none;
+            position: fixed;
+            top: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 15000;
+            min-width: 300px;
+            box-shadow: 0 6px 18px rgba(46,125,50,0.45);
+            animation: fadeInOut 4s forwards;
+            font-size: 1.1rem;
+            letter-spacing: 0.03em;
+        }
+        .error-message {
+            background: var(--danger-color);
+            box-shadow: 0 6px 15px rgba(211,47,47,0.6);
+        }
+        .warning-message {
+            background: var(--warning-color);
+            color: #222;
+            box-shadow: 0 6px 15px rgba(249,168,37,0.7);
+        }
+        .info-message {
+            background: var(--secondary-color);
+            box-shadow: 0 6px 20px rgba(20,70,160,0.7);
+        }
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+            10% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            90% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+        }
+        @media (max-width: 900px) {
+            .flex-row {
+                flex-direction: column;
+            }
+            nav {
+                justify-content: center;
+            }
+            nav button {
+                flex-grow: 1;
+                min-width: 130px;
+            }
+            main {
+                width: 98%;
+                padding: 1rem 0.5rem 3rem;
+            }
+        }
+        /* Chart container custom */
+        .chart-container {
+            max-width: 720px;
+            margin: 1rem auto 2rem;
+            background: var(--bg-white);
+            padding: 1rem 1.2rem;
+            border-radius: 14px;
+            box-shadow: var(--shadow-box);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 14000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.45);
+            padding-top: 75px;
+            user-select: none;
+        }padding
+        .modal-content {
+            background-color: #fefefe;
+            margin: 0 auto;
+            padding: 20px 25px;
+            border: 1px solid #888;
+            width: 85%;
+            max-width: 740px;
+            border-radius: 16px;
+            box-shadow: 0 10px 28px rgba(0,0,0,0.4);
+            position: relative;
+            font-family: var(--font-family);
+            direction: rtl;
+            user-select: text;
+            overflow-y: auto;
+            max-height: 85vh;
+        }
+        .close-button {
+            color: #aaa;
+            float: left;
+            font-size: 30px;
+            font-weight: 900;
+            cursor: pointer;
+            user-select: none;
+            transition: color 0.25s ease;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: var(--primary-color);
+            text-decoration: none;
+            outline: none;
+            user-select: none;
+        }
+        .modal-content h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid var(--accent-color);
+            padding-bottom: 0.75rem;
+            font-weight: 900;
+            font-size: 1.45rem;
+            letter-spacing: 0.03em;
+        }
+        .modal-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.2rem;
+            font-size: 0.92rem;
+            user-select: none;
+        }
+        .modal-content th, .modal-content td {
+            border: 1.2px solid #ccc;
+            padding: 10px 14px;
+            text-align: center;
+        }
+        .modal-content th {
+            background-color: var(--secondary-color);
+            color: white;
+            font-weight: 900;
+            user-select: none;
+        }
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 2rem;
+            gap: 1rem;
+        }
+        .modal-footer button {
+            margin-left: 6px;
+            padding: 0.65rem 1.3rem;
+            font-weight: 900;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 12px;
+            border: none;
+            user-select: none;
+        }
+        .modal-footer button.btn-primary {
+            background: var(--primary-color);
+            color: white;
+            filter: drop-shadow(0 4px 10px rgba(11,61,145,0.45));
+            transition: background-color 0.3s ease;
+        }
+        .modal-footer button.btn-primary:hover {
+            background: var(--accent-hover);
+            outline: none;
+        }
+        .modal-footer button.btn-danger {
+            background: var(--danger-color);
+            color: white;
+            filter: drop-shadow(0 4px 12px rgba(211,47,47,0.6));
+            transition: background-color 0.3s ease;
+        }
+        .modal-footer button.btn-danger:hover {
+            background: #b62a2a;
+            outline: none;
+        }
+
+        /* Scrollbars for modals and tables */
+        .modal-content::-webkit-scrollbar {
+            width: 10px;
+        }
+        .modal-content::-webkit-scrollbar-track {
+            background: #eee;
+            border-radius: 12px;
+        }
+        .modal-content::-webkit-scrollbar-thumb {
+            background: var(--accent-color);
+            border-radius: 12px;
+        }
+        .table-scroll::-webkit-scrollbar {
+            height: 8px;
+        }
+        .table-scroll::-webkit-scrollbar-track {
+            background: #f0f0f0;
+            border-radius: 10px;
+        }
+        .table-scroll::-webkit-scrollbar-thumb {
+            background-color: var(--accent-color);
+            border-radius: 10px;
+        }
+        /* Enhanced Select dropdown (native fallback with datalist for RTL) */
+        select.custom-select {
+            cursor: pointer;
+            appearance: none;
+            padding-right: 1rem;
+            background-image:
+                linear-gradient(45deg, transparent 50%, var(--text-light) 50%),
+                linear-gradient(135deg, var(--text-light) 50%, transparent 50%),
+                linear-gradient(to right, var(--accent-color), var(--accent-color));
+            background-position:
+                calc(100% - 20px) calc(1em + 2px),
+                calc(100% - 15px) calc(1em + 2px),
+                calc(100% - 25px) 0.8em;
+            background-size: 5px 5px, 5px 5px, 1px 1.5em;
+            background-repeat: no-repeat;
+            border-radius: 14px;
+            transition: border-color 0.3s ease;
+        }
+        select.custom-select:focus {
+            border-color: var(--accent-color);
+            outline: none;
+            box-shadow: 0 0 8px var(--accent-color);
+        }
+
+        /* Inputs and selects with icon support */
+        .input-group {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .input-group input, .input-group select {
+            padding-left: 2.4rem;
+        }
+        .input-group .input-icon {
+            position: absolute;
+            left: 0.8rem;
+            color: var(--accent-color);
+            font-size: 1.3rem;
+            user-select: none;
+            pointer-events: none;
+            transition: color 0.3s ease;
+        }
+        .input-group input:focus + .input-icon,
+        .input-group select:focus + .input-icon {
+            color: var(--primary-color);
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/persian-date@1.1.0/dist/persian-date.min.js"></script>
+    <script src="https://unpkg.com/persian-datepicker@1.2.0/dist/persian-datepicker.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/persian-datepicker@1.2.0/dist/persian-datepicker.min.css"/>
+</head>
+<body>
+    <header>سامانه حسابداری پیشرفته - نسخه کامل</header>
+    <nav role="tablist" aria-label="ناوبری سایت حسابداری پیشرفته">
+        <button role="tab" aria-selected="true" aria-controls="tab-dashboard" id="tabbtn-dashboard" class="active">داشبورد</button>
+        <button role="tab" aria-selected="false" aria-controls="tab-accounts" id="tabbtn-accounts">حسابداری مالی</button>
+        <button role="tab" aria-selected="false" aria-controls="tab-income-expense" id="tabbtn-income-expense">درآمد و هزینه</button>
+        <button role="tab" aria-selected="false" aria-controls="tab-invoices" id="tabbtn-invoices">فاکتورها (فروش)</button>
+        <button role="tab" aria-selected="false" aria-controls="tab-purchase-invoices" id="tabbtn-purchase-invoices">فاکتور خرید</button>
+        <button role="tab" aria-selected="false" aria-controls="tab-customers-suppliers" id="tabbtn-cust-sup">مشتریان و تامین‌کنندگان</button>
+        <button role="tab" aria-selected="false" aria-controls="tab-inventory" id="tabbtn-inventory">مدیریت موجودی</button>
+        <button role="tab" aria-selected="false" aria-controls="tab-payroll" id="tabbtn-payroll">حقوق و دستمزد</button>
+        <button role="tab" aria-selected="false" aria-controls="tab-fixed-assets" id="tabbtn-fixed-assets">دارایی‌های ثابت</button>
+        <button role="tab" aria-selected="false" aria-controls="tab-projects" id="tabbtn-projects">مدیریت پروژه</button>
+        <button role="tab" aria-selected="false" aria-controls="tab-budgeting" id="tabbtn-budgeting">بودجه‌بندی</button>
+        <button role="tab" aria-selected="false" aria-controls="tab-returns" id="tabbtn-returns">کالاهای مرجوعی</button>
+        <button role="tab" aria-selected="false" aria-controls="tab-reports" id="tabbtn-reports">گزارش‌ها</button>
+        <button role="tab" aria-selected="false" aria-controls="tab-users" id="tabbtn-users">کاربران و دسترسی‌ها</button>
+        <button role="tab" aria-selected="false" aria-controls="tab-settings" id="tabbtn-settings">تنظیمات</button>
+    </nav>
+
+    <main>
+        <section id="tab-dashboard" role="tabpanel" aria-labelledby="tabbtn-dashboard" class="active">
+            <h2>داشبورد مالی حرفه‌ای</h2>
+            <div class="flex-row" style="gap:3rem; max-width:720px; margin-bottom:2rem;">
+                <div><strong>درآمد کل:</strong> <span id="dashboard-total-income" style="color:var(--success-color)">0 تومان</span></div>
+                <div><strong>هزینه کل:</strong> <span id="dashboard-total-expense" style="color:var(--danger-color)">0 تومان</span></div>
+                <div><strong>تراز حساب:</strong> <span id="dashboard-balance">0 تومان</span></div>
+            </div>
+            <div class="chart-container" aria-label="نمودار درصد درآمد و هزینه" role="img">
+                <h3>نمودار درصد درآمد و هزینه</h3>
+                <canvas id="chart-income-expense"></canvas>
+            </div>
+            <div class="chart-container" aria-label="گزارش سود و زیان" role="img">
+                <h3>گزارش سود و زیان</h3>
+                <canvas id="report-profit-loss"></canvas>
+            </div>
+            <div class="chart-container" aria-label="گزارش جریان نقدینگی" role="img">
+                <h3>گزارش جریان نقدینگی</h3>
+                <canvas id="report-cash-flow"></canvas>
+            </div>
+        </section>
+
+        <section id="tab-accounts" role="tabpanel" aria-labelledby="tabbtn-accounts">
+            <h2>حسابداری مالی و اسناد مالی</h2>
+            <form id="form-accounting-entry" style="max-width: 720px;">
+                <div class="flex-row">
+                    <div class="flex-grow">
+                        <label for="acc-entry-type">نوع سند مالی</label>
+                        <select id="acc-entry-type" class="custom-select" required>
+                            <option value="">انتخاب کنید</option>
+                            <option value="sales-invoice">فاکتور فروش</option>
+                            <option value="purchase-invoice">فاکتور خرید</option>
+                            <option value="salary-payment">حقوق و دستمزد</option>
+                            <option value="manual-entry">ثبت دستی</option>
+                            <option value="receive-payment">دریافت وجه</option>
+                            <option value="pay-bill">پرداخت قبض</option>
+                        </select>
+                    </div>
+                    <div class="flex-grow">
+                        <label for="acc-entry-date">تاریخ سند</label>
+                        <input type="text" id="acc-entry-date" class="persian-date-picker" required />
+                    </div>
+                </div>
+                <div>
+                    <label for="acc-entry-description">توضیحات سند</label>
+                    <textarea id="acc-entry-description" rows="3" placeholder="توضیحات مربوط به سند مالی" style="resize:none;"></textarea>
+                </div>
+                <button type="submit">ثبت سند مالی جدید</button>
+            </form>
+            <h3>لیست اسناد مالی</h3>
+            <div class="table-scroll" style="max-height:350px; overflow-y:auto;">
+                <table aria-label="لیست اسناد مالی">
+                    <thead>
+                        <tr><th>#</th><th>نوع سند</th><th>تاریخ</th><th>توضیحات</th><th>عملیات</th></tr>
+                    </thead>
+                    <tbody id="accounting-entries-list"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="tab-income-expense" role="tabpanel" aria-labelledby="tabbtn-income-expense">
+            <h2>ثبت درآمد و هزینه</h2>
+            <form id="form-income-expense">
+                <div class="flex-row">
+                    <div class="flex-grow">
+                        <label for="ie-type">نوع تراکنش</label>
+                        <select id="ie-type" class="custom-select" required>
+                            <option value="">انتخاب کنید</option>
+                            <option value="income">درآمد</option>
+                            <option value="expense">هزینه</option>
+                        </select>
+                    </div>
+                    <div class="flex-grow">
+                        <label for="ie-title">عنوان</label>
+                        <input type="text" id="ie-title" required placeholder="مثال: فروش محصول" autocomplete="off" />
+                    </div>
+                </div>
+                <div class="flex-row">
+                    <div class="flex-grow">
+                        <label for="ie-amount">مبلغ (تومان)</label>
+                        <input type="number" id="ie-amount" min="0" required />
+                    </div>
+                    <div class="flex-grow">
+                        <label for="ie-date">تاریخ</label>
+                        <input type="text" id="ie-date" class="persian-date-picker" required />
+                    </div>
+                </div>
+                <button type="submit">ثبت تراکنش</button>
+            </form>
+            <h3>لیست تراکنش‌ها</h3>
+            <div class="table-scroll" style="max-height:400px; overflow-y:auto;">
+                <table aria-label="لیست تراکنش‌های مالی">
+                    <thead>
+                        <tr>
+                            <th>#</th><th>نوع</th><th>عنوان</th><th>مبلغ</th><th>تاریخ</th><th>عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ie-transaction-list"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="tab-invoices" role="tabpanel" aria-labelledby="tabbtn-invoices">
+            <h2>مدیریت فاکتورهای فروش پیشرفته</h2>
+            <form id="form-invoice" style="max-width:800px;">
+                <div class="flex-row">
+                    <div class="flex-grow">
+                        <label for="invoice-client">نام مشتری</label>
+                        <input type="text" id="invoice-client" list="customer-names" required placeholder="مثال: شرکت نمونه" autocomplete="off" />
+                        <datalist id="customer-names"></datalist>
+                    </div>
+                    <div class="flex-grow">
+                        <label for="invoice-date">تاریخ</label>
+                        <input type="text" id="invoice-date" class="persian-date-picker" required />
+                    </div>
+                    <div class="flex-grow">
+                        <label for="invoice-status">وضعیت پرداخت</label>
+                        <select id="invoice-status" class="custom-select" required>
+                            <option value="pending">معلق</option>
+                            <option value="paid">پرداخت شده</option>
+                            <option value="overdue">دیر پرداخت شده</option>
+                        </select>
+                    </div>
+                </div>
+                <fieldset style="border: 2px solid var(--accent-color); border-radius: 12px; padding: 1rem; margin-top:1.2rem;">
+                    <legend style="font-weight: 900; font-size: 1.1rem;">اقلام فاکتور</legend>
+                    <table aria-label="اقلام فاکتور" style="width:100%; border-collapse:collapse; margin-bottom:1rem;">
+                        <thead>
+                            <tr style="background: var(--accent-color); color: #fff; font-weight: 700;">
+                                <th style="padding: 9px;">نام کالا/خدمت</th>
+                                <th style="padding: 9px;">تعداد</th>
+                                <th style="padding: 9px;">قیمت واحد (تومان)</th>
+                                <th style="padding: 9px;">تخفیف واحد (تومان)</th>
+                                <th style="padding: 9px;">مالیات واحد (تومان)</th>
+                                <th style="padding: 9px;">جمع (تومان)</th>
+                                <th style="padding: 9px;">عملیات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="invoice-items-body">
+                        </tbody>
+                    </table>
+                    <button type="button" id="btn-add-invoice-item" class="btn-primary">افزودن قلم</button>
+                    <div style="text-align: left; margin-top: 1rem; font-weight: 900; font-size: 1.1rem;">
+                        <p>جمع کل بدون تخفیف و مالیات: <span id="invoice-total-before-discount">0 تومان</span></p>
+                        <p>تخفیف کل فاکتور (تومان): <input type="number" id="invoice-total-discount-overall" value="0" min="0" style="width:140px; direction:ltr; display:inline-block; border-radius: 10px; border: 2px solid var(--accent-color); font-weight: 900; font-size: 1.1rem;" oninput="calculateInvoiceTotals()" /></p>
+                        <p>مالیات کل فاکتور (تومان): <input type="number" id="invoice-total-tax-overall" value="0" min="0" style="width:140px; direction:ltr; display:inline-block; border-radius: 10px; border: 2px solid var(--accent-color); font-weight: 900; font-size: 1.1rem;" oninput="calculateInvoiceTotals()" /></p>
+                        <p>هزینه حمل و نقل (تومان): <input type="number" id="invoice-shipping-cost" value="0" min="0" style="width:140px; direction:ltr; display:inline-block; border-radius: 10px; border: 2px solid var(--accent-color); font-weight: 900; font-size: 1.1rem;" oninput="calculateInvoiceTotals()" /></p>
+                        <p><strong>جمع کل نهایی: <span id="invoice-total">0 تومان</span></strong></p>
+                    </div>
+                </fieldset>
+                <button type="submit" style="margin-top: 1.25rem;">ذخیره فاکتور</button>
+            </form>
+            <h3>لیست فاکتورها</h3>
+            <div class="table-scroll" style="max-height:400px; overflow-y:auto;">
+                <table aria-label="لیست فاکتورها" style="font-size:0.95rem;">
+                    <thead>
+                        <tr>
+                            <th>#</th><th>مشتری</th><th>تاریخ</th><th>جمع کل</th><th>وضعیت</th><th>عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="invoice-list"></tbody>
+                </table>
+            </div>
+            <button id="btn-send-invoices" class="btn-primary" style="margin-top:1rem;">ارسال فاکتورهای انتخاب شده (شبیه‌سازی)</button>
+        </section>
+
+        <section id="tab-purchase-invoices" role="tabpanel" aria-labelledby="tabbtn-purchase-invoices">
+            <h2>مدیریت فاکتورهای خرید</h2>
+            <form id="form-purchase-invoice" style="max-width:800px;">
+                <div class="flex-row">
+                    <div class="flex-grow">
+                        <label for="purchase-invoice-supplier">نام تامین‌کننده</label>
+                        <input type="text" id="purchase-invoice-supplier" list="supplier-names" required placeholder="مثال: تامین‌کننده نمونه" autocomplete="off" />
+                        <datalist id="supplier-names"></datalist>
+                    </div>
+                    <div class="flex-grow">
+                        <label for="purchase-invoice-date">تاریخ</label>
+                        <input type="text" id="purchase-invoice-date" class="persian-date-picker" required />
+                    </div>
+                </div>
+                <fieldset style="border: 2px solid var(--accent-color); border-radius:12px; padding: 1rem; margin-top:1rem;">
+                    <legend style="font-weight: 900; font-size: 1.15rem;">اقلام فاکتور خرید</legend>
+                    <table aria-label="اقلام فاکتور خرید" style="width:100%; border-collapse:collapse; margin-bottom:1rem;">
+                        <thead>
+                            <tr style="background: var(--accent-color); color:#fff; font-weight: 700;">
+                                <th style="padding:8px;">نام کالا/خدمت</th>
+                                <th style="padding:8px;">تعداد</th>
+                                <th style="padding:8px;">قیمت واحد (تومان)</th>
+                                <th style="padding:8px;">تخفیف واحد (تومان)</th>
+                                <th style="padding:8px;">مالیات واحد (تومان)</th>
+                                <th style="padding:8px;">جمع (تومان)</th>
+                                <th style="padding:8px;">عملیات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="purchase-invoice-items-body">
+                        </tbody>
+                    </table>
+                    <button type="button" id="btn-add-purchase-invoice-item" class="btn-primary">افزودن قلم</button>
+                    <div style="text-align: left; margin-top: 1rem; font-weight: 900; font-size: 1.1rem;">
+                        <p>جمع کل بدون تخفیف و مالیات: <span id="purchase-invoice-total-before-discount">0 تومان</span></p>
+                        <p>تخفیف کل فاکتور (تومان): <input type="number" id="purchase-invoice-total-discount-overall" value="0" min="0" style="width:140px; direction:ltr; display:inline-block; border-radius: 10px; border: 2px solid var(--accent-color); font-weight: 900; font-size: 1.1rem;" oninput="calculatePurchaseInvoiceTotals()" /></p>
+                        <p>مالیات کل فاکتور (تومان): <input type="number" id="purchase-invoice-total-tax-overall" value="0" min="0" style="width:140px; direction:ltr; display:inline-block; border-radius: 10px; border: 2px solid var(--accent-color); font-weight: 900; font-size: 1.1rem;" oninput="calculatePurchaseInvoiceTotals()" /></p>
+                        <p>هزینه حمل و نقل (تومان): <input type="number" id="purchase-invoice-shipping-cost" value="0" min="0" style="width:140px; direction:ltr; display:inline-block; border-radius: 10px; border: 2px solid var(--accent-color); font-weight: 900; font-size: 1.1rem;" oninput="calculatePurchaseInvoiceTotals()" /></p>
+                        <p><strong>جمع کل نهایی: <span id="purchase-invoice-total">0 تومان</span></strong></p>
+                    </div>
+                </fieldset>
+                <button type="submit" style="margin-top: 1.25rem;">ذخیره فاکتور خرید</button>
+            </form>
+            <h3>لیست فاکتورهای خرید</h3>
+            <div class="table-scroll" style="max-height:400px; overflow-y:auto;">
+                <table aria-label="لیست فاکتورهای خرید" style="font-size:0.95rem;">
+                    <thead>
+                        <tr>
+                            <th>#</th><th>تامین‌کننده</th><th>تاریخ</th><th>جمع کل</th><th>عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="purchase-invoice-list"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="tab-customers-suppliers" role="tabpanel" aria-labelledby="tabbtn-cust-sup">
+            <h2>مدیریت مشتریان و تامین‌کنندگان</h2>
+            <form id="form-customer-supplier">
+                <div class="flex-row">
+                    <div class="flex-grow">
+                        <label for="cs-type">نوع</label>
+                        <select id="cs-type" class="custom-select" required>
+                            <option value="">انتخاب کنید</option>
+                            <option value="customer">مشتری</option>
+                            <option value="supplier">تامین‌کننده</option>
+                        </select>
+                    </div>
+                    <div class="flex-grow">
+                        <label for="cs-name">نام</label>
+                        <input type="text" id="cs-name" required placeholder="مثال: آقای محمدی" autocomplete="off" />
+                    </div>
+                </div>
+                <div class="flex-row">
+                    <div class="flex-grow">
+                        <label for="cs-phone">شماره تلفن</label>
+                        <input type="tel" id="cs-phone" placeholder="مثال: 09123456789" autocomplete="off" />
+                    </div>
+                    <div class="flex-grow">
+                        <label for="cs-email">ایمیل</label>
+                        <input type="email" id="cs-email" placeholder="مثال: info@example.com" autocomplete="off" />
+                    </div>
+                </div>
+                <div>
+                    <label for="cs-address">آدرس</label>
+                    <textarea id="cs-address" rows="2" placeholder="آدرس کامل" style="resize:none;"></textarea>
+                </div>
+                <button type="submit">ذخیره شخص</button>
+            </form>
+            <h3>لیست مشتریان و تامین‌کنندگان</h3>
+            <div class="table-scroll" style="max-height:400px; overflow-y:auto;">
+                <table aria-label="لیست مشتریان و تامین‌کنندگان">
+                    <thead>
+                        <tr>
+                            <th>#</th><th>نوع</th><th>نام</th><th>تلفن</th><th>ایمیل</th><th>آدرس</th><th>عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="customer-supplier-list"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="tab-inventory" role="tabpanel" aria-labelledby="tabbtn-inventory">
+            <h2>مدیریت موجودی و کالا</h2>
+            <form id="form-inventory">
+                <div class="flex-row">
+                    <div class="flex-grow">
+                        <label for="inv-item-name">نام کالا</label>
+                        <input type="text" id="inv-item-name" required placeholder="مثال: لپ تاپ" autocomplete="off" />
+                    </div>
+                    <div class="flex-grow">
+                        <label for="inv-quantity">تعداد</label>
+                        <input type="number" id="inv-quantity" min="0" required />
+                    </div>
+                </div>
+                <div class="flex-row">
+                    <div class="flex-grow">
+                        <label for="inv-unit-price">قیمت واحد خرید (تومان)</label>
+                        <input type="number" id="inv-unit-price" min="0" required />
+                    </div>
+                    <div class="flex-grow">
+                        <label for="inv-sale-price">قیمت واحد فروش (تومان)</label>
+                        <input type="number" id="inv-sale-price" min="0" required />
+                    </div>
+                </div>
+                <div>
+                    <label for="inv-description">توضیحات</label>
+                    <textarea id="inv-description" rows="2" placeholder="جزئیات کالا" style="resize:none;"></textarea>
+                </div>
+                <button type="submit">افزودن/بروزرسانی کالا</button>
+            </form>
+            <h3>لیست موجودی کالا</h3>
+            <div class="table-scroll" style="max-height:400px; overflow-y:auto;">
+                <table aria-label="لیست موجودی کالا">
+                    <thead>
+                        <tr>
+                            <th>#</th><th>نام کالا</th><th>تعداد</th><th>قیمت خرید</th><th>قیمت فروش</th><th>توضیحات</th><th>عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="inventory-list"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="tab-payroll" role="tabpanel" aria-labelledby="tabbtn-payroll">
+            <h2>مدیریت حقوق و دستمزد</h2>
+            <form id="form-payroll">
+                <div class="flex-row">
+                    <div class="flex-grow">
+                        <label for="payroll-employee-name">نام کارمند</label>
+                        <input type="text" id="payroll-employee-name" required placeholder="مثال: علی رضایی" autocomplete="off" />
+                    </div>
+                    <div class="flex-grow">
+                        <label for="payroll-amount">مبلغ حقوق (تومان)</label>
+                        <input type="number" id="payroll-amount" min="0" required />
+                    </div>
+                </div>
+                <div class="flex-row">
+                    <div class="flex-grow">
+                        <label for="payroll-date">تاریخ پرداخت</label>
+                        <input type="text" id="payroll-date" class="persian-date-picker" required />
+                    </div>
+                    <div class="flex-grow">
+                        <label for="payroll-deductions">کسورات (تومان)</label>
+                        <input type="number" id="payroll-deductions" value="0" min="0" />
+                    </div>
+                </div>
+                <div>
+                    <label for="payroll-description">توضیحات</label>
+                    <textarea id="payroll-description" rows="2" placeholder="توضیحات حقوق و دستمزد"></textarea>
+                </div>
+                <button type="submit">ثبت حقوق و دستمزد</button>
+            </form>
+            <h3>لیست حقوق و دستمزد</h3>
+            <div class="table-scroll" style="max-height:400px; overflow-y:auto;">
+                <table aria-label="لیست حقوق و دستمزد">
+                    <thead>
+                        <tr>
+                            <th>#</th><th>نام کارمند</th><th>مبلغ حقوق</th><th>کسورات</th><th>تاریخ پرداخت</th><th>توضیحات</th><th>عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="payroll-list"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="tab-fixed-assets" role="tabpanel" aria-labelledby="tabbtn-fixed-assets">
+            <h2>مدیریت دارایی‌های ثابت</h2>
+            <form id="form-fixed-asset">
+                <div class="flex-row">
+                    <div class="flex-grow">
+                        <label for="asset-name">نام دارایی</label>
+                        <input type="text" id="asset-name" required placeholder="مثال: دستگاه چاپ" autocomplete="off" />
+                    </div>
+                    <div class="flex-grow">
+                        <label for="asset-purchase-date">تاریخ خرید</label>
+                        <input type="text" id="asset-purchase-date" class="persian-date-picker" required />
+                    </div>
+                </div>
+                <div class="flex-row">
+                    <div class="flex-grow">
+                        <label for="asset-cost">هزینه خرید (تومان)</label>
+                        <input type="number" id="asset-cost" min="0" required />
+                    </div>
+                    <div class="flex-grow">
+                        <label for="asset-useful-life">عمر مفید (سال)</label>
+                        <input type="number" id="asset-useful-life" min="1" required />
+                    </div>
+                </div>
+                <div>
+                    <label for="asset-salvage-value">ارزش اسقاط (تومان)</label>
+                    <input type="number" id="asset-salvage-value" value="0" min="0" />
+                </div>
+                <button type="submit">افزودن دارایی</button>
+            </form>
+            <h3>لیست دارایی‌های ثابت</h3>
+            <div class="table-scroll" style="max-height:400px; overflow-y:auto;">
+                <table aria-label="لیست دارایی‌های ثابت">
+                    <thead>
+                        <tr>
+                            <th>#</th><th>نام دارایی</th><th>تاریخ خرید</th><th>هزینه خرید</th><th>عمر مفید</th><th>ارزش اسقاط</th><th>استهلاک سالانه</th><th>عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="fixed-assets-list"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="tab-projects" role="tabpanel" aria-labelledby="tabbtn-projects">
+            <h2>مدیریت پروژه</h2>
+            <form id="form-project">
+                <div class="flex-row">
+                    <div class="flex-grow">
+                        <label for="project-name">نام پروژه</label>
+                        <input type="text" id="project-name" required placeholder="مثال: پروژه طراحی وبسایت" autocomplete="off" />
+                    </div>
+                    <div class="flex-grow">
+                        <label for="project-start-date">تاریخ شروع</label>
+                        <input type="text" id="project-start-date" class="persian-date-picker" required />
+                    </div>
+                </div>
+                <div class="flex-row">
+                    <div class="flex-grow">
+                        <label for="project-end-date">تاریخ پایان (اختیاری)</label>
+                        <input type="text" id="project-end-date" class="persian-date-picker" />
+                    </div>
+                    <div class="flex-grow">
+                        <label for="project-budget">بودجه پروژه (تومان)</label>
+                        <input type="number" id="project-budget" min="0" value="0" />
+                    </div>
+                </div>
+                <div>
+                    <label for="project-description">توضیحات</label>
+                    <textarea id="project-description" rows="2" placeholder="جزئیات پروژه"></textarea>
+                </div>
+                <button type="submit">افزودن/بروزرسانی پروژه</button>
+            </form>
+            <h3>لیست پروژه‌ها</h3>
+            <div class="table-scroll" style="max-height:400px; overflow-y:auto;">
+                <table aria-label="لیست پروژه‌ها">
+                    <thead>
+                        <tr>
+                            <th>#</th><th>نام پروژه</th><th>تاریخ شروع</th><th>تاریخ پایان</th><th>بودجه</th><th>توضیحات</th><th>عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="projects-list"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="tab-budgeting" role="tabpanel" aria-labelledby="tabbtn-budgeting">
+            <h2>بودجه‌بندی</h2>
+            <form id="form-budget">
+                <div class="flex-row">
+                    <div class="flex-grow">
+                        <label for="budget-category">دسته بودجه</label>
+                        <input type="text" id="budget-category" required placeholder="مثال: هزینه بازاریابی" autocomplete="off" />
+                    </div>
+                    <div class="flex-grow">
+                        <label for="budget-amount">مبلغ بودجه (تومان)</label>
+                        <input type="number" id="budget-amount" min="0" required />
+                    </div>
+                </div>
+                <div class="flex-row">
+                    <div class="flex-grow">
+                        <label for="budget-start-date">تاریخ شروع</label>
+                        <input type="text" id="budget-start-date" class="persian-date-picker" required />
+                    </div>
+                    <div class="flex-grow">
+                        <label for="budget-end-date">تاریخ پایان</label>
+                        <input type="text" id="budget-end-date" class="persian-date-picker" required />
+                    </div>
+                </div>
+                <button type="submit">ثبت بودجه</button>
+            </form>
+            <h3>لیست بودجه‌ها</h3>
+            <div class="table-scroll" style="max-height:400px; overflow-y:auto;">
+                <table aria-label="لیست بودجه‌ها">
+                    <thead>
+                        <tr>
+                            <th>#</th><th>دسته</th><th>مبلغ بودجه</th><th>تاریخ شروع</th><th>تاریخ پایان</th><th>مصرف شده</th><th>باقی مانده</th><th>عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="budget-list"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="tab-returns" role="tabpanel" aria-labelledby="tabbtn-returns">
+            <h2>مدیریت کالاهای مرجوعی</h2>
+            <form id="form-return">
+                <div class="flex-row">
+                    <div class="flex-grow">
+                        <label for="return-type">نوع مرجوعی</label>
+                        <select id="return-type" class="custom-select" required>
+                            <option value="">انتخاب کنید</option>
+                            <option value="sales-return">مرجوعی فروش</option>
+                            <option value="purchase-return">مرجوعی خرید</option>
+                        </select>
+                    </div>
+                    <div class="flex-grow">
+                        <label for="return-invoice-id">شماره فاکتور مرتبط</label>
+                        <input type="text" id="return-invoice-id" placeholder="اختیاری: شماره فاکتور" autocomplete="off" />
+                    </div>
+                </div>
+                <div class="flex-row">
+                    <div class="flex-grow">
+                        <label for="return-item-name">نام کالا/خدمت مرجوعی</label>
+                        <input type="text" id="return-item-name" required placeholder="مثال: محصول معیوب" autocomplete="off" />
+                    </div>
+                    <div class="flex-grow">
+                        <label for="return-quantity">تعداد</label>
+                        <input type="number" id="return-quantity" min="1" required />
+                    </div>
+                </div>
+                <div class="flex-row">
+                    <div class="flex-grow">
+                        <label for="return-amount">مبلغ بازگشتی/کسر شده (تومان)</label>
+                        <input type="number" id="return-amount" min="0" required />
+                    </div>
+                    <div class="flex-grow">
+                        <label for="return-date">تاریخ مرجوعی</label>
+                        <input type="text" id="return-date" class="persian-date-picker" required />
+                    </div>
+                </div>
+                <div>
+                    <label for="return-reason">دلیل مرجوعی</label>
+                    <textarea id="return-reason" rows="2" placeholder="دلیل مرجوعی کالا/خدمت"></textarea>
+                </div>
+                <button type="submit">ثبت مرجوعی</button>
+            </form>
+            <h3>لیست کالاهای مرجوعی</h3>
+            <div class="table-scroll" style="max-height:400px; overflow-y:auto;">
+                <table aria-label="لیست کالاهای مرجوعی">
+                    <thead>
+                        <tr>
+                            <th>#</th><th>نوع</th><th>فاکتور مرتبط</th><th>کالا/خدمت</th><th>تعداد</th><th>مبلغ</th><th>تاریخ</th><th>دلیل</th><th>عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="returns-list"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="tab-reports" role="tabpanel" aria-labelledby="tabbtn-reports">
+            <h2>گزارش‌های جامع مالی</h2>
+            <p>اینجا می‌توانید انواع گزارش‌های مالی را مشاهده و تولید کنید.</p>
+            <div class="flex-row" style="margin-bottom:1.5rem;">
+                <div class="flex-grow">
+                    <label for="report-type-select">انتخاب نوع گزارش</label>
+                    <select id="report-type-select" class="custom-select">
+                        <option value="profit-loss">گزارش سود و زیان</option>
+                        <option value="cash-flow">گزارش جریان نقدینگی</option>
+                        <option value="balance-sheet">ترازنامه</option>
+                        <option value="invoice-summary">خلاصه فاکتورها</option>
+                        <option value="expense-by-category">هزینه‌ها بر اساس دسته</option>
+                        <option value="inventory-value">ارزش موجودی کالا</option>
+                        <option value="payroll-summary">خلاصه حقوق و دستمزد</option>
+                        <option value="project-profitability">سودآوری پروژه</option>
+                    </select>
+                </div>
+                <div class="flex-grow">
+                    <label for="report-start-date">از تاریخ</label>
+                    <input type="text" id="report-start-date" class="persian-date-picker" />
+                </div>
+                <div class="flex-grow">
+                    <label for="report-end-date">تا تاریخ</label>
+                    <input type="text" id="report-end-date" class="persian-date-picker" />
+                </div>
+            </div>
+            <button id="btn-generate-report" class="btn-primary">تولید گزارش</button>
+            <div id="report-output" style="margin-top: 2rem; border-top: 1px solid #eee; padding-top: 1.5rem;">
+                </div>
+        </section>
+
+        <section id="tab-users" role="tabpanel" aria-labelledby="tabbtn-users">
+            <h2>مدیریت کاربران و دسترسی‌ها</h2>
+            <form id="form-user">
+                <div class="flex-row">
+                    <div class="flex-grow">
+                        <label for="user-name">نام کاربر</label>
+                        <input type="text" id="user-name" required placeholder="مثال: رضا احمدی" autocomplete="off" />
+                    </div>
+                    <div class="flex-grow">
+                        <label for="user-role">نقش کاربری</label>
+                        <select id="user-role" class="custom-select" required>
+                            <option value="admin">مدیر کل</option>
+                            <option value="accountant">حسابدار</option>
+                            <option value="sales">فروشنده</option>
+                            <option value="viewer">مشاهده‌کننده</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="flex-row">
+                    <div class="flex-grow">
+                        <label for="user-username">نام کاربری (برای ورود)</label>
+                        <input type="text" id="user-username" required placeholder="مثال: reza.ahmadi" autocomplete="off" />
+                    </div>
+                    <div class="flex-grow">
+                        <label for="user-password">رمز عبور</label>
+                        <input type="password" id="user-password" placeholder="برای تغییر رمز عبور وارد کنید" autocomplete="new-password" />
+                    </div>
+                </div>
+                <button type="submit">افزودن/بروزرسانی کاربر</button>
+            </form>
+            <h3>لیست کاربران</h3>
+            <div class="table-scroll" style="max-height:400px; overflow-y:auto;">
+                <table aria-label="لیست کاربران">
+                    <thead>
+                        <tr>
+                            <th>#</th><th>نام کاربر</th><th>نقش</th><th>نام کاربری</th><th>عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="user-list"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="tab-settings" role="tabpanel" aria-labelledby="tabbtn-settings">
+            <h2>تنظیمات سیستم</h2>
+            <form id="form-settings">
+                <div class="flex-row">
+                    <div class="flex-grow">
+                        <label for="company-name">نام شرکت</label>
+                        <input type="text" id="company-name" placeholder="نام شرکت شما" />
+                    </div>
+                    <div class="flex-grow">
+                        <label for="default-currency">واحد پول پیش‌فرض</label>
+                        <input type="text" id="default-currency" value="تومان" placeholder="مثال: تومان" />
+                    </div>
+                </div>
+                <div>
+                    <label for="tax-rate">نرخ مالیات پیش‌فرض (%)</label>
+                    <input type="number" id="tax-rate" min="0" max="100" value="9" />
+                </div>
+                <button type="submit">ذخیره تنظیمات</button>
+            </form>
+            <h3>تنظیمات پیشرفته</h3>
+            <p>این بخش برای تنظیمات کلی سیستم، پشتیبان‌گیری و بازیابی اطلاعات است.</p>
+            <button id="btn-backup-data" class="btn-info">پشتیبان‌گیری از اطلاعات</button>
+            <button id="btn-restore-data" class="btn-info">بازیابی اطلاعات</button>
+            <button id="btn-clear-data" class="btn-danger" style="margin-right:1rem;">حذف تمام اطلاعات (خطرناک!)</button>
+        </section>
+
+    </main>
+
+    <div id="message-container"></div>
+
+    <script>
+        // Data storage (using localStorage for simplicity, in a real app, this would be a backend)
+        let data = {
+            incomeExpenses: [],
+            invoices: [],
+            purchaseInvoices: [],
+            customersSuppliers: [],
+            inventory: [],
+            accountingEntries: [],
+            payroll: [],
+            fixedAssets: [],
+            projects: [],
+            budgets: [],
+            returns: [],
+            users: [],
+            settings: {
+                companyName: 'شرکت حسابداری شما',
+                defaultCurrency: 'تومان',
+                taxRate: 9
+            }
+        };
+
+        // Utility functions
+        function showMessage(message, type = 'success') {
+            const msgContainer = document.getElementById('message-container');
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `message ${type}-message`;
+            msgDiv.textContent = message;
+            msgContainer.appendChild(msgDiv);
+            setTimeout(() => {
+                msgDiv.remove();
+            }, 3800); // Animation is 4s, remove slightly before to avoid flicker
+        }
+
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('fa-IR').format(amount) + ' ' + data.settings.defaultCurrency;
+        }
+
+        function getPersianDate(date = new Date()) {
+            return new persianDate(date).format('YYYY/MM/DD');
+        }
+
+        // Tab Navigation
+        const tabButtons = document.querySelectorAll('nav button');
+        const sections = document.querySelectorAll('main section');
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                sections.forEach(sec => sec.classList.remove('active'));
+
+                button.classList.add('active');
+                const targetId = button.getAttribute('aria-controls');
+                document.getElementById(targetId).classList.add('active');
+            });
+        });
+
+        // Initialize Persian Date Pickers
+        function initializeDatePickers() {
+            $(".persian-date-picker").pDatepicker({
+                format: 'YYYY/MM/DD',
+                autoClose: true,
+                initialValue: false,
+                initialValueType: 'persian',
+                maxDate: new persianDate(), // Prevents selecting future dates
+                onSelect: function (unix) {
+                    const date = new persianDate(unix).format('YYYY/MM/DD');
+                    console.log('Selected Persian Date:', date);
+                }
+            });
+        }
+
+        // Load data from localStorage
+        function loadData() {
+            const storedData = localStorage.getItem('accountingData');
+            if (storedData) {
+                data = JSON.parse(storedData);
+            }
+            initializeDatePickers(); // Initialize date pickers on load
+            renderAllLists(); // Render all lists after loading data
+            updateDashboard(); // Update dashboard after loading
+            populateDatalists(); // Populate customer/supplier datalists
+        }
+
+        // Save data to localStorage
+        function saveData() {
+            localStorage.setItem('accountingData', JSON.stringify(data));
+            showMessage('اطلاعات با موفقیت ذخیره شد.', 'success');
+        }
+
+        // Populate Datalists for Customers/Suppliers
+        function populateDatalists() {
+            const customerNamesDatalist = document.getElementById('customer-names');
+            const supplierNamesDatalist = document.getElementById('supplier-names');
+            customerNamesDatalist.innerHTML = '';
+            supplierNamesDatalist.innerHTML = '';
+
+            data.customersSuppliers.forEach(item => {
+                const option = document.createElement('option');
+                option.value = item.name;
+                if (item.type === 'customer') {
+                    customerNamesDatalist.appendChild(option);
+                } else if (item.type === 'supplier') {
+                    supplierNamesDatalist.appendChild(option);
+                }
+            });
+        }
+
+        // Render functions for each section
+        // Dashboard
+        function updateDashboard() {
+            const totalIncome = data.incomeExpenses.filter(t => t.type === 'income').reduce((sum, t) => sum + parseFloat(t.amount), 0);
+            const totalExpense = data.incomeExpenses.filter(t => t.type === 'expense').reduce((sum, t) => sum + parseFloat(t.amount), 0);
+            const balance = totalIncome - totalExpense;
+
+            document.getElementById('dashboard-total-income').textContent = formatCurrency(totalIncome);
+            document.getElementById('dashboard-total-expense').textContent = formatCurrency(totalExpense);
+            document.getElementById('dashboard-balance').textContent = formatCurrency(balance);
+
+            renderIncomeExpenseChart(totalIncome, totalExpense);
+            renderProfitLossChart();
+            renderCashFlowChart();
+        }
+
+        let incomeExpenseChart, profitLossChart, cashFlowChart; // Define chart instances
+
+        function renderIncomeExpenseChart(income, expense) {
+            const ctx = document.getElementById('chart-income-expense').getContext('2d');
+            if (incomeExpenseChart) incomeExpenseChart.destroy();
+            incomeExpenseChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['درآمد', 'هزینه'],
+                    datasets: [{
+                        data: [income, expense],
+                        backgroundColor: [varToString(getComputedStyle(document.documentElement).getPropertyValue('--success-color')), varToString(getComputedStyle(document.documentElement).getPropertyValue('--danger-color'))],
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                font: {
+                                    family: varToString(getComputedStyle(document.documentElement).getPropertyValue('--font-family')),
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed !== null) {
+                                        label += formatCurrency(context.parsed);
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function renderProfitLossChart() {
+            const monthlyData = {};
+            data.incomeExpenses.forEach(t => {
+                const date = new persianDate(t.date, 'YYYY/MM/DD');
+                const monthYear = date.format('YYYY/MM');
+                if (!monthlyData[monthYear]) {
+                    monthlyData[monthYear] = { income: 0, expense: 0 };
+                }
+                if (t.type === 'income') {
+                    monthlyData[monthYear].income += parseFloat(t.amount);
+                } else {
+                    monthlyData[monthYear].expense += parseFloat(t.amount);
+                }
+            });
+
+            const labels = Object.keys(monthlyData).sort();
+            const incomes = labels.map(m => monthlyData[m].income);
+            const expenses = labels.map(m => monthlyData[m].expense);
+            const profits = labels.map(m => monthlyData[m].income - monthlyData[m].expense);
+
+            const ctx = document.getElementById('report-profit-loss').getContext('2d');
+            if (profitLossChart) profitLossChart.destroy();
+            profitLossChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels.map(l => new persianDate(l, 'YYYY/MM').format('MMMM YYYY')),
+                    datasets: [
+                        {
+                            label: 'درآمد',
+                            data: incomes,
+                            backgroundColor: varToString(getComputedStyle(document.documentElement).getPropertyValue('--success-color')),
+                            borderColor: varToString(getComputedStyle(document.documentElement).getPropertyValue('--success-color')),
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'هزینه',
+                            data: expenses,
+                            backgroundColor: varToString(getComputedStyle(document.documentElement).getPropertyValue('--danger-color')),
+                            borderColor: varToString(getComputedStyle(document.documentElement).getPropertyValue('--danger-color')),
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'سود/زیان',
+                            data: profits,
+                            backgroundColor: (ctx) => {
+                                const value = ctx.parsed.y;
+                                return value >= 0 ? varToString(getComputedStyle(document.documentElement).getPropertyValue('--primary-color')) : varToString(getComputedStyle(document.documentElement).getPropertyValue('--danger-color'));
+                            },
+                            borderColor: (ctx) => {
+                                const value = ctx.parsed.y;
+                                return value >= 0 ? varToString(getComputedStyle(document.documentElement).getPropertyValue('--primary-color')) : varToString(getComputedStyle(document.documentElement).getPropertyValue('--danger-color'));
+                            },
+                            type: 'line',
+                            fill: false,
+                            tension: 0.3
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                font: {
+                                    family: varToString(getComputedStyle(document.documentElement).getPropertyValue('--font-family')),
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += formatCurrency(context.parsed.y);
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: {
+                                font: {
+                                    family: varToString(getComputedStyle(document.documentElement).getPropertyValue('--font-family')),
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: 'ماه',
+                                font: {
+                                    family: varToString(getComputedStyle(document.documentElement).getPropertyValue('--font-family')),
+                                    weight: 'bold'
+                                }
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return formatCurrency(value);
+                                },
+                                font: {
+                                    family: varToString(getComputedStyle(document.documentElement).getPropertyValue('--font-family')),
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: 'مبلغ',
+                                font: {
+                                    family: varToString(getComputedStyle(document.documentElement).getPropertyValue('--font-family')),
+                                    weight: 'bold'
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function renderCashFlowChart() {
+            const monthlyCashFlow = {};
+            data.incomeExpenses.forEach(t => {
+                const date = new persianDate(t.date, 'YYYY/MM/DD');
+                const monthYear = date.format('YYYY/MM');
+                if (!monthlyCashFlow[monthYear]) {
+                    monthlyCashFlow[monthYear] = 0;
+                }
+                if (t.type === 'income') {
+                    monthlyCashFlow[monthYear] += parseFloat(t.amount);
+                } else {
+                    monthlyCashFlow[monthYear] -= parseFloat(t.amount);
+                }
+            });
+
+            const labels = Object.keys(monthlyCashFlow).sort();
+            const cashFlowValues = labels.map(m => monthlyCashFlow[m]);
+
+            const ctx = document.getElementById('report-cash-flow').getContext('2d');
+            if (cashFlowChart) cashFlowChart.destroy();
+            cashFlowChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels.map(l => new persianDate(l, 'YYYY/MM').format('MMMM YYYY')),
+                    datasets: [{
+                        label: 'جریان نقدینگی',
+                        data: cashFlowValues,
+                        borderColor: varToString(getComputedStyle(document.documentElement).getPropertyValue('--primary-color')),
+                        backgroundColor: 'rgba(11, 61, 145, 0.2)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                font: {
+                                    family: varToString(getComputedStyle(document.documentElement).getPropertyValue('--font-family')),
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += formatCurrency(context.parsed.y);
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: {
+                                font: {
+                                    family: varToString(getComputedStyle(document.documentElement).getPropertyValue('--font-family')),
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: 'ماه',
+                                font: {
+                                    family: varToString(getComputedStyle(document.documentElement).getPropertyValue('--font-family')),
+                                    weight: 'bold'
+                                }
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return formatCurrency(value);
+                                },
+                                font: {
+                                    family: varToString(getComputedStyle(document.documentElement).getPropertyValue('--font-family')),
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: 'مبلغ',
+                                font: {
+                                    family: varToString(getComputedStyle(document.documentElement).getPropertyValue('--font-family')),
+                                    weight: 'bold'
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Helper function to get CSS variable values safely
+        function varToString(str) {
+            if (str && str.startsWith('var(') && str.endsWith(')')) {
+                return getComputedStyle(document.documentElement).getPropertyValue(str.substring(4, str.length - 1).trim());
+            }
+            return str;
+        }
+
+        // Accounting Entries
+        const formAccountingEntry = document.getElementById('form-accounting-entry');
+        const accountingEntriesList = document.getElementById('accounting-entries-list');
+
+        formAccountingEntry.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const type = document.getElementById('acc-entry-type').value;
+            const date = document.getElementById('acc-entry-date').value;
+            const description = document.getElementById('acc-entry-description').value;
+
+            const newEntry = {
+                id: Date.now(),
+                type,
+                date,
+                description
+            };
+            data.accountingEntries.push(newEntry);
+            saveData();
+            renderAccountingEntries();
+            formAccountingEntry.reset();
+            showMessage('سند مالی با موفقیت ثبت شد.', 'success');
+        });
+
+        function renderAccountingEntries() {
+            accountingEntriesList.innerHTML = '';
+            data.accountingEntries.forEach((entry, index) => {
+                const row = accountingEntriesList.insertRow();
+                row.insertCell().textContent = index + 1;
+                row.insertCell().textContent = entry.type;
+                row.insertCell().textContent = entry.date;
+                row.insertCell().textContent = entry.description;
+                const actionsCell = row.insertCell();
+                actionsCell.className = 'action-btn';
+                const deleteBtn = document.createElement('button');
+                deleteBtn.textContent = 'حذف';
+                deleteBtn.className = 'btn-danger';
+                deleteBtn.onclick = () => {
+                    if (confirm('آیا از حذف این سند مالی اطمینان دارید؟')) {
+                        data.accountingEntries = data.accountingEntries.filter(item => item.id !== entry.id);
+                        saveData();
+                        renderAccountingEntries();
+                        showMessage('سند مالی حذف شد.', 'warning');
+                    }
+                };
+                actionsCell.appendChild(deleteBtn);
+            });
+        }
+
+        // Income/Expense
+        const formIncomeExpense = document.getElementById('form-income-expense');
+        const ieTransactionList = document.getElementById('ie-transaction-list');
+
+        formIncomeExpense.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const type = document.getElementById('ie-type').value;
+            const title = document.getElementById('ie-title').value;
+            const amount = parseFloat(document.getElementById('ie-amount').value);
+            const date = document.getElementById('ie-date').value;
+
+            const newTransaction = {
+                id: Date.now(),
+                type,
+                title,
+                amount,
+                date
+            };
+            data.incomeExpenses.push(newTransaction);
+            saveData();
+            renderIncomeExpenses();
+            updateDashboard();
+            formIncomeExpense.reset();
+            showMessage('تراکنش با موفقیت ثبت شد.', 'success');
+        });
+
+        function renderIncomeExpenses() {
+            ieTransactionList.innerHTML = '';
+            data.incomeExpenses.forEach((transaction, index) => {
+                const row = ieTransactionList.insertRow();
+                row.insertCell().textContent = index + 1;
+                row.insertCell().textContent = transaction.type === 'income' ? 'درآمد' : 'هزینه';
+                row.insertCell().textContent = transaction.title;
+                row.insertCell().textContent = formatCurrency(transaction.amount);
+                row.insertCell().textContent = transaction.date;
+                const actionsCell = row.insertCell();
+                actionsCell.className = 'action-btn';
+                const deleteBtn = document.createElement('button');
+                deleteBtn.textContent = 'حذف';
+                deleteBtn.className = 'btn-danger';
+                deleteBtn.onclick = () => {
+                    if (confirm('آیا از حذف این تراکنش اطمینان دارید؟')) {
+                        data.incomeExpenses = data.incomeExpenses.filter(item => item.id !== transaction.id);
+                        saveData();
+                        renderIncomeExpenses();
+                        updateDashboard();
+                        showMessage('تراکنش حذف شد.', 'warning');
+                    }
+                };
+                actionsCell.appendChild(deleteBtn);
+            });
+        }
+
+        // Sales Invoices
+        const formInvoice = document.getElementById('form-invoice');
+        const invoiceItemsBody = document.getElementById('invoice-items-body');
+        const btnAddInvoiceItem = document.getElementById('btn-add-invoice-item');
+        const invoiceList = document.getElementById('invoice-list');
+
+        let currentInvoiceItems = []; // Temporary storage for items being added to the current invoice
+
+        btnAddInvoiceItem.addEventListener('click', () => {
+            const newItem = {
+                id: Date.now(),
+                name: '',
+                quantity: 0,
+                unitPrice: 0,
+                discount: 0,
+                tax: 0,
+                total: 0
+            };
+            currentInvoiceItems.push(newItem);
+            renderInvoiceItems();
+        });
+
+        function renderInvoiceItems() {
+            invoiceItemsBody.innerHTML = '';
+            currentInvoiceItems.forEach((item, index) => {
+                const row = invoiceItemsBody.insertRow();
+                row.innerHTML = `
+                    <td><input type="text" value="${item.name}" oninput="updateInvoiceItem(${index}, 'name', this.value)" placeholder="نام کالا/خدمت" style="width:120px;"/></td>
+                    <td><input type="number" value="${item.quantity}" oninput="updateInvoiceItem(${index}, 'quantity', this.value)" min="0" style="width:70px; text-align:center;"/></td>
+                    <td><input type="number" value="${item.unitPrice}" oninput="updateInvoiceItem(${index}, 'unitPrice', this.value)" min="0" style="width:100px; text-align:center;"/></td>
+                    <td><input type="number" value="${item.discount}" oninput="updateInvoiceItem(${index}, 'discount', this.value)" min="0" style="width:100px; text-align:center;"/></td>
+                    <td><input type="number" value="${item.tax}" oninput="updateInvoiceItem(${index}, 'tax', this.value)" min="0" style="width:100px; text-align:center;"/></td>
+                    <td>${formatCurrency(item.total)}</td>
+                    <td class="action-btn"><button type="button" class="btn-danger small-button" onclick="removeInvoiceItem(${index})">X</button></td>
+                `;
+            });
+            calculateInvoiceTotals();
+        }
+
+        function updateInvoiceItem(index, field, value) {
+            if (field === 'name') {
+                currentInvoiceItems[index][field] = value;
+            } else {
+                currentInvoiceItems[index][field] = parseFloat(value) || 0;
+            }
+            const item = currentInvoiceItems[index];
+            item.total = (item.quantity * item.unitPrice) - item.discount + item.tax;
+            renderInvoiceItems(); // Re-render to update the total for the item
+        }
+
+        function removeInvoiceItem(index) {
+            currentInvoiceItems.splice(index, 1);
+            renderInvoiceItems();
+        }
+
+        function calculateInvoiceTotals() {
+            let totalBeforeDiscount = 0;
+            let totalItemsDiscount = 0;
+            let totalItemsTax = 0;
+
+            currentInvoiceItems.forEach(item => {
+                totalBeforeDiscount += (item.quantity * item.unitPrice);
+                totalItemsDiscount += item.discount;
+                totalItemsTax += item.tax;
+            });
+
+            document.getElementById('invoice-total-before-discount').textContent = formatCurrency(totalBeforeDiscount);
+
+            const overallDiscount = parseFloat(document.getElementById('invoice-total-discount-overall').value) || 0;
+            const overallTax = parseFloat(document.getElementById('invoice-total-tax-overall').value) || 0;
+            const shippingCost = parseFloat(document.getElementById('invoice-shipping-cost').value) || 0;
+
+            const finalTotal = totalBeforeDiscount - totalItemsDiscount - overallDiscount + totalItemsTax + overallTax + shippingCost;
+            document.getElementById('invoice-total').textContent = formatCurrency(finalTotal);
+        }
+
+        formInvoice.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const client = document.getElementById('invoice-client').value;
+            const date = document.getElementById('invoice-date').value;
+            const status = document.getElementById('invoice-status').value;
+            const total = parseFloat(document.getElementById('invoice-total').textContent.replace(/[^\d.]/g, '')); // Clean up currency format
+
+            if (currentInvoiceItems.length === 0) {
+                showMessage('لطفا حداقل یک قلم به فاکتور اضافه کنید.', 'error');
+                return;
+            }
+
+            const newInvoice = {
+                id: Date.now(),
+                client,
+                date,
+                status,
+                items: JSON.parse(JSON.stringify(currentInvoiceItems)), // Deep copy
+                total,
+                overallDiscount: parseFloat(document.getElementById('invoice-total-discount-overall').value) || 0,
+                overallTax: parseFloat(document.getElementById('invoice-total-tax-overall').value) || 0,
+                shippingCost: parseFloat(document.getElementById('invoice-shipping-cost').value) || 0
+            };
+            data.invoices.push(newInvoice);
+            saveData();
+            renderInvoices();
+            formInvoice.reset();
+            currentInvoiceItems = []; // Clear items after saving
+            renderInvoiceItems(); // Update the table to reflect empty items
+            updateDashboard(); // Since invoices affect income, update dashboard
+            showMessage('فاکتور فروش با موفقیت ذخیره شد.', 'success');
+        });
+
+        function renderInvoices() {
+            invoiceList.innerHTML = '';
+            data.invoices.forEach((invoice, index) => {
+                const row = invoiceList.insertRow();
+                row.insertCell().textContent = index + 1;
+                row.insertCell().textContent = invoice.client;
+                row.insertCell().textContent = invoice.date;
+                row.insertCell().textContent = formatCurrency(invoice.total);
+                const statusCell = row.insertCell();
+                const statusChip = document.createElement('span');
+                statusChip.className = `status-chip status-${invoice.status}`;
+                statusChip.textContent = {
+                    'pending': 'معلق',
+                    'paid': 'پرداخت شده',
+                    'overdue': 'دیر پرداخت شده'
+                }[invoice.status];
+                statusCell.appendChild(statusChip);
+                const actionsCell = row.insertCell();
+                actionsCell.className = 'action-btn';
+
+                const viewBtn = document.createElement('button');
+                viewBtn.textContent = 'مشاهده';
+                viewBtn.className = 'btn-info';
+                viewBtn.onclick = () => viewInvoiceDetails(invoice);
+                actionsCell.appendChild(viewBtn);
+
+                const deleteBtn = document.createElement('button');
+                deleteBtn.textContent = 'حذف';
+                deleteBtn.className = 'btn-danger';
+                deleteBtn.onclick = () => {
+                    if (confirm('آیا از حذف این فاکتور اطمینان دارید؟')) {
+                        data.invoices = data.invoices.filter(item => item.id !== invoice.id);
+                        saveData();
+                        renderInvoices();
+                        updateDashboard();
+                        showMessage('فاکتور حذف شد.', 'warning');
+                    }
+                };
+                actionsCell.appendChild(deleteBtn);
+            });
+        }
+
+        // Invoice Details Modal
+        const invoiceModal = document.createElement('div');
+        invoiceModal.className = 'modal';
+        invoiceModal.id = 'invoice-details-modal';
+        document.body.appendChild(invoiceModal);
+
+        function viewInvoiceDetails(invoice) {
+            invoiceModal.innerHTML = `
+                <div class="modal-content">
+                    <span class="close-button" onclick="invoiceModal.style.display='none'">&times;</span>
+                    <h3>جزئیات فاکتور فروش</h3>
+                    <p><strong>مشتری:</strong> ${invoice.client}</p>
+                    <p><strong>تاریخ:</strong> ${invoice.date}</p>
+                    <p><strong>وضعیت:</strong> <span class="status-chip status-${invoice.status}">${{ 'pending': 'معلق', 'paid': 'پرداخت شده', 'overdue': 'دیر پرداخت شده' }[invoice.status]}</span></p>
+                    <h4>اقلام فاکتور:</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>نام کالا/خدمت</th>
+                                <th>تعداد</th>
+                                <th>قیمت واحد</th>
+                                <th>تخفیف واحد</th>
+                                <th>مالیات واحد</th>
+                                <th>جمع</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${invoice.items.map(item => `
+                                <tr>
+                                    <td>${item.name}</td>
+                                    <td>${item.quantity}</td>
+                                    <td>${formatCurrency(item.unitPrice)}</td>
+                                    <td>${formatCurrency(item.discount)}</td>
+                                    <td>${formatCurrency(item.tax)}</td>
+                                    <td>${formatCurrency(item.total)}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                    <div style="text-align: left; margin-top: 1rem; font-weight: 900;">
+                        <p>تخفیف کل فاکتور: ${formatCurrency(invoice.overallDiscount)}</p>
+                        <p>مالیات کل فاکتور: ${formatCurrency(invoice.overallTax)}</p>
+                        <p>هزینه حمل و نقل: ${formatCurrency(invoice.shippingCost)}</p>
+                        <p><strong>جمع کل نهایی: ${formatCurrency(invoice.total)}</strong></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn-primary" onclick="invoiceModal.style.display='none'">بستن</button>
+                    </div>
+                </div>
+            `;
+            invoiceModal.style.display = 'block';
+        }
+
+        // Purchase Invoices (similar structure to Sales Invoices)
+        const formPurchaseInvoice = document.getElementById('form-purchase-invoice');
+        const purchaseInvoiceItemsBody = document.getElementById('purchase-invoice-items-body');
+        const btnAddPurchaseInvoiceItem = document.getElementById('btn-add-purchase-invoice-item');
+        const purchaseInvoiceList = document.getElementById('purchase-invoice-list');
+
+        let currentPurchaseInvoiceItems = [];
+
+        btnAddPurchaseInvoiceItem.addEventListener('click', () => {
+            const newItem = {
+                id: Date.now(),
+                name: '',
+                quantity: 0,
+                unitPrice: 0,
+                discount: 0,
+                tax: 0,
+                total: 0
+            };
+            currentPurchaseInvoiceItems.push(newItem);
+            renderPurchaseInvoiceItems();
+        });
+
+        function renderPurchaseInvoiceItems() {
+            purchaseInvoiceItemsBody.innerHTML = '';
+            currentPurchaseInvoiceItems.forEach((item, index) => {
+                const row = purchaseInvoiceItemsBody.insertRow();
+                row.innerHTML = `
+                    <td><input type="text" value="${item.name}" oninput="updatePurchaseInvoiceItem(${index}, 'name', this.value)" placeholder="نام کالا/خدمت" style="width:120px;"/></td>
+                    <td><input type="number" value="${item.quantity}" oninput="updatePurchaseInvoiceItem(${index}, 'quantity', this.value)" min="0" style="width:70px; text-align:center;"/></td>
+                    <td><input type="number" value="${item.unitPrice}" oninput="updatePurchaseInvoiceItem(${index}, 'unitPrice', this.value)" min="0" style="width:100px; text-align:center;"/></td>
+                    <td><input type="number" value="${item.discount}" oninput="updatePurchaseInvoiceItem(${index}, 'discount', this.value)" min="0" style="width:100px; text-align:center;"/></td>
+                    <td><input type="number" value="${item.tax}" oninput="updatePurchaseInvoiceItem(${index}, 'tax', this.value)" min="0" style="width:100px; text-align:center;"/></td>
+                    <td>${formatCurrency(item.total)}</td>
+                    <td class="action-btn"><button type="button" class="btn-danger small-button" onclick="removePurchaseInvoiceItem(${index})">X</button></td>
+                `;
+            });
+            calculatePurchaseInvoiceTotals();
+        }
+
+        function updatePurchaseInvoiceItem(index, field, value) {
+            if (field === 'name') {
+                currentPurchaseInvoiceItems[index][field] = value;
+            } else {
+                currentPurchaseInvoiceItems[index][field] = parseFloat(value) || 0;
+            }
+            const item = currentPurchaseInvoiceItems[index];
+            item.total = (item.quantity * item.unitPrice) - item.discount + item.tax;
+            renderPurchaseInvoiceItems();
+        }
+
+        function removePurchaseInvoiceItem(index) {
+            currentPurchaseInvoiceItems.splice(index, 1);
+            renderPurchaseInvoiceItems();
+        }
+
+        function calculatePurchaseInvoiceTotals() {
+            let totalBeforeDiscount = 0;
+            let totalItemsDiscount = 0;
+            let totalItemsTax = 0;
+
+            currentPurchaseInvoiceItems.forEach(item => {
+                totalBeforeDiscount += (item.quantity * item.unitPrice);
+                totalItemsDiscount += item.discount;
+                totalItemsTax += item.tax;
+            });
+
+            document.getElementById('purchase-invoice-total-before-discount').textContent = formatCurrency(totalBeforeDiscount);
+
+            const overallDiscount = parseFloat(document.getElementById('purchase-invoice-total-discount-overall').value) || 0;
+            const overallTax = parseFloat(document.getElementById('purchase-invoice-total-tax-overall').value) || 0;
+            const shippingCost = parseFloat(document.getElementById('purchase-invoice-shipping-cost').value) || 0;
+
+            const finalTotal = totalBeforeDiscount - totalItemsDiscount - overallDiscount + totalItemsTax + overallTax + shippingCost;
+            document.getElementById('purchase-invoice-total').textContent = formatCurrency(finalTotal);
+        }
+
+        formPurchaseInvoice.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const supplier = document.getElementById('purchase-invoice-supplier').value;
+            const date = document.getElementById('purchase-invoice-date').value;
+            const total = parseFloat(document.getElementById('purchase-invoice-total').textContent.replace(/[^\d.]/g, ''));
+
+            if (currentPurchaseInvoiceItems.length === 0) {
+                showMessage('لطفا حداقل یک قلم به فاکتور خرید اضافه کنید.', 'error');
+                return;
+            }
+
+            const newPurchaseInvoice = {
+                id: Date.now(),
+                supplier,
+                date,
+                items: JSON.parse(JSON.stringify(currentPurchaseInvoiceItems)),
+                total,
+                overallDiscount: parseFloat(document.getElementById('purchase-invoice-total-discount-overall').value) || 0,
+                overallTax: parseFloat(document.getElementById('purchase-invoice-total-tax-overall').value) || 0,
+                shippingCost: parseFloat(document.getElementById('purchase-invoice-shipping-cost').value) || 0
+            };
+            data.purchaseInvoices.push(newPurchaseInvoice);
+            saveData();
+            renderPurchaseInvoices();
+            formPurchaseInvoice.reset();
+            currentPurchaseInvoiceItems = [];
+            renderPurchaseInvoiceItems();
+            updateDashboard(); // Purchase invoices affect expenses, update dashboard
+            showMessage('فاکتور خرید با موفقیت ذخیره شد.', 'success');
+        });
+
+        function renderPurchaseInvoices() {
+            purchaseInvoiceList.innerHTML = '';
+            data.purchaseInvoices.forEach((invoice, index) => {
+                const row = purchaseInvoiceList.insertRow();
+                row.insertCell().textContent = index + 1;
+                row.insertCell().textContent = invoice.supplier;
+                row.insertCell().textContent = invoice.date;
+                row.insertCell().textContent = formatCurrency(invoice.total);
+                const actionsCell = row.insertCell();
+                actionsCell.className = 'action-btn';
+
+                const viewBtn = document.createElement('button');
+                viewBtn.textContent = 'مشاهده';
+                viewBtn.className = 'btn-info';
+                viewBtn.onclick = () => viewPurchaseInvoiceDetails(invoice);
+                actionsCell.appendChild(viewBtn);
+
+                const deleteBtn = document.createElement('button');
+                deleteBtn.textContent = 'حذف';
+                deleteBtn.className = 'btn-danger';
+                deleteBtn.onclick = () => {
+                    if (confirm('آیا از حذف این فاکتور خرید اطمینان دارید؟')) {
+                        data.purchaseInvoices = data.purchaseInvoices.filter(item => item.id !== invoice.id);
+                        saveData();
+                        renderPurchaseInvoices();
+                        updateDashboard();
+                        showMessage('فاکتور خرید حذف شد.', 'warning');
+                    }
+                };
+                actionsCell.appendChild(deleteBtn);
+            });
+        }
+
+        // Purchase Invoice Details Modal
+        const purchaseInvoiceModal = document.createElement('div');
+        purchaseInvoiceModal.className = 'modal';
+        purchaseInvoiceModal.id = 'purchase-invoice-details-modal';
+        document.body.appendChild(purchaseInvoiceModal);
+
+        function viewPurchaseInvoiceDetails(invoice) {
+            purchaseInvoiceModal.innerHTML = `
+                <div class="modal-content">
+                    <span class="close-button" onclick="purchaseInvoiceModal.style.display='none'">&times;</span>
+                    <h3>جزئیات فاکتور خرید</h3>
+                    <p><strong>تامین‌کننده:</strong> ${invoice.supplier}</p>
+                    <p><strong>تاریخ:</strong> ${invoice.date}</p>
+                    <h4>اقلام فاکتور خرید:</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>نام کالا/خدمت</th>
+                                <th>تعداد</th>
+                                <th>قیمت واحد</th>
+                                <th>تخفیف واحد</th>
+                                <th>مالیات واحد</th>
+                                <th>جمع</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${invoice.items.map(item => `
+                                <tr>
+                                    <td>${item.name}</td>
+                                    <td>${item.quantity}</td>
+                                    <td>${formatCurrency(item.unitPrice)}</td>
+                                    <td>${formatCurrency(item.discount)}</td>
+                                    <td>${formatCurrency(item.tax)}</td>
+                                    <td>${formatCurrency(item.total)}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                    <div style="text-align: left; margin-top: 1rem; font-weight: 900;">
+                        <p>تخفیف کل فاکتور: ${formatCurrency(invoice.overallDiscount)}</p>
+                        <p>مالیات کل فاکتور: ${formatCurrency(invoice.overallTax)}</p>
+                        <p>هزینه حمل و نقل: ${formatCurrency(invoice.shippingCost)}</p>
+                        <p><strong>جمع کل نهایی: ${formatCurrency(invoice.total)}</strong></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn-primary" onclick="purchaseInvoiceModal.style.display='none'">بستن</button>
+                    </div>
+                </div>
+            `;
+            purchaseInvoiceModal.style.display = 'block';
+        }
+
+        // Customers and Suppliers
+        const formCustomerSupplier = document.getElementById('form-customer-supplier');
+        const customerSupplierList = document.getElementById('customer-supplier-list');
+
+        formCustomerSupplier.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const type = document.getElementById('cs-type').value;
+            const name = document.getElementById('cs-name').value;
+            const phone = document.getElementById('cs-phone').value;
+            const email = document.getElementById('cs-email').value;
+            const address = document.getElementById('cs-address').value;
+
+            const newCS = {
+                id: Date.now(),
+                type,
+                name,
+                phone,
+                email,
+                address
+            };
+            data.customersSuppliers.push(newCS);
+            saveData();
+            renderCustomersSuppliers();
+            populateDatalists(); // Update datalists after adding
+            formCustomerSupplier.reset();
+            showMessage('مشتری/تامین‌کننده با موفقیت ذخیره شد.', 'success');
+        });
+
+        function renderCustomersSuppliers() {
+            customerSupplierList.innerHTML = '';
+            data.customersSuppliers.forEach((cs, index) => {
+                const row = customerSupplierList.insertRow();
+                row.insertCell().textContent = index + 1;
+                row.insertCell().textContent = cs.type === 'customer' ? 'مشتری' : 'تامین‌کننده';
+                row.insertCell().textContent = cs.name;
+                row.insertCell().textContent = cs.phone;
+                row.insertCell().textContent = cs.email;
+                row.insertCell().textContent = cs.address;
+                const actionsCell = row.insertCell();
+                actionsCell.className = 'action-btn';
+                const deleteBtn = document.createElement('button');
+                deleteBtn.textContent = 'حذف';
+                deleteBtn.className = 'btn-danger';
+                deleteBtn.onclick = () => {
+                    if (confirm('آیا از حذف این مورد اطمینان دارید؟')) {
+                        data.customersSuppliers = data.customersSuppliers.filter(item => item.id !== cs.id);
+                        saveData();
+                        renderCustomersSuppliers();
+                        populateDatalists(); // Update datalists after deleting
+                        showMessage('مشتری/تامین‌کننده حذف شد.', 'warning');
+                    }
+                };
+                actionsCell.appendChild(deleteBtn);
+            });
+        }
+
+        // Inventory Management
+        const formInventory = document.getElementById('form-inventory');
+        const inventoryList = document.getElementById('inventory-list');
+
+        formInventory.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('inv-item-name').value;
+            const quantity = parseInt(document.getElementById('inv-quantity').value);
+            const unitPrice = parseFloat(document.getElementById('inv-unit-price').value);
+            const salePrice = parseFloat(document.getElementById('inv-sale-price').value);
+            const description = document.getElementById('inv-description').value;
+
+            // Check if item already exists
+            const existingItemIndex = data.inventory.findIndex(item => item.name === name);
+
+            if (existingItemIndex !== -1) {
+                // Update existing item
+                data.inventory[existingItemIndex].quantity += quantity; // Assuming adding to existing stock
+                data.inventory[existingItemIndex].unitPrice = unitPrice; // Update price to latest
+                data.inventory[existingItemIndex].salePrice = salePrice;
+                data.inventory[existingItemIndex].description = description;
+                showMessage('موجودی کالا بروزرسانی شد.', 'info');
+            } else {
+                // Add new item
+                const newItem = {
+                    id: Date.now(),
+                    name,
+                    quantity,
+                    unitPrice,
+                    salePrice,
+                    description
+                };
+                data.inventory.push(newItem);
+                showMessage('کالا با موفقیت اضافه شد.', 'success');
+            }
+
+            saveData();
+            renderInventory();
+            formInventory.reset();
+        });
+
+        function renderInventory() {
+            inventoryList.innerHTML = '';
+            data.inventory.forEach((item, index) => {
+                const row = inventoryList.insertRow();
+                row.insertCell().textContent = index + 1;
+                row.insertCell().textContent = item.name;
+                row.insertCell().textContent = item.quantity;
+                row.insertCell().textContent = formatCurrency(item.unitPrice);
+                row.insertCell().textContent = formatCurrency(item.salePrice);
+                row.insertCell().textContent = item.description;
+                const actionsCell = row.insertCell();
+                actionsCell.className = 'action-btn';
+                const deleteBtn = document.createElement('button');
+                deleteBtn.textContent = 'حذف';
+                deleteBtn.className = 'btn-danger';
+                deleteBtn.onclick = () => {
+                    if (confirm('آیا از حذف این کالا اطمینان دارید؟')) {
+                        data.inventory = data.inventory.filter(invItem => invItem.id !== item.id);
+                        saveData();
+                        renderInventory();
+                        showMessage('کالا حذف شد.', 'warning');
+                    }
+                };
+                actionsCell.appendChild(deleteBtn);
+            });
+        }
+
+        // Payroll Management
+        const formPayroll = document.getElementById('form-payroll');
+        const payrollList = document.getElementById('payroll-list');
+
+        formPayroll.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const employeeName = document.getElementById('payroll-employee-name').value;
+            const amount = parseFloat(document.getElementById('payroll-amount').value);
+            const deductions = parseFloat(document.getElementById('payroll-deductions').value) || 0;
+            const date = document.getElementById('payroll-date').value;
+            const description = document.getElementById('payroll-description').value;
+
+            const newPayroll = {
+                id: Date.now(),
+                employeeName,
+                amount,
+                deductions,
+                netAmount: amount - deductions,
+                date,
+                description
+            };
+            data.payroll.push(newPayroll);
+            saveData();
+            renderPayroll();
+            // Automatically add as an expense
+            data.incomeExpenses.push({
+                id: Date.now(),
+                type: 'expense',
+                title: `حقوق ${employeeName}`,
+                amount: newPayroll.netAmount,
+                date: date
+            });
+            saveData();
+            updateDashboard();
+            formPayroll.reset();
+            showMessage('حقوق و دستمزد با موفقیت ثبت شد.', 'success');
+        });
+
+        function renderPayroll() {
+            payrollList.innerHTML = '';
+            data.payroll.forEach((p, index) => {
+                const row = payrollList.insertRow();
+                row.insertCell().textContent = index + 1;
+                row.insertCell().textContent = p.employeeName;
+                row.insertCell().textContent = formatCurrency(p.amount);
+                row.insertCell().textContent = formatCurrency(p.deductions);
+                row.insertCell().textContent = p.date;
+                row.insertCell().textContent = p.description;
+                const actionsCell = row.insertCell();
+                actionsCell.className = 'action-btn';
+                const deleteBtn = document.createElement('button');
+                deleteBtn.textContent = 'حذف';
+                deleteBtn.className = 'btn-danger';
+                deleteBtn.onclick = () => {
+                    if (confirm('آیا از حذف این حقوق و دستمزد اطمینان دارید؟')) {
+                        data.payroll = data.payroll.filter(item => item.id !== p.id);
+                        // Also remove the corresponding expense entry
+                        data.incomeExpenses = data.incomeExpenses.filter(item => !(item.title === `حقوق ${p.employeeName}` && item.amount === p.netAmount && item.date === p.date && item.type === 'expense'));
+                        saveData();
+                        renderPayroll();
+                        updateDashboard();
+                        showMessage('حقوق و دستمزد حذف شد.', 'warning');
+                    }
+                };
+                actionsCell.appendChild(deleteBtn);
+            });
+        }
+
+        // Fixed Assets
+        const formFixedAsset = document.getElementById('form-fixed-asset');
+        const fixedAssetsList = document.getElementById('fixed-assets-list');
+
+        formFixedAsset.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('asset-name').value;
+            const purchaseDate = document.getElementById('asset-purchase-date').value;
+            const cost = parseFloat(document.getElementById('asset-cost').value);
+            const usefulLife = parseInt(document.getElementById('asset-useful-life').value);
+            const salvageValue = parseFloat(document.getElementById('asset-salvage-value').value) || 0;
+
+            const annualDepreciation = (cost - salvageValue) / usefulLife;
+
+            const newAsset = {
+                id: Date.now(),
+                name,
+                purchaseDate,
+                cost,
+                usefulLife,
+                salvageValue,
+                annualDepreciation
+            };
+            data.fixedAssets.push(newAsset);
+            saveData();
+            renderFixedAssets();
+            formFixedAsset.reset();
+            showMessage('دارایی ثابت با موفقیت اضافه شد.', 'success');
+        });
+
+        function renderFixedAssets() {
+            fixedAssetsList.innerHTML = '';
+            data.fixedAssets.forEach((asset, index) => {
+                const row = fixedAssetsList.insertRow();
+                row.insertCell().textContent = index + 1;
+                row.insertCell().textContent = asset.name;
+                row.insertCell().textContent = asset.purchaseDate;
+                row.insertCell().textContent = formatCurrency(asset.cost);
+                row.insertCell().textContent = `${asset.usefulLife} سال`;
+                row.insertCell().textContent = formatCurrency(asset.salvageValue);
+                row.insertCell().textContent = formatCurrency(asset.annualDepreciation);
+                const actionsCell = row.insertCell();
+                actionsCell.className = 'action-btn';
+                const deleteBtn = document.createElement('button');
+                deleteBtn.textContent = 'حذف';
+                deleteBtn.className = 'btn-danger';
+                deleteBtn.onclick = () => {
+                    if (confirm('آیا از حذف این دارایی ثابت اطمینان دارید؟')) {
+                        data.fixedAssets = data.fixedAssets.filter(item => item.id !== asset.id);
+                        saveData();
+                        renderFixedAssets();
+                        showMessage('دارایی ثابت حذف شد.', 'warning');
+                    }
+                };
+                actionsCell.appendChild(deleteBtn);
+            });
+        }
+
+        // Project Management
+        const formProject = document.getElementById('form-project');
+        const projectsList = document.getElementById('projects-list');
+
+        formProject.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('project-name').value;
+            const startDate = document.getElementById('project-start-date').value;
+            const endDate = document.getElementById('project-end-date').value;
+            const budget = parseFloat(document.getElementById('project-budget').value) || 0;
+            const description = document.getElementById('project-description').value;
+
+            const newProject = {
+                id: Date.now(),
+                name,
+                startDate,
+                endDate,
+                budget,
+                description
+            };
+            data.projects.push(newProject);
+            saveData();
+            renderProjects();
+            formProject.reset();
+            showMessage('پروژه با موفقیت ثبت شد.', 'success');
+        });
+
+        function renderProjects() {
+            projectsList.innerHTML = '';
+            data.projects.forEach((project, index) => {
+                const row = projectsList.insertRow();
+                row.insertCell().textContent = index + 1;
+                row.insertCell().textContent = project.name;
+                row.insertCell().textContent = project.startDate;
+                row.insertCell().textContent = project.endDate || '-';
+                row.insertCell().textContent = formatCurrency(project.budget);
+                row.insertCell().textContent = project.description;
+                const actionsCell = row.insertCell();
+                actionsCell.className = 'action-btn';
+                const deleteBtn = document.createElement('button');
+                deleteBtn.textContent = 'حذف';
+                deleteBtn.className = 'btn-danger';
+                deleteBtn.onclick = () => {
+                    if (confirm('آیا از حذف این پروژه اطمینان دارید؟')) {
+                        data.projects = data.projects.filter(item => item.id !== project.id);
+                        saveData();
+                        renderProjects();
+                        showMessage('پروژه حذف شد.', 'warning');
+                    }
+                };
+                actionsCell.appendChild(deleteBtn);
+            });
+        }
+
+        // Budgeting
+        const formBudget = document.getElementById('form-budget');
+        const budgetList = document.getElementById('budget-list');
+
+        formBudget.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const category = document.getElementById('budget-category').value;
+            const amount = parseFloat(document.getElementById('budget-amount').value);
+            const startDate = document.getElementById('budget-start-date').value;
+            const endDate = document.getElementById('budget-end-date').value;
+
+            const newBudget = {
+                id: Date.now(),
+                category,
+                amount,
+                startDate,
+                endDate,
+                spent: 0 // Will be updated by transactions
+            };
+            data.budgets.push(newBudget);
+            saveData();
+            renderBudgets();
+            formBudget.reset();
+            showMessage('بودجه با موفقیت ثبت شد.', 'success');
+        });
+
+        function renderBudgets() {
+            budgetList.innerHTML = '';
+            data.budgets.forEach((budget, index) => {
+                // For a real application, 'spent' would be calculated dynamically
+                // by summing up relevant expenses within the budget period.
+                // For this example, we'll keep it simple or mock it.
+                const spentAmount = budget.spent; // Placeholder for now
+                const remaining = budget.amount - spentAmount;
+
+                const row = budgetList.insertRow();
+                row.insertCell().textContent = index + 1;
+                row.insertCell().textContent = budget.category;
+                row.insertCell().textContent = formatCurrency(budget.amount);
+                row.insertCell().textContent = budget.startDate;
+                row.insertCell().textContent = budget.endDate;
+                row.insertCell().textContent = formatCurrency(spentAmount);
+                row.insertCell().textContent = formatCurrency(remaining);
+                const actionsCell = row.insertCell();
+                actionsCell.className = 'action-btn';
+                const deleteBtn = document.createElement('button');
+                deleteBtn.textContent = 'حذف';
+                deleteBtn.className = 'btn-danger';
+                deleteBtn.onclick = () => {
+                    if (confirm('آیا از حذف این بودجه اطمینان دارید؟')) {
+                        data.budgets = data.budgets.filter(item => item.id !== budget.id);
+                        saveData();
+                        renderBudgets();
+                        showMessage('بودجه حذف شد.', 'warning');
+                    }
+                };
+                actionsCell.appendChild(deleteBtn);
+            });
+        }
+
+        // Returns
+        const formReturn = document.getElementById('form-return');
+        const returnsList = document.getElementById('returns-list');
+
+        formReturn.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const type = document.getElementById('return-type').value;
+            const invoiceId = document.getElementById('return-invoice-id').value;
+            const itemName = document.getElementById('return-item-name').value;
+            const quantity = parseInt(document.getElementById('return-quantity').value);
+            const amount = parseFloat(document.getElementById('return-amount').value);
+            const date = document.getElementById('return-date').value;
+            const reason = document.getElementById('return-reason').value;
+
+            const newReturn = {
+                id: Date.now(),
+                type,
+                invoiceId,
+                itemName,
+                quantity,
+                amount,
+                date,
+                reason
+            };
+            data.returns.push(newReturn);
+            saveData();
+            renderReturns();
+            // Adjust inventory for sales returns (increase stock) or purchase returns (decrease stock)
+            const inventoryItemIndex = data.inventory.findIndex(item => item.name === itemName);
+            if (inventoryItemIndex !== -1) {
+                if (type === 'sales-return') {
+                    data.inventory[inventoryItemIndex].quantity += quantity;
+                    showMessage('موجودی کالا برای مرجوعی فروش بروزرسانی شد.', 'info');
+                } else if (type === 'purchase-return') {
+                    data.inventory[inventoryItemIndex].quantity -= quantity; // Decrement for purchase return
+                    if (data.inventory[inventoryItemIndex].quantity < 0) data.inventory[inventoryItemIndex].quantity = 0; // Prevent negative stock
+                    showMessage('موجودی کالا برای مرجوعی خرید بروزرسانی شد.', 'info');
+                }
+                saveData();
+                renderInventory(); // Re-render inventory list
+            }
+            // Add corresponding income/expense entry if applicable (e.g., refund for sales return)
+            if (type === 'sales-return') {
+                data.incomeExpenses.push({
+                    id: Date.now(),
+                    type: 'expense', // This is effectively an expense (refund)
+                    title: `بازگشت از فروش (${itemName})`,
+                    amount: amount,
+                    date: date
+                });
+            } else if (type === 'purchase-return') {
+                data.incomeExpenses.push({
+                    id: Date.now(),
+                    type: 'income', // This is effectively an income (money back)
+                    title: `بازگشت از خرید (${itemName})`,
+                    amount: amount,
+                    date: date
+                });
+            }
+            saveData();
+            updateDashboard();
+            formReturn.reset();
+            showMessage('مرجوعی با موفقیت ثبت شد.', 'success');
+        });
+
+        function renderReturns() {
+            returnsList.innerHTML = '';
+            data.returns.forEach((ret, index) => {
+                const row = returnsList.insertRow();
+                row.insertCell().textContent = index + 1;
+                row.insertCell().textContent = ret.type === 'sales-return' ? 'مرجوعی فروش' : 'مرجوعی خرید';
+                row.insertCell().textContent = ret.invoiceId || '-';
+                row.insertCell().textContent = ret.itemName;
+                row.insertCell().textContent = ret.quantity;
+                row.insertCell().textContent = formatCurrency(ret.amount);
+                row.insertCell().textContent = ret.date;
+                row.insertCell().textContent = ret.reason;
+                const actionsCell = row.insertCell();
+                actionsCell.className = 'action-btn';
+                const deleteBtn = document.createElement('button');
+                deleteBtn.textContent = 'حذف';
+                deleteBtn.className = 'btn-danger';
+                deleteBtn.onclick = () => {
+                    if (confirm('آیا از حذف این مرجوعی اطمینان دارید؟')) {
+                        data.returns = data.returns.filter(item => item.id !== ret.id);
+                        saveData();
+                        renderReturns();
+                        showMessage('مرجوعی حذف شد.', 'warning');
+                    }
+                };
+                actionsCell.appendChild(deleteBtn);
+            });
+        }
+
+        // Reports (Placeholder for actual report generation logic)
+        const btnGenerateReport = document.getElementById('btn-generate-report');
+        const reportOutput = document.getElementById('report-output');
+
+        btnGenerateReport.addEventListener('click', () => {
+            const reportType = document.getElementById('report-type-select').value;
+            const startDate = document.getElementById('report-start-date').value;
+            const endDate = document.getElementById('report-end-date').value;
+
+            // Simple report generation based on selected type
+            let reportContent = `<h3>گزارش: ${reportType}</h3>`;
+            reportContent += `<p>از تاریخ: ${startDate || 'ابتدا'} - تا تاریخ: ${endDate || 'انتها'}</p>`;
+
+            // Filtering data based on date range (implement full logic here)
+            let filteredData = [];
+            if (reportType === 'profit-loss' || reportType === 'cash-flow' || reportType === 'expense-by-category') {
+                filteredData = data.incomeExpenses.filter(item => {
+                    const itemDate = new persianDate(item.date, 'YYYY/MM/DD').valueOf();
+                    const start = startDate ? new persianDate(startDate, 'YYYY/MM/DD').valueOf() : -Infinity;
+                    const end = endDate ? new persianDate(endDate, 'YYYY/MM/DD').valueOf() : Infinity;
+                    return itemDate >= start && itemDate <= end;
+                });
+            } else if (reportType === 'invoice-summary') {
+                filteredData = data.invoices.filter(item => {
+                    const itemDate = new persianDate(item.date, 'YYYY/MM/DD').valueOf();
+                    const start = startDate ? new persianDate(startDate, 'YYYY/MM/DD').valueOf() : -Infinity;
+                    const end = endDate ? new persianDate(endDate, 'YYYY/MM/DD').valueOf() : Infinity;
+                    return itemDate >= start && itemDate <= end;
+                });
+            }
+            // ... more filtering logic for other report types
+
+            switch (reportType) {
+                case 'profit-loss':
+                    const totalIncome = filteredData.filter(t => t.type === 'income').reduce((sum, t) => sum + parseFloat(t.amount), 0);
+                    const totalExpense = filteredData.filter(t => t.type === 'expense').reduce((sum, t) => sum + parseFloat(t.amount), 0);
+                    reportContent += `<p>درآمد کل: ${formatCurrency(totalIncome)}</p>`;
+                    reportContent += `<p>هزینه کل: ${formatCurrency(totalExpense)}</p>`;
+                    reportContent += `<p>سود/زیان خالص: ${formatCurrency(totalIncome - totalExpense)}</p>`;
+                    break;
+                case 'cash-flow':
+                    const netCashFlow = filteredData.filter(t => t.type === 'income').reduce((sum, t) => sum + parseFloat(t.amount), 0) -
+                                        filteredData.filter(t => t.type === 'expense').reduce((sum, t) => sum + parseFloat(t.amount), 0);
+                    reportContent += `<p>جریان نقدینگی خالص: ${formatCurrency(netCashFlow)}</p>`;
+                    break;
+                case 'balance-sheet':
+                    // This would require a more complex calculation involving assets, liabilities, equity
+                    reportContent += '<p>ترازنامه نیاز به محاسبات پیچیده‌تری دارد که در این نسخه ساده‌سازی شده.</p>';
+                    reportContent += `<p>دارایی‌ها: (به صورت دستی محاسبه شود)</p>`;
+                    reportContent += `<p>بدهی‌ها: (به صورت دستی محاسبه شود)</p>`;
+                    reportContent += `<p>حقوق صاحبان سهام: (به صورت دستی محاسبه شود)</p>`;
+                    break;
+                case 'invoice-summary':
+                    if (filteredData.length > 0) {
+                        reportContent += `<table><thead><tr><th>#</th><th>مشتری</th><th>تاریخ</th><th>مبلغ</th><th>وضعیت</th></tr></thead><tbody>`;
+                        filteredData.forEach((inv, i) => {
+                            reportContent += `<tr><td>${i+1}</td><td>${inv.client}</td><td>${inv.date}</td><td>${formatCurrency(inv.total)}</td><td><span class="status-chip status-${inv.status}">${{ 'pending': 'معلق', 'paid': 'پرداخت شده', 'overdue': 'دیر پرداخت شده' }[inv.status]}</span></td></tr>`;
+                        });
+                        reportContent += `</tbody></table>`;
+                    } else {
+                        reportContent += '<p>هیچ فاکتوری در بازه انتخابی یافت نشد.</p>';
+                    }
+                    break;
+                case 'expense-by-category':
+                    const expenseCategories = {};
+                    filteredData.filter(t => t.type === 'expense').forEach(exp => {
+                        const category = exp.title; // For simplicity, title is category here
+                        if (!expenseCategories[category]) {
+                            expenseCategories[category] = 0;
+                        }
+                        expenseCategories[category] += parseFloat(exp.amount);
+                    });
+                    if (Object.keys(expenseCategories).length > 0) {
+                        reportContent += `<table><thead><tr><th>دسته</th><th>مبلغ</th></tr></thead><tbody>`;
+                        for (const category in expenseCategories) {
+                            reportContent += `<tr><td>${category}</td><td>${formatCurrency(expenseCategories[category])}</td></tr>`;
+                        }
+                        reportContent += `</tbody></table>`;
+                    } else {
+                        reportContent += '<p>هیچ هزینه‌ای در بازه انتخابی یافت نشد.</p>';
+                    }
+                    break;
+                case 'inventory-value':
+                    let totalInventoryValue = 0;
+                    if (data.inventory.length > 0) {
+                        reportContent += `<table><thead><tr><th>نام کالا</th><th>تعداد</th><th>قیمت خرید واحد</th><th>ارزش کل</th></tr></thead><tbody>`;
+                        data.inventory.forEach(item => {
+                            const itemValue = item.quantity * item.unitPrice;
+                            totalInventoryValue += itemValue;
+                            reportContent += `<tr><td>${item.name}</td><td>${item.quantity}</td><td>${formatCurrency(item.unitPrice)}</td><td>${formatCurrency(itemValue)}</td></tr>`;
+                        });
+                        reportContent += `</tbody></table>`;
+                        reportContent += `<p><strong>کل ارزش موجودی: ${formatCurrency(totalInventoryValue)}</strong></p>`;
+                    } else {
+                        reportContent += '<p>هیچ کالایی در موجودی یافت نشد.</p>';
+                    }
+                    break;
+                case 'payroll-summary':
+                    if (data.payroll.length > 0) {
+                        let totalGross = 0;
+                        let totalDeductions = 0;
+                        let totalNet = 0;
+                        reportContent += `<table><thead><tr><th>نام کارمند</th><th>مبلغ حقوق</th><th>کسورات</th><th>خالص پرداخت</th></tr></thead><tbody>`;
+                        data.payroll.forEach(p => {
+                            totalGross += p.amount;
+                            totalDeductions += p.deductions;
+                            totalNet += p.netAmount;
+                            reportContent += `<tr><td>${p.employeeName}</td><td>${formatCurrency(p.amount)}</td><td>${formatCurrency(p.deductions)}</td><td>${formatCurrency(p.netAmount)}</td></tr>`;
+                        });
+                        reportContent += `</tbody></table>`;
+                        reportContent += `<p><strong>جمع کل حقوق ناخالص: ${formatCurrency(totalGross)}</strong></p>`;
+                        reportContent += `<p><strong>جمع کل کسورات: ${formatCurrency(totalDeductions)}</strong></p>`;
+                        reportContent += `<p><strong>جمع کل حقوق خالص پرداخت شده: ${formatCurrency(totalNet)}</strong></p>`;
+                    } else {
+                        reportContent += '<p>هیچ حقوق و دستمزدی ثبت نشده است.</p>';
+                    }
+                    break;
+                case 'project-profitability':
+                    if (data.projects.length > 0) {
+                        reportContent += `<table><thead><tr><th>نام پروژه</th><th>بودجه</th><th>هزینه واقعی (تخمین)</th><th>سود/زیان (تخمین)</th></tr></thead><tbody>`;
+                        data.projects.forEach(proj => {
+                            // This would be a complex calculation linking expenses to projects
+                            const estimatedCost = 0; // Placeholder
+                            const estimatedProfitLoss = proj.budget - estimatedCost;
+                            reportContent += `<tr><td>${proj.name}</td><td>${formatCurrency(proj.budget)}</td><td>${formatCurrency(estimatedCost)}</td><td>${formatCurrency(estimatedProfitLoss)}</td></tr>`;
+                        });
+                        reportContent += `</tbody></table>`;
+                    } else {
+                        reportContent += '<p>هیچ پروژه‌ای ثبت نشده است.</p>';
+                    }
+                    break;
+                default:
+                    reportContent += '<p>لطفا یک نوع گزارش را انتخاب کنید.</p>';
+            }
+
+            reportOutput.innerHTML = reportContent;
+            showMessage('گزارش تولید شد.', 'info');
+        });
+
+        // Users and Permissions
+        const formUser = document.getElementById('form-user');
+        const userList = document.getElementById('user-list');
+
+        formUser.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('user-name').value;
+            const role = document.getElementById('user-role').value;
+            const username = document.getElementById('user-username').value;
+            const password = document.getElementById('user-password').value; // In a real app, hash this!
+
+            // Check if username exists
+            const existingUserIndex = data.users.findIndex(user => user.username === username);
+
+            if (existingUserIndex !== -1) {
+                // Update existing user
+                data.users[existingUserIndex].name = name;
+                data.users[existingUserIndex].role = role;
+                if (password) { // Only update password if provided
+                    data.users[existingUserIndex].password = password;
+                }
+                showMessage('کاربر بروزرسانی شد.', 'info');
+            } else {
+                // Add new user
+                const newUser = {
+                    id: Date.now(),
+                    name,
+                    role,
+                    username,
+                    password // Hashing is crucial for production!
+                };
+                data.users.push(newUser);
+                showMessage('کاربر با موفقیت اضافه شد.', 'success');
+            }
+
+            saveData();
+            renderUsers();
+            formUser.reset();
+        });
+
+        function renderUsers() {
+            userList.innerHTML = '';
+            data.users.forEach((user, index) => {
+                const row = userList.insertRow();
+                row.insertCell().textContent = index + 1;
+                row.insertCell().textContent = user.name;
+                row.insertCell().textContent = user.role;
+                row.insertCell().textContent = user.username;
+                const actionsCell = row.insertCell();
+                actionsCell.className = 'action-btn';
+                const deleteBtn = document.createElement('button');
+                deleteBtn.textContent = 'حذف';
+                deleteBtn.className = 'btn-danger';
+                deleteBtn.onclick = () => {
+                    if (confirm('آیا از حذف این کاربر اطمینان دارید؟')) {
+                        data.users = data.users.filter(item => item.id !== user.id);
+                        saveData();
+                        renderUsers();
+                        showMessage('کاربر حذف شد.', 'warning');
+                    }
+                };
+                actionsCell.appendChild(deleteBtn);
+            });
+        }
+
+        // Settings
+        const formSettings = document.getElementById('form-settings');
+        const btnBackupData = document.getElementById('btn-backup-data');
+        const btnRestoreData = document.getElementById('btn-restore-data');
+        const btnClearData = document.getElementById('btn-clear-data');
+
+        // Load settings when the page loads
+        function loadSettings() {
+            document.getElementById('company-name').value = data.settings.companyName;
+            document.getElementById('default-currency').value = data.settings.defaultCurrency;
+            document.getElementById('tax-rate').value = data.settings.taxRate;
+        }
+
+        formSettings.addEventListener('submit', (e) => {
+            e.preventDefault();
+            data.settings.companyName = document.getElementById('company-name').value;
+            data.settings.defaultCurrency = document.getElementById('default-currency').value;
+            data.settings.taxRate = parseFloat(document.getElementById('tax-rate').value) || 0;
+            saveData();
+            updateDashboard(); // Currency might affect dashboard formatting
+            showMessage('تنظیمات با موفقیت ذخیره شد.', 'success');
+        });
+
+        btnBackupData.addEventListener('click', () => {
+            const dataStr = JSON.stringify(data, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `accounting_backup_${getPersianDate()}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showMessage('پشتیبان‌گیری از اطلاعات انجام شد.', 'info');
+        });
+
+        btnRestoreData.addEventListener('click', () => {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'application/json';
+            input.onchange = (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        try {
+                            const loadedData = JSON.parse(event.target.result);
+                            if (confirm('آیا از بازیابی اطلاعات اطمینان دارید؟ اطلاعات فعلی از بین خواهند رفت.')) {
+                                data = loadedData;
+                                saveData(); // To commit restored data to localStorage
+                                renderAllLists();
+                                updateDashboard();
+                                populateDatalists();
+                                loadSettings(); // Reload settings form
+                                showMessage('اطلاعات با موفقیت بازیابی شد.', 'success');
+                            }
+                        } catch (error) {
+                            console.error('Error parsing JSON:', error);
+                            showMessage('فایل انتخاب شده معتبر نیست یا فرمت آن صحیح نمی‌باشد.', 'error');
+                        }
+                    };
+                    reader.readAsText(file);
+                }
+            };
+            input.click();
+        });
+
+        btnClearData.addEventListener('click', () => {
+            if (confirm('هشدار! آیا از حذف تمام اطلاعات سیستم اطمینان دارید؟ این عمل غیر قابل بازگشت است.')) {
+                localStorage.removeItem('accountingData');
+                data = { // Reset to initial empty state
+                    incomeExpenses: [],
+                    invoices: [],
+                    purchaseInvoices: [],
+                    customersSuppliers: [],
+                    inventory: [],
+                    accountingEntries: [],
+                    payroll: [],
+                    fixedAssets: [],
+                    projects: [],
+                    budgets: [],
+                    returns: [],
+                    users: [],
+                    settings: {
+                        companyName: 'شرکت حسابداری شما',
+                        defaultCurrency: 'تومان',
+                        taxRate: 9
+                    }
+                };
+                renderAllLists();
+                updateDashboard();
+                populateDatalists();
+                loadSettings();
+                showMessage('تمام اطلاعات سیستم حذف شد.', 'danger');
+            }
+        });
+
+        // Function to render all lists on page load/data change
+        function renderAllLists() {
+            renderAccountingEntries();
+            renderIncomeExpenses();
+            renderInvoices();
+            renderPurchaseInvoices();
+            renderCustomersSuppliers();
+            renderInventory();
+            renderPayroll();
+            renderFixedAssets();
+            renderProjects();
+            renderBudgets();
+            renderReturns();
+            renderUsers();
+        }
+
+        // Initial load
+        window.addEventListener('load', () => {
+            loadData();
+            loadSettings(); // Ensure settings are loaded into the form inputs
+            initializeDatePickers(); // Re-initialize date pickers after content might have been loaded
+        });
+    </script>
+</body>
+</html>
